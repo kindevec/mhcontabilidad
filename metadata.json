@@ -1,0 +1,6 @@
+{
+  "name": "MH Contabilidad",
+  "description": "Sitio web corporativo oficial de MH Contabilidad y Servicios Tributarios. Asesoría contable, tributaria y financiera profesional en Ecuador por Jorge Hernández.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
