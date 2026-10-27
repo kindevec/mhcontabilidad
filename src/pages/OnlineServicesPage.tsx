@@ -405,18 +405,41 @@ export const OnlineServicesPage: React.FC = () => {
                 </div>
               </div>
 
-              {/* Tarjeta de Asistencia */}
-              <div className="p-5 rounded-2xl bg-[#005BB2] text-white space-y-3">
+              {/* Tarjeta de Acceso a Sistema */}
+              <div className="p-6 rounded-2xl bg-gradient-to-br from-[#005BB2] to-[#003d75] text-white space-y-4 shadow-md">
                 <div className="flex items-center gap-2 text-xs font-semibold text-orange-300">
+                  <Laptop className="w-4 h-4" />
+                  <span>Web de Sistema Oficial</span>
+                </div>
+                <h4 className="text-base font-bold">
+                  Acceso a tu Plataforma Contable en Línea
+                </h4>
+                <p className="text-xs text-blue-100 leading-relaxed">
+                  Ingresa directamente a la plataforma para gestionar comprobantes, revisar ventas y sincronizar con tu programa contable integrado.
+                </p>
+                <div className="pt-2">
+                  <a
+                    href={siteConfig.systemUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs font-bold bg-[#FC6412] hover:bg-[#e05308] text-white transition-all shadow-xs"
+                  >
+                    <span>Ingresar a Web de Sistema →</span>
+                  </a>
+                </div>
+              </div>
+
+              {/* Tarjeta de Asistencia */}
+              <div className="p-5 rounded-2xl bg-[#F3F6FA] border border-slate-200 text-[#172B3A] space-y-3">
+                <div className="flex items-center gap-2 text-xs font-semibold text-[#005BB2]">
                   <PhoneCall className="w-4 h-4" />
                   <span>Soporte Directo</span>
                 </div>
-                <h4 className="text-base font-bold">
-                  ¿Necesita asistencia inmediata con sus comprobantes?
+                <h4 className="text-sm font-bold">
+                  ¿Necesitas asistencia inmediata con tus comprobantes?
                 </h4>
-                <p className="text-xs text-blue-100 leading-relaxed">
-                  Contáctese con Jorge Hernández en nuestro canal de atención para resolver cualquier duda
-                  sobre sus obligaciones ante el SRI o el manejo de su sistema.
+                <p className="text-xs text-[#64748B] leading-relaxed">
+                  Contáctate con Jorge Hernández por WhatsApp para resolver dudas sobre tus obligaciones ante el SRI o el manejo de tu sistema.
                 </p>
                 <div className="pt-1">
                   <a
@@ -425,9 +448,9 @@ export const OnlineServicesPage: React.FC = () => {
                     )}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-xs font-bold text-white hover:text-orange-200 transition-colors underline underline-offset-4"
+                    className="inline-flex items-center gap-2 text-xs font-bold text-[#005BB2] hover:text-[#004a91] transition-colors underline underline-offset-4"
                   >
-                    <span>Conversar con un asesor ahora →</span>
+                    <span>Conversar por WhatsApp ({siteConfig.phone.display}) →</span>
                   </a>
                 </div>
               </div>

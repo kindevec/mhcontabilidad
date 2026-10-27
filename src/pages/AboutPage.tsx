@@ -3,25 +3,28 @@ import { Link } from 'react-router-dom';
 import { siteConfig } from '../data/siteConfig';
 import {
   Shield,
-  Clock,
-  Lock,
-  CheckCircle,
+  Eye,
+  TrendingUp,
+  MessageSquare,
   Target,
   Compass,
   ArrowRight,
   UserCheck,
-  Search,
-  FileSpreadsheet,
   CheckCircle2,
-  CalendarCheck,
+  PhoneCall,
+  Sparkles,
 } from 'lucide-react';
 import { motion } from 'motion/react';
 import consultingTeamImg from '../assets/images/corporate_consulting_team_1792700513952.jpg';
 
 export const AboutPage: React.FC = () => {
+  const whatsappUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent(
+    'Hola Jorge Hernández / MH Contabilidad, me gustaría conversar sobre sus servicios contables y tributarios.'
+  )}`;
+
   return (
     <div className="space-y-0">
-      {/* 1. Encabezado sin contenedores: única forma para la imagen derecha */}
+      {/* 1. Encabezado Institucional */}
       <section className="relative pt-28 pb-16 lg:pt-32 lg:pb-20 overflow-hidden bg-white border-b border-slate-100">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[460px] items-center relative">
@@ -36,18 +39,19 @@ export const AboutPage: React.FC = () => {
               <div className="space-y-4">
                 <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#005BB2] uppercase tracking-wider">
                   <span className="w-2.5 h-0.5 bg-[#FC6412]" />
-                  <span>Página Institucional</span>
+                  <span>Nuestra Firma</span>
                   <span aria-hidden="true" className="text-slate-300">·</span>
                   <span>MH Contabilidad</span>
                 </div>
 
                 <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#172B3A] tracking-tight leading-[1.15]">
-                  Nosotros: Rigor, ética y cercanía profesional
+                  Tu respaldo contable. <br />
+                  <span className="text-[#005BB2]">Tu impulso estratégico.</span>
                 </h1>
 
                 <p className="text-base sm:text-lg text-[#64748B] leading-relaxed max-w-xl">
-                  Conozca la filosofía de trabajo, los valores éticos y el compromiso que rige cada servicio
-                  en MH Contabilidad, bajo la representación de Jorge Hernández.
+                  Somos una firma de servicios contables y fiscales diseñada específicamente para ser el respaldo de
+                  autónomos, pymes y medianas empresas en Ecuador, bajo el liderazgo de {siteConfig.representative}.
                 </p>
               </div>
 
@@ -59,8 +63,8 @@ export const AboutPage: React.FC = () => {
                       <UserCheck className="w-5 h-5" />
                     </div>
                     <div>
-                      <strong className="block font-bold text-[#172B3A] text-xs sm:text-[13px]">Jorge Hernández</strong>
-                      <span className="text-slate-500 text-[11px]">Representante</span>
+                      <strong className="block font-bold text-[#172B3A] text-xs sm:text-[13px]">{siteConfig.representative}</strong>
+                      <span className="text-slate-500 text-[11px]">{siteConfig.businessEntity}</span>
                     </div>
                   </div>
 
@@ -69,25 +73,25 @@ export const AboutPage: React.FC = () => {
                       <Shield className="w-5 h-5" />
                     </div>
                     <div>
-                      <strong className="block font-bold text-[#172B3A] text-xs sm:text-[13px]">Normativa Vigente</strong>
-                      <span className="text-slate-500 text-[11px]">SRI & NIIF</span>
+                      <strong className="block font-bold text-[#172B3A] text-xs sm:text-[13px]">Precisión Segura</strong>
+                      <span className="text-slate-500 text-[11px]">Rigor y cumplimiento</span>
                     </div>
                   </div>
 
                   <div className="flex items-center gap-3">
                     <div className="w-11 h-11 rounded-full bg-[#FFF0E6] text-[#FC6412] flex items-center justify-center shrink-0 border border-orange-100">
-                      <Compass className="w-5 h-5" />
+                      <MessageSquare className="w-5 h-5" />
                     </div>
                     <div>
-                      <strong className="block font-bold text-[#172B3A] text-xs sm:text-[13px]">Cobertura</strong>
-                      <span className="text-slate-500 text-[11px]">Nacional Ecuador</span>
+                      <strong className="block font-bold text-[#172B3A] text-xs sm:text-[13px]">Cercanía Proactiva</strong>
+                      <span className="text-slate-500 text-[11px]">Trato humano directo</span>
                     </div>
                   </div>
                 </div>
               </div>
             </motion.div>
 
-            {/* Columna Derecha: ÚNICA FORMA azul para la imagen con corte diagonal */}
+            {/* Columna Derecha: Imagen Institucional */}
             <motion.div
               initial={{ opacity: 0, scale: 0.96 }}
               animate={{ opacity: 1, scale: 1 }}
@@ -102,7 +106,7 @@ export const AboutPage: React.FC = () => {
               <div className="relative z-10 w-full h-full flex items-end justify-center lg:[clip-path:polygon(14%_0,100%_0,100%_100%,0%_100%)]">
                 <img
                   src={consultingTeamImg}
-                  alt="Equipo y representante Jorge Hernández en reunión con clientes"
+                  alt="Equipo de asesoría contable y tributaria MH Contabilidad"
                   className="w-full h-72 sm:h-80 lg:h-[420px] object-cover object-top drop-shadow-xl"
                   loading="lazy"
                   referrerPolicy="no-referrer"
@@ -131,239 +135,252 @@ export const AboutPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 2. Presentación y Filosofía de Trabajo */}
-      <section className="py-16 bg-white">
+      {/* 2. Quiénes Somos (Texto Oficial Completo) */}
+      <section className="py-20 bg-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-start">
+            
             <div className="lg:col-span-7 space-y-6">
+              <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#005BB2] uppercase tracking-wider">
+                <span className="w-2.5 h-0.5 bg-[#FC6412]" />
+                <span>Nuestra Historia & Convicción</span>
+              </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-[#172B3A]">
-                Nuestra Firma
+                Quiénes Somos
               </h2>
-              <p className="text-sm sm:text-base text-[#64748B] leading-relaxed">
-                <strong className="text-[#172B3A]">MH Contabilidad</strong> nació con el propósito fundamental
-                de brindar a empresas, profesionales y negocios en Ecuador una asesoría contable transparente,
-                eficiente y oportuna. Comprendemos que las normas tributarias emitidas por el SRI y los organismos
-                de control exigen precisión absoluta para salvaguardar la estabilidad de cada negocio.
-              </p>
-              <p className="text-sm sm:text-base text-[#64748B] leading-relaxed">
-                Nuestra filosofía se basa en la <strong className="text-[#005BB2]">atención personalizada</strong>.
-                No tratamos los balances como simples números fríos; acompañamos a los contribuyentes a comprender
-                la salud financiera de sus operaciones, planificar sus impuestos dentro del marco legal vigente y
-                prevenir cualquier contingencia o sanción económica.
-              </p>
+              
+              <div className="prose prose-slate max-w-none space-y-4 text-sm sm:text-base text-[#64748B] leading-relaxed">
+                <p>
+                  En el mundo de los negocios, detrás de cada gran idea, de cada pyme que se consolida y de cada
+                  mediana empresa que se expande, hay una realidad inevitable: <strong>los números</strong>. Sin embargo,
+                  sabemos que tú no fundaste tu negocio para pasar horas ordenando facturas, descifrando leyes
+                  fiscales complejas o preocupándote por sorpresas de última hora con los impuestos.
+                </p>
+                <div className="p-5 rounded-2xl bg-[#FFF5EF] border border-[#FC6412]/20 text-[#172B3A] font-semibold text-base sm:text-lg">
+                  "Nacimos con una convicción clara: la contabilidad no debería ser un dolor de cabeza, sino la herramienta más poderosa para tu crecimiento."
+                </div>
+                <p>
+                  Somos una firma de servicios contables y fiscales diseñada específicamente para ser el respaldo de
+                  autónomos, pymes y medianas empresas. Nos alejamos del modelo del contador tradicional y
+                  distante que solo aparece a final de mes. Nos convertimos en tus aliados estratégicos cotidianos,
+                  combinando el máximo rigor técnico con un trato cercano, humano y sin tecnicismos difíciles de entender.
+                </p>
+              </div>
 
-              {/* Perfil Representante */}
-              <div className="p-5 rounded-2xl bg-[#F3F6FA] border border-slate-200/90 flex items-start gap-4">
-                <div className="p-3 rounded-xl bg-[#005BB2] text-white shrink-0">
-                  <UserCheck className="w-6 h-6" />
-                </div>
-                <div className="space-y-1">
-                  <h3 className="text-sm font-bold text-[#172B3A]">
-                    Representante: {siteConfig.representative}
-                  </h3>
-                  <p className="text-xs text-[#64748B] leading-relaxed">
-                    Profesional a cargo de la gestión, revisión y validación de los servicios contables y
-                    tributarios. Comunicación directa sin filtros para resolver inquietudes inmediatas de cada cliente.
-                  </p>
-                </div>
+              {/* Manifiesto y Cierre */}
+              <div className="p-6 rounded-2xl bg-[#F3F6FA] border border-slate-200/90 space-y-3">
+                <p className="text-sm font-semibold text-[#172B3A] italic">
+                  "Creemos que cuando tienes tus números en orden, recuperas el control y el tiempo para hacer lo que mejor sabes hacer: liderar tu éxito."
+                </p>
+                <p className="text-base font-extrabold text-[#005BB2]">
+                  Déjanos los números a nosotros. Concéntrate en crecer.
+                </p>
               </div>
             </div>
 
-            {/* Misión y Visión */}
+            {/* Misión y Visión (Oficiales del PDF) */}
             <div className="lg:col-span-5 space-y-6">
+              {/* Misión */}
               <motion.div
-                whileHover={{ y: -2 }}
+                whileHover={{ y: -3 }}
                 transition={{ duration: 0.2 }}
-                className="p-6 sm:p-7 rounded-2xl border border-slate-200 bg-white shadow-xs space-y-4"
+                className="p-7 rounded-2xl border border-slate-200 bg-white shadow-xs space-y-4 relative overflow-hidden"
               >
-                <div className="flex items-center gap-2.5">
-                  <div className="p-2 rounded-lg bg-blue-50 text-[#005BB2]">
+                <div className="absolute top-0 left-0 w-1.5 h-full bg-[#005BB2]" />
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-xl bg-blue-50 text-[#005BB2]">
                     <Target className="w-5 h-5" />
                   </div>
-                  <h3 className="text-base font-bold text-[#172B3A]">Nuestra Misión</h3>
+                  <div>
+                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Propósito Fundamental</span>
+                    <h3 className="text-lg font-bold text-[#172B3A]">Misión</h3>
+                  </div>
                 </div>
                 <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed">
-                  Proporcionar servicios contables, tributarios y de consultoría financiera con los más altos
-                  estándares de calidad y responsabilidad profesional, facilitando a nuestros clientes el
-                  cumplimiento cabal de sus deberes formales y el control óptimo de sus recursos económicos.
+                  "Impulsar el éxito de autónomos, Pymes y medianas empresas simplificando su gestión contable y
+                  fiscal. Brindando total tranquilidad y cumplimiento normativo, transformando los números en
+                  información estratégica, clara y accesible para que nuestros clientes tomen decisiones seguras y se
+                  enfoquen en hacer crecer su negocio."
                 </p>
               </motion.div>
 
+              {/* Visión */}
               <motion.div
-                whileHover={{ y: -2 }}
+                whileHover={{ y: -3 }}
                 transition={{ duration: 0.2 }}
-                className="p-6 sm:p-7 rounded-2xl border border-slate-200 bg-white shadow-xs space-y-4"
+                className="p-7 rounded-2xl border border-slate-200 bg-white shadow-xs space-y-4 relative overflow-hidden"
               >
-                <div className="flex items-center gap-2.5">
-                  <div className="p-2 rounded-lg bg-orange-50 text-[#FC6412]">
+                <div className="absolute top-0 left-0 w-1.5 h-full bg-[#FC6412]" />
+                <div className="flex items-center gap-3">
+                  <div className="p-2.5 rounded-xl bg-orange-50 text-[#FC6412]">
                     <Compass className="w-5 h-5" />
                   </div>
-                  <h3 className="text-base font-bold text-[#172B3A]">Nuestra Visión</h3>
+                  <div>
+                    <span className="text-[11px] font-semibold text-slate-400 uppercase tracking-wider block">Dirección Futura</span>
+                    <h3 className="text-lg font-bold text-[#172B3A]">Visión</h3>
+                  </div>
                 </div>
                 <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed">
-                  Consolidarnos como la firma contable de referencia y confianza para el ecosistema productivo y
-                  profesional de Ecuador, destacándonos por la solidez técnica, la ética inquebrantable y la
-                  adopción progresiva de herramientas tecnológicas e interoperabilidad contable.
+                  "Ser la firma contable y el aliado estratégico de referencia para el tejido empresarial y los
+                  profesionales independientes, reconocidos por redefinir la confianza financiera a través de la
+                  innovación, la claridad absoluta y una cercanía que impulsa el desarrollo sostenible de cada
+                  negocio."
                 </p>
               </motion.div>
+
+              {/* Diferenciador / Por qué contratarnos */}
+              <div className="p-6 rounded-2xl bg-gradient-to-br from-[#005BB2] to-[#004282] text-white space-y-3 shadow-md">
+                <div className="flex items-center gap-2 text-xs font-bold text-orange-300 uppercase tracking-wider">
+                  <Sparkles className="w-4 h-4" />
+                  <span>¿Por qué contratarnos?</span>
+                </div>
+                <p className="text-xs sm:text-sm text-blue-50 leading-relaxed italic">
+                  "Nosotros nos diferenciamos porque creemos en la <strong>Claridad Absoluta</strong>: te explicamos tus números
+                  sin enredos, y en la <strong>Cercanía Proactiva</strong>: te llamamos nosotros antes de que tú tengas que
+                  buscarnos."
+                </p>
+              </div>
+
             </div>
           </div>
         </div>
       </section>
 
-      {/* 3. Valores Fundamentales */}
-      <section className="py-16 bg-[#F3F6FA] border-y border-slate-200/80">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center space-y-3 mb-12">
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#172B3A]">
-              Valores que Rigen Nuestra Práctica
-            </h2>
-            <p className="text-sm text-[#64748B]">
-              Principios innegociables aplicados en la custodia y procesamiento de su información contable.
-            </p>
-          </div>
-
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-            <motion.div
-              whileHover={{ y: -3 }}
-              transition={{ duration: 0.2 }}
-              className="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-3"
-            >
-              <div className="p-3 w-fit rounded-xl bg-blue-50 text-[#005BB2]">
-                <Shield className="w-5 h-5" />
-              </div>
-              <h3 className="text-sm font-bold text-[#172B3A]">Integridad Absoluta</h3>
-              <p className="text-xs text-[#64748B] leading-relaxed">
-                Actuamos con apego estricto a las leyes tributarias y normas contables, ofreciendo claridad en cada balance.
-              </p>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ y: -3 }}
-              transition={{ duration: 0.2 }}
-              className="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-3"
-            >
-              <div className="p-3 w-fit rounded-xl bg-orange-50 text-[#FC6412]">
-                <Clock className="w-5 h-5" />
-              </div>
-              <h3 className="text-sm font-bold text-[#172B3A]">Puntualidad en Plazos</h3>
-              <p className="text-xs text-[#64748B] leading-relaxed">
-                Anticipamos los calendarios de vencimiento del SRI para que sus declaraciones se presenten siempre a tiempo.
-              </p>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ y: -3 }}
-              transition={{ duration: 0.2 }}
-              className="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-3"
-            >
-              <div className="p-3 w-fit rounded-xl bg-blue-50 text-[#005BB2]">
-                <Lock className="w-5 h-5" />
-              </div>
-              <h3 className="text-sm font-bold text-[#172B3A]">Confidencialidad Total</h3>
-              <p className="text-xs text-[#64748B] leading-relaxed">
-                Garantizamos reserva y secreto profesional respecto a la situación patrimonial y documental del cliente.
-              </p>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ y: -3 }}
-              transition={{ duration: 0.2 }}
-              className="p-6 rounded-2xl bg-white border border-slate-200 shadow-2xs space-y-3"
-            >
-              <div className="p-3 w-fit rounded-xl bg-orange-50 text-[#FC6412]">
-                <CheckCircle className="w-5 h-5" />
-              </div>
-              <h3 className="text-sm font-bold text-[#172B3A]">Atención Directa</h3>
-              <p className="text-xs text-[#64748B] leading-relaxed">
-                Acompañamiento sin intermediarios burocráticos; comunicación ágil a través de canales modernos como WhatsApp.
-              </p>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* 4. Nuestra Metodología de Acompañamiento Paso a Paso */}
-      <section className="py-20 bg-white">
+      {/* 3. Valores Comerciales (Oficiales del PDF) */}
+      <section className="py-20 bg-[#F3F6FA] border-y border-slate-200/80">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="max-w-3xl mx-auto text-center space-y-3 mb-16">
             <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#005BB2] uppercase tracking-wider">
               <span className="w-2.5 h-0.5 bg-[#FC6412]" />
-              <span>Metodología</span>
+              <span>Nuestros Pilares</span>
             </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#172B3A]">
-              ¿Cómo gestionamos sus obligaciones contables?
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#172B3A]">
+              Valores Comerciales
             </h2>
-            <p className="text-sm text-[#64748B]">
-              Un proceso estructurado para llevar orden, trazabilidad y control a su negocio.
+            <p className="text-sm sm:text-base text-[#64748B] leading-relaxed max-w-2xl mx-auto">
+              No solo hacemos tu contabilidad; cambiamos la forma en que te relacionas con las finanzas de tu
+              empresa a través de nuestros valores comerciales:
             </p>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
-            <div className="p-6 rounded-2xl border border-slate-200 bg-white space-y-3 relative hover:border-[#005BB2]/40 transition-colors">
-              <div className="text-2xl font-black text-[#005BB2]/20 font-mono">01</div>
-              <div className="flex items-center gap-2 font-bold text-sm text-[#172B3A]">
-                <Search className="w-4 h-4 text-[#005BB2]" />
-                <span>Diagnóstico Inicial</span>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
+            {/* 1. Claridad Absoluta */}
+            <motion.div
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.2 }}
+              className="p-7 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-4 hover:border-[#005BB2]/50 transition-all flex flex-col justify-between"
+            >
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#005BB2] flex items-center justify-center font-bold">
+                  <Eye className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-[#172B3A]">Claridad Absoluta</h3>
+                  <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed mt-2">
+                    Explicamos las finanzas y los impuestos en un idioma simple, directo y sin tecnicismos complejos.
+                  </p>
+                </div>
               </div>
-              <p className="text-xs text-[#64748B] leading-relaxed">
-                Revisión del estado de su RUC, declaraciones históricas ante el SRI y detección de inconsistencias o pasivos fiscales pendientes.
-              </p>
-            </div>
+              <div className="pt-4 border-t border-slate-100 text-[11px] font-semibold text-[#005BB2]">
+                Cero enredos fiscales
+              </div>
+            </motion.div>
 
-            <div className="p-6 rounded-2xl border border-slate-200 bg-white space-y-3 relative hover:border-[#FC6412]/40 transition-colors">
-              <div className="text-2xl font-black text-[#FC6412]/20 font-mono">02</div>
-              <div className="flex items-center gap-2 font-bold text-sm text-[#172B3A]">
-                <FileSpreadsheet className="w-4 h-4 text-[#FC6412]" />
-                <span>Regularización y Libros</span>
+            {/* 2. Cercanía Proactiva */}
+            <motion.div
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.2 }}
+              className="p-7 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-4 hover:border-[#FC6412]/50 transition-all flex flex-col justify-between"
+            >
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-xl bg-orange-50 text-[#FC6412] flex items-center justify-center font-bold">
+                  <PhoneCall className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-[#172B3A]">Cercanía Proactiva</h3>
+                  <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed mt-2">
+                    No somos el contador que solo aparece a fin de mes para pedir facturas. Monitoreamos activamente el negocio y nos anticipamos a los problemas o a las oportunidades de ahorro fiscal.
+                  </p>
+                </div>
               </div>
-              <p className="text-xs text-[#64748B] leading-relaxed">
-                Clasificación de comprobantes de venta y compra, actualización de libros diarios, mayores y asientos de ajuste correspondientes.
-              </p>
-            </div>
+              <div className="pt-4 border-t border-slate-100 text-[11px] font-semibold text-[#FC6412]">
+                Te contactamos nosotros
+              </div>
+            </motion.div>
 
-            <div className="p-6 rounded-2xl border border-slate-200 bg-white space-y-3 relative hover:border-[#005BB2]/40 transition-colors">
-              <div className="text-2xl font-black text-[#005BB2]/20 font-mono">03</div>
-              <div className="flex items-center gap-2 font-bold text-sm text-[#172B3A]">
-                <CalendarCheck className="w-4 h-4 text-[#005BB2]" />
-                <span>Declaración Mensual</span>
+            {/* 3. Precisión Segura */}
+            <motion.div
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.2 }}
+              className="p-7 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-4 hover:border-[#005BB2]/50 transition-all flex flex-col justify-between"
+            >
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-xl bg-blue-50 text-[#005BB2] flex items-center justify-center font-bold">
+                  <Shield className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-[#172B3A]">Precisión Segura</h3>
+                  <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed mt-2">
+                    Aplicamos el máximo rigor técnico y actualización normativa en cada proceso para garantizar un cumplimiento fiscal impecable y sin errores.
+                  </p>
+                </div>
               </div>
-              <p className="text-xs text-[#64748B] leading-relaxed">
-                Liquidación oportuna de IVA, retenciones en la fuente y anexos transaccionales (ATS) antes de las fechas límite establecidas.
-              </p>
-            </div>
+              <div className="pt-4 border-t border-slate-100 text-[11px] font-semibold text-[#005BB2]">
+                Cero errores y multas
+              </div>
+            </motion.div>
 
-            <div className="p-6 rounded-2xl border border-slate-200 bg-white space-y-3 relative hover:border-[#FC6412]/40 transition-colors">
-              <div className="text-2xl font-black text-[#FC6412]/20 font-mono">04</div>
-              <div className="flex items-center gap-2 font-bold text-sm text-[#172B3A]">
-                <CheckCircle2 className="w-4 h-4 text-[#FC6412]" />
-                <span>Reportes y Asesoría</span>
+            {/* 4. Visión de Crecimiento */}
+            <motion.div
+              whileHover={{ y: -4 }}
+              transition={{ duration: 0.2 }}
+              className="p-7 rounded-2xl bg-white border border-slate-200/90 shadow-2xs space-y-4 hover:border-[#FC6412]/50 transition-all flex flex-col justify-between"
+            >
+              <div className="space-y-4">
+                <div className="w-12 h-12 rounded-xl bg-orange-50 text-[#FC6412] flex items-center justify-center font-bold">
+                  <TrendingUp className="w-6 h-6" />
+                </div>
+                <div>
+                  <h3 className="text-base font-bold text-[#172B3A]">Visión de Crecimiento</h3>
+                  <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed mt-2">
+                    Diseñamos soluciones contables que se adaptan al tamaño actual del cliente, pero con la estructura necesaria para soportar su crecimiento futuro.
+                  </p>
+                </div>
               </div>
-              <p className="text-xs text-[#64748B] leading-relaxed">
-                Entrega de estados financieros claros y recomendaciones estratégicas para optimizar la estructura financiera de su actividad.
-              </p>
-            </div>
+              <div className="pt-4 border-t border-slate-100 text-[11px] font-semibold text-[#FC6412]">
+                Estructura escalable
+              </div>
+            </motion.div>
           </div>
 
-          {/* Banner de Enlace a Contacto */}
-          <div className="mt-16 p-8 rounded-2xl bg-[#005BB2] text-white text-center max-w-3xl mx-auto space-y-4 shadow-sm">
-            <h3 className="text-xl font-bold">
-              ¿Desea iniciar una revisión de su situación tributaria?
+          {/* Banner de Llamada Directa a WhatsApp */}
+          <div className="mt-16 p-8 sm:p-10 rounded-3xl bg-[#005BB2] text-white text-center max-w-4xl mx-auto space-y-5 shadow-lg">
+            <h3 className="text-xl sm:text-2xl font-extrabold">
+              ¿Listo para ordenar tus finanzas e impulsar tu crecimiento?
             </h3>
             <p className="text-xs sm:text-sm text-blue-100 max-w-xl mx-auto leading-relaxed">
-              Agende una reunión telemática o presencial con Jorge Hernández para evaluar las necesidades
-              particulares de su empresa.
+              Comunícate directamente con Jorge Hernández por WhatsApp y recibe una atención cercana, ágil y transparente desde el primer día.
             </p>
-            <div className="pt-2">
-              <Link
-                to="/contacto"
-                className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-xs font-bold text-[#172B3A] bg-white hover:bg-slate-100 hover:-translate-y-0.5 transition-all shadow-xs"
+            <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+              <a
+                href={whatsappUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5"
               >
-                <span>Ir al formulario de contacto</span>
+                <MessageSquare className="w-4 h-4" />
+                <span>Escríbenos al {siteConfig.phone.display}</span>
+              </a>
+              <Link
+                to="/servicios"
+                className="inline-flex items-center gap-2 px-7 py-3.5 rounded-full text-xs sm:text-sm font-bold text-white bg-white/10 hover:bg-white/20 transition-all border border-white/20"
+              >
+                <span>Ver catálogo de servicios</span>
                 <ArrowRight className="w-4 h-4" />
               </Link>
             </div>
           </div>
+
         </div>
       </section>
     </div>

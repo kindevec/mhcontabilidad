@@ -16,6 +16,8 @@ import {
   Check,
   HelpCircle,
   ArrowRight,
+  Users,
+  Laptop,
 } from 'lucide-react';
 import { motion, AnimatePresence } from 'motion/react';
 import heroImg from '../assets/images/hero_contabilidad_asesoria_1792699795005.jpg';
@@ -47,6 +49,10 @@ export const ServicesPage: React.FC = () => {
         return <PieChart {...props} />;
       case 'Briefcase':
         return <Briefcase {...props} />;
+      case 'Users':
+        return <Users {...props} />;
+      case 'Laptop':
+        return <Laptop {...props} />;
       default:
         return <Calculator {...props} />;
     }
@@ -226,20 +232,26 @@ export const ServicesPage: React.FC = () => {
                         <h3 className="text-xl font-bold text-[#172B3A] group-hover:text-[#005BB2] transition-colors">
                           {service.title}
                         </h3>
+                        <p className="text-xs font-semibold text-[#FC6412] mt-1 italic">
+                          "{service.tagline}"
+                        </p>
                         <p className="text-sm text-[#64748B] leading-relaxed mt-2">
                           {service.description}
                         </p>
                       </div>
 
-                      {/* Entregables y puntos clave */}
-                      <ul className="space-y-2 pt-2 border-t border-slate-100 text-xs text-[#172B3A]">
-                        {service.highlights.map((highlight, idx) => (
-                          <li key={idx} className="flex items-start gap-2">
-                            <Check className="w-3.5 h-3.5 text-[#FC6412] shrink-0 mt-0.5" />
-                            <span className="text-slate-600">{highlight}</span>
-                          </li>
+                      {/* Entregables y puntos clave del PDF */}
+                      <div className="space-y-3 pt-3 border-t border-slate-100 text-xs">
+                        {service.detailedHighlights?.map((item, idx) => (
+                          <div key={idx} className="flex items-start gap-2.5">
+                            <Check className="w-4 h-4 text-[#FC6412] shrink-0 mt-0.5" />
+                            <div>
+                              <strong className="font-semibold text-[#172B3A]">{item.title}: </strong>
+                              <span className="text-slate-600 leading-relaxed">{item.description}</span>
+                            </div>
+                          </div>
                         ))}
-                      </ul>
+                      </div>
                     </div>
 
                     {/* Acciones */}

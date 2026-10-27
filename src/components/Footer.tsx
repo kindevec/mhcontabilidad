@@ -2,7 +2,7 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 import { MHLogo } from './MHLogo';
 import { siteConfig } from '../data/siteConfig';
-import { MessageSquare, Mail, MapPin, ArrowUp } from 'lucide-react';
+import { MessageSquare, MapPin, ArrowUp, ExternalLink, Server, ShieldCheck } from 'lucide-react';
 
 export const Footer: React.FC = () => {
   const currentYear = new Date().getFullYear();
@@ -15,27 +15,34 @@ export const Footer: React.FC = () => {
     <footer className="bg-[#172B3A] text-white border-t border-slate-800">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-16">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-12 gap-10">
-          {/* Columna 1: Marca y Representación */}
+          {/* Columna 1: Marca, Razón Social y Representación */}
           <div className="lg:col-span-5 space-y-4">
             <Link to="/" className="inline-block" aria-label="Ir a Inicio">
               <MHLogo variant="light" />
             </Link>
             <p className="text-xs text-slate-300 leading-relaxed max-w-sm pt-2">
-              Firma especializada en asesoría contable, planificación tributaria ante el SRI, estados financieros
-              y gestión estratégica para empresas y profesionales en Ecuador.
+              "{siteConfig.tagline}"
             </p>
-            <div className="pt-2 text-xs text-slate-400">
-              <span className="text-slate-200 font-semibold">Representante:</span> {siteConfig.representative}
-            </div>
-            <div className="text-xs text-slate-400">
-              <span className="text-slate-200 font-semibold">Área:</span> {siteConfig.location.country}
+            <p className="text-xs text-slate-400 leading-relaxed max-w-sm">
+              Firma de servicios contables y fiscales para autónomos, pymes y medianas empresas. Claridad absoluta y cercanía proactiva para impulsar tu crecimiento.
+            </p>
+            <div className="pt-2 text-xs text-slate-300 space-y-1">
+              <div>
+                <span className="text-slate-400 font-semibold">Razón Social:</span> {siteConfig.businessEntity}
+              </div>
+              <div>
+                <span className="text-slate-400 font-semibold">Representante:</span> {siteConfig.representative}
+              </div>
+              <div>
+                <span className="text-slate-400 font-semibold">Cobertura:</span> {siteConfig.location.country}
+              </div>
             </div>
           </div>
 
-          {/* Columna 2: Navegación de 5 Páginas Principales */}
+          {/* Columna 2: Navegación de Páginas Principales */}
           <div className="lg:col-span-3 space-y-4">
             <h4 className="text-xs font-bold uppercase tracking-wider text-orange-400">
-              Páginas del Sitio
+              Navegación
             </h4>
             <ul className="space-y-2.5 text-xs text-slate-300">
               {siteConfig.navLinks.map((link) => (
@@ -48,13 +55,24 @@ export const Footer: React.FC = () => {
                   </Link>
                 </li>
               ))}
+              <li>
+                <a
+                  href={siteConfig.systemUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white hover:underline transition-colors inline-flex items-center gap-1.5 text-orange-300 font-medium"
+                >
+                  <span>Web de Sistema</span>
+                  <ExternalLink className="w-3 h-3" />
+                </a>
+              </li>
             </ul>
           </div>
 
-          {/* Columna 3: Contacto Directo */}
+          {/* Columna 3: Canales Oficiales */}
           <div className="lg:col-span-4 space-y-4">
             <h4 className="text-xs font-bold uppercase tracking-wider text-orange-400">
-              Canales de Comunicación
+              Canales de Atención Oficial
             </h4>
             <div className="space-y-3 text-xs text-slate-300">
               <div className="flex items-center gap-2.5">
@@ -63,19 +81,21 @@ export const Footer: React.FC = () => {
                   href={`https://wa.me/${siteConfig.phone.whatsappNumber}`}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="hover:text-white transition-colors"
+                  className="hover:text-white font-medium text-white transition-colors"
                 >
                   WhatsApp: {siteConfig.phone.display}
                 </a>
               </div>
 
               <div className="flex items-center gap-2.5">
-                <Mail className="w-4 h-4 text-[#005BB2] shrink-0" />
+                <Server className="w-4 h-4 text-[#005BB2] shrink-0" />
                 <a
-                  href={`mailto:${siteConfig.email.general}`}
-                  className="hover:text-white transition-colors"
+                  href={siteConfig.systemUrl}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="hover:text-white transition-colors truncate"
                 >
-                  {siteConfig.email.general}
+                  {siteConfig.systemUrl}
                 </a>
               </div>
 
@@ -88,28 +108,29 @@ export const Footer: React.FC = () => {
             <div className="pt-2">
               <a
                 href={`https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent(
-                  'Hola Jorge Hernández / MH Contabilidad, me gustaría agendar una consulta contable.'
+                  'Hola Jorge Hernández / MH Contabilidad, requiero asesoría contable y tributaria personalizada.'
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold bg-[#FC6412] hover:bg-[#e05308] text-white transition-colors shadow-xs"
+                className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs font-semibold bg-[#FC6412] hover:bg-[#e05308] text-white transition-colors shadow-xs"
               >
                 <MessageSquare className="w-3.5 h-3.5" />
-                <span>Iniciar Chat de WhatsApp</span>
+                <span>Conversar por WhatsApp</span>
               </a>
             </div>
           </div>
         </div>
 
-        {/* Fila Inferior: Copyright, Aviso de Privacidad y Botón Volver Arriba */}
+        {/* Fila Inferior: Copyright, Razón Social y Botón Volver Arriba */}
         <div className="mt-12 pt-8 border-t border-slate-800 flex flex-col sm:flex-row items-center justify-between gap-4 text-[11px] text-slate-400">
           <div>
-            © {currentYear} {siteConfig.tradeName}. Todos los derechos reservados.
+            © {currentYear} {siteConfig.companyName} · {siteConfig.businessEntity}. Todos los derechos reservados.
           </div>
 
           <div className="flex items-center gap-6">
-            <span className="text-slate-400">
-              Información tributaria y contable protegida bajo secreto profesional
+            <span className="text-slate-400 flex items-center gap-1.5">
+              <ShieldCheck className="w-3.5 h-3.5 text-blue-400" />
+              <span>Información contable y tributaria protegida</span>
             </span>
             <button
               type="button"

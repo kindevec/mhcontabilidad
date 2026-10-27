@@ -1,297 +1,247 @@
 import React, { useState } from 'react';
-import { Link, NavLink } from 'react-router-dom';
+import { Link } from 'react-router-dom';
 import {
   ArrowRight,
-  ShieldCheck,
-  FileCheck,
-  Layers,
-  CheckCircle2,
   Server,
   MessageSquare,
   Sparkles,
-  Menu,
-  X,
-  PhoneCall,
+  ExternalLink,
+  ChevronDown,
 } from 'lucide-react';
 import { siteConfig } from '../data/siteConfig';
-import { MHLogo } from '../components/MHLogo';
 import { ServicesCarousel } from '../components/ServicesCarousel';
+import { HeroSection } from '../components/HeroSection';
+import { StatsBanner } from '../components/StatsBanner';
+import teamGroupImg from '../assets/images/equipo_mh_completo_panoramico.jpg';
 import { motion, AnimatePresence } from 'motion/react';
-import heroImg from '../assets/images/hero_contabilidad_asesoria_1792699795005.jpg';
-import consultingTeamImg from '../assets/images/corporate_consulting_team_1792700513952.jpg';
 
 export const HomePage: React.FC = () => {
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isTeamHovered, setIsTeamHovered] = useState(false);
 
   const whatsappGeneralUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent(
     'Hola Jorge Hernández / MH Contabilidad, requiero asesoría contable y tributaria personalizada.'
   )}`;
+
   return (
     <div className="space-y-0">
-      {/* 1. Hero Principal sin contenedores exteriores: única forma de fondo para la imagen derecha */}
-      <section className="relative pt-28 pb-16 lg:pt-32 lg:pb-20 overflow-hidden bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[520px] items-center relative">
-            
-            {/* Columna Izquierda: Título Principal, Descripción, Acciones y Métricas */}
-            <div className="lg:col-span-7 py-6 sm:py-8 lg:py-10 flex flex-col justify-between space-y-8 z-10 relative">
-              {/* Anillo decorativo tenue detrás del titular (igual a la referencia) */}
-              <div className="w-28 sm:w-36 h-28 sm:h-36 rounded-full border-2 border-[#005BB2]/15 absolute top-2 -left-4 pointer-events-none -z-10" />
+      {/* 1. Hero Principal de Alto Impacto */}
+      <HeroSection />
 
-              <div className="space-y-4">
-                {/* Título de Impacto en Gran Tamaño */}
-                <h1 className="text-3xl sm:text-4xl lg:text-[2.75rem] xl:text-[3.25rem] font-extrabold text-[#172B3A] tracking-tight leading-[1.12]">
-                  Gestión contable rigurosa y cumplimiento tributario estratégico
-                </h1>
+      {/* Franja Bicolor de Dos Colores con Cifras y Respaldo Estratégico */}
+      <StatsBanner />
 
-                {/* Bajada Descriptiva */}
-                <p className="text-sm sm:text-base text-[#64748B] leading-relaxed max-w-lg pt-1">
-                  Brindamos asesoría especializada a empresas y profesionales independientes en Ecuador.
-                  Mantenemos sus cuentas al día, aseguramos el cumplimiento puntual de sus obligaciones ante el
-                  SRI y proporcionamos información financiera oportuna para impulsar su negocio.
+      {/* 2. Sección Quiénes Somos / Nuestra Convicción con foto grupal que empieza después del título y contenedor interactivo centrado */}
+      <section className="relative bg-[#F8FAFC] border-y border-slate-200/80 overflow-hidden">
+        {/* Encabezado: Título limpio centrado sin flechas que precede a la imagen */}
+        <div className="text-center pt-8 sm:pt-9 pb-4 sm:pb-5 relative z-10 bg-[#F8FAFC]">
+          <h2 className="text-xs sm:text-sm font-extrabold tracking-[0.25em] text-[#005BB2] uppercase">
+            QUIÉNES SOMOS
+          </h2>
+        </div>
+
+        {/* Banner con la imagen del equipo que inicia estrictamente después del título */}
+        <div className="relative w-full overflow-hidden bg-slate-900 group">
+          {/* Foto grupal completa como fondo anclada arriba para que no se corten las cabezas */}
+          <div className="absolute inset-0 z-0">
+            <img
+              src={teamGroupImg}
+              alt="Equipo de consultores y asesores de MH Contabilidad en Ecuador"
+              className="w-full h-full object-cover object-center filter brightness-[0.88] transition-transform duration-700 ease-out group-hover:scale-[1.01]"
+              loading="lazy"
+              referrerPolicy="no-referrer"
+            />
+            {/* Overlay sutil para realzar la nitidez de la foto y el contenedor */}
+            <div className="absolute inset-0 bg-slate-950/40 transition-colors duration-500 group-hover:bg-slate-950/55" />
+          </div>
+
+          <div className="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pt-32 sm:pt-40 lg:pt-48 pb-6 sm:pb-8 lg:pb-10 flex justify-center items-end min-h-[420px] sm:min-h-[460px] lg:min-h-[500px]">
+            {/* Contenedor Azul Semitransparente Cuadrado: Se expande ÚNICAMENTE al pasar el mouse sobre él */}
+            <motion.div
+              layout
+              transition={{ duration: 0.35, ease: 'easeOut' }}
+              onMouseEnter={() => setIsTeamHovered(true)}
+              onMouseLeave={() => setIsTeamHovered(false)}
+              className="w-full max-w-2xl bg-[#002D5A]/85 hover:bg-[#002D5A]/95 backdrop-blur-md text-white p-6 sm:p-7 lg:p-8 rounded-none shadow-2xl border border-white/20 transition-all space-y-4 cursor-pointer"
+            >
+              {/* Frase / Convicción principal: Directa sin contenedor interior */}
+              <p className="text-white font-bold text-sm sm:text-base lg:text-[16px] leading-relaxed tracking-tight text-center sm:text-left drop-shadow-sm">
+                “Nacimos con una convicción clara: la contabilidad no debería ser un dolor de cabeza, sino la herramienta más poderosa para tu crecimiento.”
+              </p>
+
+              {/* Indicador interactivo en estado de reposo (cuando no se pasa el mouse) */}
+              {!isTeamHovered && (
+                <div className="flex items-center justify-center gap-2 pt-1 text-[11px] sm:text-xs text-sky-200/90 font-medium tracking-wide">
+                  <span>Pasa el cursor aquí para ver la información completa</span>
+                  <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
+                </div>
+              )}
+
+              {/* Contenido completo que se despliega al pasar el mouse por la imagen */}
+              <AnimatePresence>
+                {isTeamHovered && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                    className="space-y-4 overflow-hidden pt-1"
+                  >
+                    <p className="text-xs sm:text-[13px] text-slate-100 leading-relaxed font-normal">
+                      En el mundo de los negocios, detrás de cada gran idea, de cada pyme que se consolida y de cada mediana empresa que se expande, hay una realidad inevitable: los números. Sin embargo, sabemos que tú no fundaste tu negocio para pasar horas ordenando facturas, descifrando leyes fiscales complejas o preocupándote por sorpresas de última hora con los impuestos.
+                    </p>
+
+                    <p className="text-xs sm:text-[13px] text-slate-100 leading-relaxed font-normal">
+                      Somos una firma de servicios contables y fiscales diseñada específicamente para ser el respaldo de autónomos, pymes y medianas empresas. Nos alejamos del modelo del contador tradicional y distante que solo aparece a final de mes. Nos convertimos en tus aliados estratégicos cotidianos, combinando el máximo rigor técnico con un trato cercano, humano y sin tecnicismos difíciles de entender.
+                    </p>
+
+                    {/* Botones de acción completos cuadrados centrados */}
+                    <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+                      <Link
+                        to="/nosotros"
+                        className="inline-flex items-center gap-2 px-5 py-2.5 rounded-none text-xs font-bold text-white bg-[#FC6412] hover:bg-[#e05308] active:bg-[#c94703] transition-all shadow-md hover:-translate-y-0.5 whitespace-nowrap"
+                      >
+                        <span>Conocer más sobre nosotros</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+
+                      <a
+                        href={whatsappGeneralUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-none text-xs font-bold text-white bg-white/15 hover:bg-white/25 border border-white/30 transition-all shadow-xs whitespace-nowrap"
+                      >
+                        <MessageSquare className="w-3.5 h-3.5 text-white" />
+                        <span>Hablar con un asesor</span>
+                      </a>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* 3. Sección Nuestros Servicios: contenida estrictamente dentro de su propio bloque */}
+      <section className="relative isolate z-10 py-12 sm:py-16 bg-white overflow-hidden border-y border-slate-100">
+        <div className="w-full max-w-[1540px] mx-auto px-4 sm:px-6 lg:px-8">
+          {/* Encabezado visible en móvil donde el ancho de pantalla es compacto */}
+          <div className="lg:hidden text-center mb-6 space-y-2">
+            <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#005BB2] uppercase tracking-wider">
+              <Sparkles className="w-4 h-4 text-[#FC6412]" />
+              <span>Nuestros Servicios</span>
+            </div>
+            <h2 className="text-2xl font-extrabold text-[#172B3A]">
+              Soluciones Integrales para Tu Empresa
+            </h2>
+            <p className="text-xs text-[#64748B]">
+              Mantén el orden contable, blinda tu negocio y automatiza tu facturación.
+            </p>
+          </div>
+
+          <ServicesCarousel
+            centerLabel={
+              <div className="hidden lg:flex flex-col justify-center items-start text-left max-w-md ml-auto pr-4 space-y-5 pointer-events-auto">
+                <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#005BB2] uppercase tracking-wider">
+                  <Sparkles className="w-4 h-4 text-[#FC6412]" />
+                  <span>Nuestros 5 Servicios Oficiales</span>
+                </div>
+                <h2 className="text-3xl sm:text-4xl font-extrabold text-[#172B3A] tracking-tight leading-tight">
+                  Soluciones Integrales para Tu Empresa
+                </h2>
+                <p className="text-sm sm:text-base text-[#64748B] leading-relaxed">
+                  Acompañamos a autónomos, pymes y medianas empresas con orden contable riguroso, blindaje tributario y herramientas tecnológicas avanzadas.
                 </p>
 
-                {/* Fila de Botones: Pill Principal + Botón Secundario con Ícono Circular */}
-                <div className="flex flex-wrap items-center gap-4 pt-3">
-                  {/* Botón Principal (Get Started) */}
+                <div className="pt-2 flex flex-wrap items-center gap-3">
                   <Link
-                    to="/contacto"
-                    className="inline-flex items-center justify-center px-8 py-3.5 rounded-full text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] active:bg-[#c94703] transition-all shadow-md hover:shadow-lg hover:-translate-y-0.5 whitespace-nowrap"
+                    to="/servicios"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-xl text-xs font-bold text-white bg-[#005BB2] hover:bg-[#004a91] transition-all shadow-sm"
                   >
-                    <span>Solicitar asesoría</span>
+                    <span>Ver catálogo de servicios</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </Link>
-
-                  {/* Botón Secundario (Call us now!) */}
                   <a
                     href={whatsappGeneralUrl}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2.5 px-3 py-2 text-xs sm:text-sm font-semibold text-[#005BB2] hover:text-[#004a91] transition-colors group whitespace-nowrap"
+                    className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-xl text-xs font-bold text-[#172B3A] bg-slate-50 hover:bg-slate-100 border border-slate-200 transition-all shadow-2xs"
                   >
-                    <span className="w-9 h-9 rounded-full bg-blue-50 border border-blue-200/60 flex items-center justify-center text-[#005BB2] shadow-2xs group-hover:scale-105 transition-transform">
-                      <MessageSquare className="w-4 h-4 fill-[#005BB2]/20" />
-                    </span>
-                    <span>Contáctenos ahora</span>
+                    <MessageSquare className="w-3.5 h-3.5 text-[#FC6412]" />
+                    <span>Hablar con un asesor</span>
                   </a>
                 </div>
               </div>
-
-              {/* Fila de 3 Métricas con Íconos Circulares (50+ Clinics, 2K+ Doctors, 50K+ Patients) */}
-              <div className="pt-6 border-t border-slate-100 relative">
-                {/* Pequeño círculo decorativo en la base izquierda */}
-                <div className="w-9 h-9 rounded-full border-2 border-[#005BB2]/20 absolute -bottom-2 -left-2 pointer-events-none hidden sm:block" />
-
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-6 sm:gap-4 text-[#172B3A]">
-                  {/* Stat 1 */}
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-full bg-[#EBF3FA] text-[#005BB2] flex items-center justify-center shrink-0 border border-blue-100 shadow-2xs">
-                      <ShieldCheck className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <div className="text-base sm:text-lg font-extrabold text-[#172B3A] leading-tight">100%</div>
-                      <div className="text-[11px] text-[#64748B] font-medium">Cumplimiento SRI</div>
-                    </div>
-                  </div>
-
-                  {/* Stat 2 */}
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-full bg-[#EBF3FA] text-[#005BB2] flex items-center justify-center shrink-0 border border-blue-100 shadow-2xs">
-                      <FileCheck className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <div className="text-base sm:text-lg font-extrabold text-[#172B3A] leading-tight">NIIF</div>
-                      <div className="text-[11px] text-[#64748B] font-medium">Orden Contable</div>
-                    </div>
-                  </div>
-
-                  {/* Stat 3 */}
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-full bg-[#FFF0E6] text-[#FC6412] flex items-center justify-center shrink-0 border border-orange-100 shadow-2xs">
-                      <Layers className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <div className="text-base sm:text-lg font-extrabold text-[#172B3A] leading-tight">ERP</div>
-                      <div className="text-[11px] text-[#64748B] font-medium">Perseo & Sistemas</div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            {/* Columna Derecha: ÚNICA FORMA para la imagen en fondo azul corporativo con corte diagonal */}
-            <div className="lg:col-span-5 relative flex items-end justify-center min-h-[420px] sm:min-h-[480px] lg:min-h-[540px] overflow-hidden">
-              {/* Forma Azul Corporativa con Corte Diagonal (única forma del hero) */}
-              <div className="absolute inset-0 bg-[#005BB2] lg:[clip-path:polygon(14%_0,100%_0,100%_100%,0%_100%)] z-0 rounded-2xl lg:rounded-none">
-                {/* Anillos concéntricos blancos translúcidos dentro de la forma */}
-                <div className="absolute top-10 right-10 w-72 h-72 rounded-full border-2 border-white/20 pointer-events-none" />
-                <div className="absolute top-20 right-20 w-52 h-52 rounded-full border border-white/25 pointer-events-none" />
-                <div className="absolute top-36 right-36 w-28 h-28 rounded-full border border-white/30 pointer-events-none" />
-              </div>
-
-              {/* Fotografía de Jorge Hernández y Equipo Contable Integrado Sin Caja Rígida */}
-              <div className="relative z-10 w-full h-full flex items-end justify-center lg:[clip-path:polygon(14%_0,100%_0,100%_100%,0%_100%)]">
-                <img
-                  src={heroImg}
-                  alt="Asesoría contable personalizada de MH Contabilidad en Ecuador"
-                  className="w-full h-80 sm:h-96 lg:h-[500px] object-cover object-top drop-shadow-xl"
-                  loading="eager"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-
-              {/* Curva / Onda Blanca Inferior que corta la base del equipo de forma orgánica */}
-              <div className="absolute -bottom-0.5 left-0 right-0 w-full z-20 pointer-events-none">
-                <svg
-                  viewBox="0 0 1440 180"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-full h-16 sm:h-24 text-white"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M0,180 L0,80 Q720,160 1440,30 L1440,180 Z"
-                    fill="#FFFFFF"
-                  />
-                </svg>
-                {/* Pequeño círculo decorativo en la curva blanca inferior derecha (idéntico a la referencia) */}
-                <div className="absolute bottom-3 right-8 w-8 h-8 rounded-full border-2 border-[#005BB2]/30 pointer-events-none hidden sm:block" />
-              </div>
-            </div>
-
-          </div>
+            }
+          />
         </div>
       </section>
 
-      {/* 2. Sección Resumen Institucional con Enlace a Nosotros */}
-      <section className="py-20 bg-[#F3F6FA] border-y border-slate-200/70">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            <div className="lg:col-span-6 space-y-5">
-              <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#005BB2] uppercase tracking-wider">
-                <span className="w-2.5 h-0.5 bg-[#FC6412]" />
-                <span>Sobre la Firma</span>
-              </div>
-              <h2 className="text-2xl sm:text-3xl font-extrabold text-[#172B3A] tracking-tight">
-                Una relación de confianza construida con rigor y confidencialidad
-              </h2>
-              <p className="text-sm text-[#64748B] leading-relaxed">
-                Representada por <strong>Jorge Hernández</strong>, MH Contabilidad se enfoca en brindar
-                un servicio preventivo y cercano. Trabajamos con empresas, emprendedores y profesionales
-                que buscan no solo cumplir formalidades con el SRI, sino comprender sus balances para tomar
-                decisiones seguras.
-              </p>
-              <div className="pt-2">
-                <Link
-                  to="/nosotros"
-                  className="inline-flex items-center gap-2 px-5 py-3 rounded-lg text-xs font-bold text-[#005BB2] bg-white border border-slate-200 hover:bg-blue-50 hover:border-[#005BB2]/40 transition-all shadow-xs"
-                >
-                  <span>Conocer nuestra firma y valores</span>
-                  <ArrowRight className="w-4 h-4" />
-                </Link>
-              </div>
-            </div>
-
-            <div className="lg:col-span-6">
-              <div className="rounded-2xl overflow-hidden border border-slate-200/80 shadow-sm bg-white">
-                <img
-                  src={consultingTeamImg}
-                  alt="Equipo y representante Jorge Hernández en reunión con clientes"
-                  className="w-full h-72 sm:h-80 object-cover object-top"
-                  loading="lazy"
-                  referrerPolicy="no-referrer"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-      </section>
-
-      {/* 3. Carrusel Moderno de Servicios Destacados */}
-      <section className="py-20 bg-white">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="max-w-3xl mx-auto text-center space-y-3 mb-10">
-            <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#005BB2] uppercase tracking-wider">
-              <Sparkles className="w-4 h-4 text-[#FC6412]" />
-              <span>Servicios Destacados</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#172B3A] tracking-tight">
-              Portafolio Integral para su Empresa
-            </h2>
-            <p className="text-sm text-[#64748B]">
-              Explore las áreas de práctica profesional disponibles para personas naturales y sociedades en Ecuador.
-            </p>
-          </div>
-
-          {/* Carrusel interactivo responsive */}
-          <ServicesCarousel />
-        </div>
-      </section>
-
-      {/* 4. Bloque Destacado de Portal Clientes */}
+      {/* 4. Bloque Destacado de Web de Sistema */}
       <section className="py-16 bg-[#005BB2] text-white">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
             <div className="lg:col-span-8 space-y-3">
               <div className="inline-flex items-center gap-2 text-xs font-semibold text-orange-300 uppercase tracking-wider">
                 <Server className="w-4 h-4" />
-                <span>Interoperabilidad Contable</span>
+                <span>Web de Sistema</span>
               </div>
               <h2 className="text-2xl sm:text-3xl font-extrabold text-white">
-                Portal Clientes y Conectividad con Software Contable
+                Acceso a la Plataforma y Sistema Contable
               </h2>
               <p className="text-xs sm:text-sm text-blue-100 leading-relaxed max-w-2xl">
-                Facilitamos la conciliación de sus comprobantes electrónicos y el enlace con sistemas como
-                Perseo ERP para mantener su contabilidad permanentemente al día.
+                Accede directamente a la plataforma en línea para sincronizar comprobantes, consultar reportes
+                y gestionar tus operaciones comerciales en tiempo real.
               </p>
             </div>
 
-            <div className="lg:col-span-4 flex justify-start lg:justify-end">
-              <Link
-                to="/portal-clientes"
+            <div className="lg:col-span-4 flex justify-start lg:justify-end gap-3">
+              <a
+                href={siteConfig.systemUrl}
+                target="_blank"
+                rel="noopener noreferrer"
                 className="inline-flex items-center gap-2 px-6 py-3.5 rounded-lg text-xs font-bold text-[#172B3A] bg-white hover:bg-slate-100 hover:-translate-y-0.5 transition-all shadow-sm"
               >
-                <span>Acceder al Portal de Clientes</span>
-                <ArrowRight className="w-4 h-4" />
-              </Link>
+                <span>Abrir Web de Sistema</span>
+                <ExternalLink className="w-4 h-4" />
+              </a>
             </div>
           </div>
         </div>
       </section>
 
-      {/* 5. Llamada a la Acción Final hacia Contacto */}
+      {/* 5. Llamada a la Acción Final hacia WhatsApp */}
       <section className="py-20 bg-white">
         <div className="max-w-4xl mx-auto px-4 text-center space-y-6">
           <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#005BB2] uppercase tracking-wider">
             <span className="w-2.5 h-0.5 bg-[#FC6412]" />
-            <span>Atención Inmediata</span>
+            <span>Cercanía Proactiva</span>
           </div>
           <h2 className="text-2xl sm:text-4xl font-extrabold text-[#172B3A] tracking-tight">
-            ¿Listo para ordenar la contabilidad de su negocio?
+            Déjanos los números a nosotros. Concéntrate en crecer.
           </h2>
           <p className="text-sm sm:text-base text-[#64748B] leading-relaxed max-w-2xl mx-auto">
-            Comuníquese con nosotros hoy mismo. Evaluamos su estado tributario actual y le brindamos una
-            propuesta de acompañamiento integral adaptada a sus obligaciones fiscales.
+            ¿Tienes dudas con tus declaraciones, facturación electrónica o necesitas poner al día tus libros contables?
+            Escríbenos directamente y te asesoramos de forma personalizada.
           </p>
           <div className="flex flex-col sm:flex-row items-center justify-center gap-3 pt-2">
-            <Link
-              to="/contacto"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg text-sm font-semibold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 transition-all shadow-xs"
-            >
-              <span>Ir a la página de Contacto</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
-
             <a
-              href={`https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent(
-                'Hola Jorge Hernández / MH Contabilidad, quisiera agendar una asesoría contable.'
-              )}`}
+              href={whatsappGeneralUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg text-sm font-semibold text-[#005BB2] bg-blue-50/70 hover:bg-blue-100 transition-colors"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-7 py-3.5 rounded-lg text-sm font-semibold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 transition-all shadow-xs"
             >
               <MessageSquare className="w-4 h-4" />
-              <span>Chatear por WhatsApp</span>
+              <span>Chatear por WhatsApp ({siteConfig.phone.display})</span>
             </a>
+
+            <Link
+              to="/contacto"
+              className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-lg text-sm font-semibold text-[#005BB2] bg-blue-50/70 hover:bg-blue-100 transition-colors"
+            >
+              <span>Ver medios de contacto</span>
+              <ArrowRight className="w-4 h-4" />
+            </Link>
           </div>
         </div>
       </section>

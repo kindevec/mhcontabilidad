@@ -1,16 +1,24 @@
 export type ServiceCategory =
   | 'contable'
   | 'tributario'
-  | 'financiero'
-  | 'empresarial';
+  | 'consultoria'
+  | 'nomina'
+  | 'tecnologia';
+
+export interface ServiceHighlight {
+  title: string;
+  description: string;
+}
 
 export interface ServiceItem {
   id: string;
   category: ServiceCategory;
   categoryLabel: string;
   title: string;
+  tagline: string;
   description: string;
-  iconName: 'Calculator' | 'FileText' | 'TrendingUp' | 'Building2' | 'ShieldCheck' | 'Receipt' | 'PieChart' | 'Briefcase';
+  iconName: string;
+  detailedHighlights: ServiceHighlight[];
   highlights: string[];
   whatsappMessage: string;
 }
@@ -41,9 +49,9 @@ export interface PerseoQueryResponse {
 
 export interface ContactFormData {
   nombreCompleto: string;
-  email: string;
+  email?: string;
   telefono: string;
-  identificacion: string; // RUC o Cédula
+  identificacion?: string; // RUC o Cédula
   tipoConsulta: string;
   mensaje: string;
 }

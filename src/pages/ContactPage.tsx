@@ -50,21 +50,21 @@ export const ContactPage: React.FC = () => {
   const validate = (): boolean => {
     const newErrors: Partial<Record<keyof ContactFormData, string>> = {};
 
-    if (!formData.nombreCompleto.trim()) {
+    if (!formData.nombreCompleto?.trim()) {
       newErrors.nombreCompleto = 'El nombre completo es obligatorio';
     }
 
-    if (!formData.email.trim()) {
+    if (!formData.email?.trim()) {
       newErrors.email = 'El correo electrónico es obligatorio';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
       newErrors.email = 'Ingrese un correo electrónico válido';
     }
 
-    if (!formData.telefono.trim()) {
+    if (!formData.telefono?.trim()) {
       newErrors.telefono = 'El teléfono o WhatsApp de contacto es obligatorio';
     }
 
-    if (!formData.identificacion.trim()) {
+    if (!formData.identificacion?.trim()) {
       newErrors.identificacion = 'Ingrese su Cédula o RUC';
     } else {
       const docVal = validateEcuadorianDocument(formData.identificacion);
@@ -248,32 +248,50 @@ export const ContactPage: React.FC = () => {
                         <span>{siteConfig.phone.display}</span>
                         <ExternalLink className="w-3.5 h-3.5 text-slate-400" />
                       </a>
-                      <p className="text-slate-500 text-[11px]">Atención directa y envío de balances</p>
+                      <p className="text-slate-500 text-[11px]">Atención directa y personalizada con Jorge Hernández</p>
                     </div>
                   </motion.div>
 
-                  {/* Correo */}
+                  {/* Web de Sistema */}
                   <motion.div
                     whileHover={{ y: -2 }}
                     transition={{ duration: 0.2 }}
                     className="flex items-start gap-3.5 p-4 bg-white rounded-xl border border-slate-200/80 shadow-2xs"
                   >
                     <div className="p-2.5 rounded-lg bg-blue-50 text-[#005BB2] shrink-0">
-                      <Mail className="w-5 h-5" />
+                      <ExternalLink className="w-5 h-5" />
                     </div>
                     <div className="space-y-1">
                       <strong className="block text-[11px] uppercase tracking-wider text-slate-500">
-                        Correo Corporativo
+                        Web de Sistema Contable
                       </strong>
                       <a
-                        href={`mailto:${siteConfig.email.general}`}
-                        className="text-sm font-bold text-[#172B3A] hover:text-[#005BB2] transition-colors"
+                        href={siteConfig.systemUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-sm font-bold text-[#172B3A] hover:text-[#005BB2] transition-colors break-all"
                       >
-                        {siteConfig.email.general}
+                        {siteConfig.systemUrl}
                       </a>
-                      <p className="text-slate-500 text-[11px]">Recepción de estados y solicitudes</p>
+                      <p className="text-slate-500 text-[11px]">Acceso a la plataforma y facturación en línea</p>
                     </div>
                   </motion.div>
+
+                  {/* Razón Social y Representación */}
+                  <div className="flex items-start gap-3.5 p-4 bg-white rounded-xl border border-slate-200/80">
+                    <div className="p-2.5 rounded-lg bg-orange-50 text-[#FC6412] shrink-0">
+                      <ShieldCheck className="w-5 h-5" />
+                    </div>
+                    <div className="space-y-1">
+                      <strong className="block text-[11px] uppercase tracking-wider text-slate-500">
+                        Razón Social & Representación
+                      </strong>
+                      <p className="text-xs font-bold text-[#172B3A]">{siteConfig.businessEntity}</p>
+                      <p className="text-slate-600 text-xs">
+                        Representante: <span className="font-semibold">{siteConfig.representative}</span>
+                      </p>
+                    </div>
+                  </div>
 
                   {/* Cobertura */}
                   <div className="flex items-start gap-3.5 p-4 bg-white rounded-xl border border-slate-200/80">
@@ -457,7 +475,7 @@ export const ContactPage: React.FC = () => {
                         id="form-phone"
                         type="tel"
                         required
-                        placeholder="099 283 1742"
+                        placeholder="096 839 2931"
                         value={formData.telefono}
                         onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
                         className={`w-full px-3.5 py-2.5 rounded-lg border text-xs text-[#172B3A] bg-white transition-colors focus:outline-none ${
@@ -488,11 +506,11 @@ export const ContactPage: React.FC = () => {
                       onChange={(e) => setFormData({ ...formData, tipoConsulta: e.target.value })}
                       className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 bg-white text-xs font-medium text-[#172B3A] focus:outline-none focus:border-[#005BB2]"
                     >
-                      <option value="Asesoría Contable General">Asesoría Contable General</option>
-                      <option value="Declaraciones Tributarias SRI">Declaraciones Tributarias SRI (IVA / Renta)</option>
-                      <option value="Elaboración de Estados Financieros">Elaboración de Estados Financieros bajo NIIF</option>
-                      <option value="Constitución y Formalización de RUC">Constitución y Formalización de RUC</option>
-                      <option value="Integración con Sistema Perseo">Integración y Soporte Sistema Perseo</option>
+                      <option value="Contabilidad General y Orden Financiero">Contabilidad General y Orden Financiero</option>
+                      <option value="Impuestos y Blindaje Fiscal">Impuestos y Blindaje Fiscal</option>
+                      <option value="Consultoría y Estrategia de Crecimiento">Consultoría y Estrategia de Crecimiento</option>
+                      <option value="Gestión de Nómina y Soporte Laboral">Gestión de Nómina y Soporte Laboral</option>
+                      <option value="Tecnología, Facturación y Firmas Electrónicas">Tecnología, Facturación y Firmas Electrónicas</option>
                       <option value="Otro Requerimiento Personalizado">Otro Requerimiento Personalizado</option>
                     </select>
                   </div>

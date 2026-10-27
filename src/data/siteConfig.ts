@@ -1,5 +1,6 @@
 export interface SiteConfig {
   companyName: string;
+  businessEntity: string;
   tradeName: string;
   tagline: string;
   representative: string;
@@ -12,6 +13,7 @@ export interface SiteConfig {
     general: string;
     support: string;
   };
+  systemUrl: string;
   location: {
     city: string;
     country: string;
@@ -36,22 +38,24 @@ export interface SiteConfig {
 
 export const siteConfig: SiteConfig = {
   companyName: "MH Contabilidad",
+  businessEntity: "STP Industrial",
   tradeName: "MH Contabilidad – Servicios Contables y Tributarios",
-  tagline: "Rigor profesional, orden contable y cumplimiento tributario estratégico",
+  tagline: "Tu respaldo contable. Tu impulso estratégico.",
   representative: "Jorge Hernández",
   phone: {
-    display: "+593 99 283 1742",
-    international: "+593992831742",
-    whatsappNumber: "593992831742",
+    display: "+593 96 839 2931",
+    international: "+593968392931",
+    whatsappNumber: "593968392931",
   },
   email: {
-    general: "contacto@mhcontabilidad.ec",
-    support: "asesoria@mhcontabilidad.ec",
+    general: "contacto@tu-contabilidad.com",
+    support: "asesoria@tu-contabilidad.com",
   },
+  systemUrl: "https://tu-contabilidad.com/sistema",
   location: {
-    city: "Quito / Guayaquil",
-    country: "Ecuador (Cobertura Nacional)",
-    addressNote: "Atención telemática integral en todo el territorio ecuatoriano y reuniones presenciales previa cita",
+    city: "Ecuador",
+    country: "Cobertura Nacional",
+    addressNote: "Atención telemática y presencial para autónomos, pymes y medianas empresas",
   },
   schedule: {
     weekdays: "Lunes a Viernes: 08:30 – 18:00",
@@ -68,37 +72,32 @@ export const siteConfig: SiteConfig = {
       id: "nosotros",
       label: "Nosotros",
       path: "/nosotros",
-      description: "Presentación institucional, enfoque de trabajo y valores",
+      description: "Misión, visión, valores comerciales y quiénes somos",
     },
     {
       id: "servicios",
       label: "Servicios",
       path: "/servicios",
-      description: "Catálogo completo de servicios contables y tributarios",
+      description: "Servicios contables, tributarios, consultoría, nómina y facturación",
     },
     {
       id: "portal-clientes",
       label: "Portal Clientes",
       path: "/portal-clientes",
-      description: "Consultas de comprobantes, cartera y gestión digital",
+      description: "Acceso al sistema en línea y consultas",
     },
     {
       id: "contacto",
       label: "Contacto",
       path: "/contacto",
-      description: "Formulario de asesoría, ubicación y canales de comunicación",
+      description: "Canal directo de WhatsApp y atención personalizada",
     },
   ],
   socials: [
     {
       name: "WhatsApp",
-      url: "https://wa.me/593992831742",
+      url: "https://wa.me/593968392931",
       isConfirmed: true,
-    },
-    {
-      name: "LinkedIn",
-      url: "#",
-      isConfirmed: false,
     },
   ],
 };

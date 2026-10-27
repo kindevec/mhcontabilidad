@@ -48,21 +48,21 @@ export const ContactSection: React.FC = () => {
   const validate = (): boolean => {
     const newErrors: Partial<Record<keyof ContactFormData, string>> = {};
 
-    if (!formData.nombreCompleto.trim()) {
+    if (!formData.nombreCompleto?.trim()) {
       newErrors.nombreCompleto = 'El nombre completo es obligatorio';
     }
 
-    if (!formData.email.trim()) {
+    if (!formData.email?.trim()) {
       newErrors.email = 'El correo electrónico es obligatorio';
     } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(formData.email.trim())) {
       newErrors.email = 'Ingrese un correo electrónico válido';
     }
 
-    if (!formData.telefono.trim()) {
+    if (!formData.telefono?.trim()) {
       newErrors.telefono = 'El teléfono o WhatsApp de contacto es obligatorio';
     }
 
-    if (!formData.identificacion.trim()) {
+    if (!formData.identificacion?.trim()) {
       newErrors.identificacion = 'Ingrese su Cédula o RUC';
     } else {
       const docVal = validateEcuadorianDocument(formData.identificacion);
@@ -339,7 +339,7 @@ export const ContactSection: React.FC = () => {
                       id="contact-phone"
                       type="tel"
                       required
-                      placeholder="Ej. 099 283 1742"
+                      placeholder="Ej. 096 839 2931"
                       value={formData.telefono}
                       onChange={(e) => setFormData({ ...formData, telefono: e.target.value })}
                       className={`w-full px-3.5 py-2.5 rounded-lg border text-xs text-[#172B3A] bg-white transition-colors focus:outline-none ${
