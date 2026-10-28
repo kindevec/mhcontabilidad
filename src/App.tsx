@@ -13,6 +13,7 @@ const AboutPage = lazy(() => import('./pages/AboutPage').then(m => ({ default: m
 const ServicesPage = lazy(() => import('./pages/ServicesPage').then(m => ({ default: m.ServicesPage })));
 const OnlineServicesPage = lazy(() => import('./pages/OnlineServicesPage').then(m => ({ default: m.OnlineServicesPage })));
 const ContactPage = lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
+const AdminPage = lazy(() => import('./pages/AdminPage').then(m => ({ default: m.AdminPage })));
 
 const RouteLoadingFallback: React.FC = () => (
   <div className="min-h-[60vh] flex items-center justify-center bg-white" aria-hidden="true">
@@ -24,6 +25,24 @@ export default function App() {
   return (
     <BrowserRouter>
       <Routes>
+        {/* Panel Administrativo MH Contabilidad */}
+        <Route
+          path="/admin"
+          element={
+            <Suspense fallback={<RouteLoadingFallback />}>
+              <AdminPage />
+            </Suspense>
+          }
+        />
+        <Route
+          path="/admin/*"
+          element={
+            <Suspense fallback={<RouteLoadingFallback />}>
+              <AdminPage />
+            </Suspense>
+          }
+        />
+
         <Route path="/" element={<Layout />}>
           {/* Ruta 1: Inicio (Carga Inmediata para FCP / LCP óptimo) */}
           <Route index element={<HomePage />} />

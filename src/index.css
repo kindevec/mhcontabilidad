@@ -9,6 +9,7 @@
     --mh-bg-light: #F3F6FA;
     --mh-text: #172B3A;
     --mh-muted: #64748B;
+    --font-display: 'Days One', 'Poppins', sans-serif;
   }
 
   html {
@@ -53,4 +54,8 @@
 
 .animate-marquee-vertical {
   animation: marquee-vertical var(--duration, 30s) linear infinite;
+}
+
+.font-brand {
+  font-family: var(--font-display);
 }

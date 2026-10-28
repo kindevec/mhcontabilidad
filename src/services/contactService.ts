@@ -113,7 +113,7 @@ export function validateEcuadorianDocument(doc: string): {
  */
 export function buildWhatsAppUrl(data: ContactFormData): string {
   // Normalizar para erradicar tildes y caracteres conflictivos que provocan rombos en WhatsApp
-  const clean = (str: string) =>
+  const clean = (str?: string) =>
     (str || '')
       .normalize('NFD')
       .replace(/[̀-ͯ]/g, '')
