@@ -38,7 +38,7 @@ export const servicesData: ServiceItem[] = [
       'Conciliación Bancaria: cuadre exacto de facturas y cuentas',
       'Salud Financiera: balances claros de rentabilidad real',
     ],
-    whatsappMessage: 'Hola MH Contabilidad / Jorge Hernández, requiero información sobre el servicio de Contabilidad General y Orden Financiero.',
+    whatsappMessage: 'Hola MH Contabilidad / Jorge Hernandez, requiero informacion sobre el servicio de Contabilidad General y Orden Financiero.',
   },
 
   // 2. Impuestos y Blindaje Fiscal
@@ -69,7 +69,7 @@ export const servicesData: ServiceItem[] = [
       'Optimización Legal: deducciones y beneficios aplicados con rigor',
       'Respaldo ante el Fisco: atención a requerimientos y auditorías',
     ],
-    whatsappMessage: 'Hola MH Contabilidad / Jorge Hernández, requiero asesoría sobre Impuestos y Blindaje Fiscal para mi negocio.',
+    whatsappMessage: 'Hola MH Contabilidad / Jorge Hernandez, requiero asesoria sobre Impuestos y Blindaje Fiscal para mi negocio.',
   },
 
   // 3. Consultoría y Estrategia de Crecimiento
@@ -100,7 +100,7 @@ export const servicesData: ServiceItem[] = [
       'Análisis de Costos: margen real por producto y cliente',
       'Flujo de Caja: previsión de liquidez y pago de nóminas seguro',
     ],
-    whatsappMessage: 'Hola MH Contabilidad / Jorge Hernández, me interesa la Consultoría y Estrategia de Crecimiento para mi empresa.',
+    whatsappMessage: 'Hola MH Contabilidad / Jorge Hernandez, me interesa la Consultoria y Estrategia de Crecimiento para mi empresa.',
   },
 
   // 4. Gestión de Nómina y Soporte Laboral
@@ -127,7 +127,7 @@ export const servicesData: ServiceItem[] = [
       'Seguridad Social: gestión de altas, bajas y aportes obligatorios',
       'Seguridad Jurídica: cumplimiento estricto de la normativa laboral',
     ],
-    whatsappMessage: 'Hola MH Contabilidad / Jorge Hernández, necesito soporte en Gestión de Nómina y Administración Laboral.',
+    whatsappMessage: 'Hola MH Contabilidad / Jorge Hernandez, necesito soporte en Gestion de Nomina y Administracion Laboral.',
   },
 
   // 5. Tecnología, Facturación y Firmas Electrónicas
@@ -158,6 +158,6 @@ export const servicesData: ServiceItem[] = [
       'Integración con software contable y sincronización de ventas',
       'Emisión inmediata de Firmas Electrónicas (archivo o token)',
     ],
-    whatsappMessage: 'Hola MH Contabilidad / Jorge Hernández, solicito información sobre Facturación Electrónica y Firma Electrónica.',
+    whatsappMessage: 'Hola MH Contabilidad / Jorge Hernandez, solicito informacion sobre Facturacion Electronica y Firma Electronica.',
   },
 ];

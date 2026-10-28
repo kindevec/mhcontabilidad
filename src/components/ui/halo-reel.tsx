@@ -10,7 +10,7 @@ import {
   type MotionValue,
 } from "framer-motion";
 import { ChevronLeft, ChevronRight, MessageSquare, ArrowRight } from "lucide-react";
-import { cn } from "@/lib/utils";
+import { cn } from "../../lib/utils";
 
 /* ── Halo Reel ───────────────────────────────────────────────────
  * Cards ride an ellipse. Card i sits at θ = i·step + rotation on an
@@ -395,11 +395,11 @@ function WheelCard({
   );
   const zIndex = useTransform(scale, (s) => Math.round(s * 25) + 1);
 
-  // Órbita: se aprecian con total claridad 4 tarjetas a lo largo del arco frontal visible.
-  // Las demás tarjetas en la parte posterior desvanecen suavemente a opacidad 0 y salen sucesivamente.
+  // Órbita circular: cuatro tarjetas visibles en el arco frontal manteniendo la distancia y holgura.
+  // Las tarjetas que rotan hacia atrás se desvanecen suavemente a opacidad 0 y vuelven a ingresar por el otro extremo.
   const opacity = useTransform(cos, (c) => {
-    if (c < -0.35) return 0;
-    if (c < -0.05) return (c + 0.35) / 0.30;
+    if (c <= -0.45) return 0;
+    if (c < -0.15) return (c + 0.45) / 0.30;
     return 1;
   });
   const pointerEvents = useTransform(opacity, (o) => (o < 0.2 ? "none" : "auto"));

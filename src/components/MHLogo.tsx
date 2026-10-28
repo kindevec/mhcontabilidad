@@ -1,5 +1,5 @@
 import React from 'react';
-import officialLogo from '../assets/images/mh_logo_official.png';
+import officialLogo from '../assets/images/mh_logo_official.webp';
 
 interface MHLogoProps {
   variant?: 'full' | 'compact' | 'light';

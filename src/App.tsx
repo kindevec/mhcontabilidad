@@ -3,35 +3,71 @@
  * SPDX-License-Identifier: Apache-2.0
  */
 
-import React from 'react';
+import React, { lazy, Suspense } from 'react';
 import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
 import { Layout } from './components/Layout';
 import { HomePage } from './pages/HomePage';
-import { AboutPage } from './pages/AboutPage';
-import { ServicesPage } from './pages/ServicesPage';
-import { OnlineServicesPage } from './pages/OnlineServicesPage';
-import { ContactPage } from './pages/ContactPage';
+
+// Code splitting con React.lazy para rutas secundarias
+const AboutPage = lazy(() => import('./pages/AboutPage').then(m => ({ default: m.AboutPage })));
+const ServicesPage = lazy(() => import('./pages/ServicesPage').then(m => ({ default: m.ServicesPage })));
+const OnlineServicesPage = lazy(() => import('./pages/OnlineServicesPage').then(m => ({ default: m.OnlineServicesPage })));
+const ContactPage = lazy(() => import('./pages/ContactPage').then(m => ({ default: m.ContactPage })));
+
+const RouteLoadingFallback: React.FC = () => (
+  <div className="min-h-[60vh] flex items-center justify-center bg-white" aria-hidden="true">
+    <div className="w-8 h-8 rounded-full border-3 border-[#005BB2]/20 border-t-[#005BB2] animate-spin" />
+  </div>
+);
 
 export default function App() {
   return (
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<Layout />}>
-          {/* Ruta 1: Inicio */}
+          {/* Ruta 1: Inicio (Carga Inmediata para FCP / LCP óptimo) */}
           <Route index element={<HomePage />} />
 
-          {/* Ruta 2: Nosotros */}
-          <Route path="nosotros" element={<AboutPage />} />
+          {/* Ruta 2: Nosotros (Diferido) */}
+          <Route
+            path="nosotros"
+            element={
+              <Suspense fallback={<RouteLoadingFallback />}>
+                <AboutPage />
+              </Suspense>
+            }
+          />
 
-          {/* Ruta 3: Servicios */}
-          <Route path="servicios" element={<ServicesPage />} />
+          {/* Ruta 3: Servicios (Diferido) */}
+          <Route
+            path="servicios"
+            element={
+              <Suspense fallback={<RouteLoadingFallback />}>
+                <ServicesPage />
+              </Suspense>
+            }
+          />
 
-          {/* Ruta 4: Portal Clientes (Consultas y Conectividad) */}
-          <Route path="portal-clientes" element={<OnlineServicesPage />} />
+          {/* Ruta 4: Portal Clientes (Diferido) */}
+          <Route
+            path="portal-clientes"
+            element={
+              <Suspense fallback={<RouteLoadingFallback />}>
+                <OnlineServicesPage />
+              </Suspense>
+            }
+          />
           <Route path="servicios-en-linea" element={<Navigate to="/portal-clientes" replace />} />
 
-          {/* Ruta 5: Contacto */}
-          <Route path="contacto" element={<ContactPage />} />
+          {/* Ruta 5: Contacto (Diferido) */}
+          <Route
+            path="contacto"
+            element={
+              <Suspense fallback={<RouteLoadingFallback />}>
+                <ContactPage />
+              </Suspense>
+            }
+          />
 
           {/* Redirección de rutas no encontradas a inicio */}
           <Route path="*" element={<Navigate to="/" replace />} />

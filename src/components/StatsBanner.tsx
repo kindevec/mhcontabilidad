@@ -4,9 +4,7 @@ import { ArrowRight, MessageSquare, ShieldCheck, FileSpreadsheet, Cpu, TrendingU
 import { siteConfig } from '../data/siteConfig';
 
 export const StatsBanner: React.FC = () => {
-  const whatsappUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent(
-    'Hola Jorge Hernández / MH Contabilidad, requiero agendar una asesoría contable y tributaria para mi negocio.'
-  )}`;
+  const whatsappUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Jorge Hernandez / MH Contabilidad, requiero agendar una asesoria contable y tributaria para mi negocio.')}`;
 
   return (
     <section className="w-full bg-[#005BB2] border-b border-blue-950/20 shadow-xs relative z-20 overflow-hidden text-white">

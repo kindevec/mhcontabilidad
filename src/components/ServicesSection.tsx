@@ -154,9 +154,7 @@ export const ServicesSection: React.FC = () => {
           <p className="text-xs text-[#64748B]">
             ¿Tienes un requerimiento contable específico para tu actividad o empresa?{' '}
             <a
-              href={`https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent(
-                'Hola Jorge Hernández / MH Contabilidad, quisiera consultar por una propuesta personalizada de servicios.'
-              )}`}
+              href={`https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Jorge Hernandez / MH Contabilidad, quisiera consultar por una propuesta personalizada de servicios.')}`}
               target="_blank"
               rel="noopener noreferrer"
               className="text-[#005BB2] font-semibold hover:underline"

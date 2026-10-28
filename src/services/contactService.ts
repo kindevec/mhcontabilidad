@@ -112,29 +112,34 @@ export function validateEcuadorianDocument(doc: string): {
  * Genera el enlace seguro de WhatsApp con el mensaje estructurado de la consulta
  */
 export function buildWhatsAppUrl(data: ContactFormData): string {
+  // Normalizar para erradicar tildes y caracteres conflictivos que provocan rombos en WhatsApp
+  const clean = (str: string) =>
+    (str || '')
+      .normalize('NFD')
+      .replace(/[̀-ͯ]/g, '')
+      .replace(/[^a-zA-Z0-9\s.,;:()#/-]/g, '')
+      .trim();
+
   const lineBreak = '\n';
   const text = [
-    `*NUEVA CONSULTA - MH CONTABILIDAD*`,
-    `--------------------------------`,
-    `*Cliente:* ${data.nombreCompleto}`,
-    `*Identificación / RUC:* ${data.identificacion}`,
-    `*Email:* ${data.email}`,
-    `*Teléfono:* ${data.telefono}`,
-    `*Tipo de consulta:* ${data.tipoConsulta}`,
-    `--------------------------------`,
-    `*Mensaje:*`,
-    `${data.mensaje}`,
-    `--------------------------------`,
-    `_Enviado desde el portal web oficial de MH Contabilidad_`,
+    '*NUEVA CONSULTA - MH CONTABILIDAD*',
+    '--------------------------------',
+    `*Cliente:* ${clean(data.nombreCompleto)}`,
+    `*Identificacion / RUC:* ${clean(data.identificacion)}`,
+    `*Email:* ${clean(data.email)}`,
+    `*Telefono:* ${clean(data.telefono)}`,
+    `*Tipo de consulta:* ${clean(data.tipoConsulta)}`,
+    '--------------------------------',
+    '*Mensaje:*',
+    clean(data.mensaje),
+    '--------------------------------',
+    '_Enviado desde el portal web oficial de MH Contabilidad_',
   ].join(lineBreak);
 
   const encoded = encodeURIComponent(text);
   return `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encoded}`;
 }
 
-/**
- * Procesa el envío del formulario registrando localmente y devolviendo la URL de WhatsApp
- */
 export async function submitContactForm(data: ContactFormData): Promise<ContactFormResult> {
   const whatsappUrl = buildWhatsAppUrl(data);
   const folio = `MH-${Date.now().toString().slice(-6)}`;

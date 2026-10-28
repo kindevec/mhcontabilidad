@@ -1,60 +1,37 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { serviceCategories, servicesData } from '../data/services';
+import { servicesData } from '../data/services';
 import { siteConfig } from '../data/siteConfig';
-import { ServiceItem } from '../types';
 import {
   Calculator,
-  FileText,
-  TrendingUp,
-  Building2,
-  ShieldCheck,
   Receipt,
-  PieChart,
-  Briefcase,
-  MessageSquare,
-  Check,
-  HelpCircle,
-  ArrowRight,
-  Users,
-  Laptop,
+  TrendingUp,
+  Plus,
 } from 'lucide-react';
-import { motion, AnimatePresence } from 'motion/react';
-import heroImg from '../assets/images/hero_contabilidad_asesoria_1792699795005.jpg';
+import { PageHero } from '../components/PageHero';
+import { ServiceCard } from '../components/ui/card-7';
+import heroImg from '../assets/images/hero_contabilidad_asesoria_1792699795005.webp';
+import contabilidadImg from '../assets/images/hero_contabilidad_asesoria_1792699795005.webp';
+import fiscalImg from '../assets/images/corporate_consulting_team_1792700513952.webp';
+import consultoriaImg from '../assets/images/hero_financial_advisor_skyline.webp';
+import nominaImg from '../assets/images/equipo_mh_contabilidad.webp';
+import tecnologiaImg from '../assets/images/digital_fintech_portal_1792700528199.webp';
 
 export const ServicesPage: React.FC = () => {
-  const [selectedCategory, setSelectedCategory] = useState<string>('all');
-
-  const filteredServices =
-    selectedCategory === 'all'
-      ? servicesData
-      : servicesData.filter((s) => s.category === selectedCategory);
-
-  const getServiceIcon = (iconName: ServiceItem['iconName']) => {
-    const props = { className: 'w-6 h-6 text-[#005BB2]' };
-    switch (iconName) {
-      case 'Calculator':
-        return <Calculator {...props} />;
-      case 'FileText':
-        return <FileText {...props} />;
-      case 'TrendingUp':
-        return <TrendingUp {...props} />;
-      case 'Building2':
-        return <Building2 {...props} />;
-      case 'ShieldCheck':
-        return <ShieldCheck {...props} />;
-      case 'Receipt':
-        return <Receipt {...props} />;
-      case 'PieChart':
-        return <PieChart {...props} />;
-      case 'Briefcase':
-        return <Briefcase {...props} />;
-      case 'Users':
-        return <Users {...props} />;
-      case 'Laptop':
-        return <Laptop {...props} />;
+  const getServiceImage = (serviceId: string) => {
+    switch (serviceId) {
+      case 'contabilidad-general':
+        return contabilidadImg;
+      case 'impuestos-blindaje-fiscal':
+        return fiscalImg;
+      case 'consultoria-estrategia':
+        return consultoriaImg;
+      case 'gestion-nomina-laboral':
+        return nominaImg;
+      case 'tecnologia-facturacion-firmas':
+        return tecnologiaImg;
       default:
-        return <Calculator {...props} />;
+        return contabilidadImg;
     }
   };
 
@@ -62,283 +39,171 @@ export const ServicesPage: React.FC = () => {
     return `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent(message)}`;
   };
 
+  const [openIndices, setOpenIndices] = useState<number[]>([]);
+
+  const toggleFaq = (idx: number) => {
+    setOpenIndices((prev) =>
+      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
+    );
+  };
+
+  const faqItems = [
+    {
+      question: '¿Quiénes están obligados a llevar contabilidad en Ecuador?',
+      answer:
+        'De acuerdo a la Ley de Régimen Tributario Interno, están obligadas a llevar contabilidad todas las sociedades y las personas naturales que operen con un capital propio superior a $180,000, tengan ingresos brutos anuales superiores a $300,000 o costos y gastos anuales superiores a $240,000.',
+    },
+    {
+      question: '¿Cómo funciona el régimen RIMPE (Negocio Popular vs. Emprendedor)?',
+      answer:
+        'El RIMPE Negocio Popular aplica a personas naturales con ingresos anuales de hasta $20,000. El RIMPE Emprendedor aplica a personas y sociedades con ingresos entre $20,001 y $300,000. En MH Contabilidad le ayudamos a clasificar correctamente sus actividades para aplicar las tarifas y retenciones correctas.',
+    },
+    {
+      question: '¿Qué necesito para migrar mi contabilidad a MH Contabilidad?',
+      answer:
+        'Únicamente necesitamos su clave del SRI en Línea, los últimos estados financieros o declaraciones presentadas y sus comprobantes electrónicos. Nosotros nos encargamos de la revisión, conciliación de saldos y continuidad ordenada sin fricciones.',
+    },
+    {
+      question: '¿Cómo emito y gestiono mis facturas electrónicas con su servicio?',
+      answer:
+        'Le asesoramos en la obtención de su Firma Electrónica con validez legal y dejamos configurado el software contable en la nube (incluyendo sincronización con Perseo) para que emita comprobantes en segundos desde su computadora o celular.',
+    },
+    {
+      question: '¿Cómo evitan multas o sanciones con el SRI?',
+      answer:
+        'Monitoreamos permanentemente su calendario fiscal según su noveno dígito de RUC, realizamos revisiones previas a cada declaración mensual/semestral y aplicamos un blindaje preventivo para evitar omisiones o inconsistencias formales.',
+    },
+    {
+      question: '¿Ofrecen atención presencial o asesoría remota en todo Ecuador?',
+      answer:
+        'Brindamos ambas modalidades: atención presencial y reuniones ejecutivas en nuestras sedes de Quito y Guayaquil, además de cobertura contable 100% digital y en tiempo real para clientes en todas las provincias del país.',
+    },
+  ];
+
   return (
     <div className="space-y-0">
-      {/* 1. Encabezado de Servicios sin contenedores: única forma para la imagen derecha */}
-      <section className="relative pt-28 pb-16 lg:pt-32 lg:pb-20 overflow-hidden bg-white border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[460px] items-center relative">
-            
-            {/* Columna Izquierda: Información de Servicios */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              className="lg:col-span-7 py-6 sm:py-8 lg:py-10 flex flex-col justify-between space-y-6 z-10 relative"
-            >
-              <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#005BB2] uppercase tracking-wider">
-                  <span className="w-2.5 h-0.5 bg-[#FC6412]" />
-                  <span>Catálogo Profesional</span>
-                  <span aria-hidden="true" className="text-slate-300">·</span>
-                  <span>MH Contabilidad</span>
-                </div>
-
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#172B3A] tracking-tight leading-[1.15]">
-                  Servicios Contables, Tributarios y Financieros
-                </h1>
-
-                <p className="text-base sm:text-lg text-[#64748B] leading-relaxed max-w-xl">
-                  Soluciones integrales diseñadas para garantizar el estricto cumplimiento tributario ante el
-                  SRI y proporcionar orden contable y financiero a empresas y profesionales independientes en Ecuador.
-                </p>
+      {/* 1. Encabezado de Servicios estilo Inicio */}
+      <PageHero
+        titleLine1="Servicios Contables y Tributarios"
+        titleHighlight="Soluciones Integrales para tu Negocio"
+        description="Garantizamos el estricto cumplimiento tributario ante el SRI y proporcionamos orden contable y financiero a empresas y autónomos en Ecuador."
+        image={heroImg}
+        imageAlt="Servicios contables y tributarios profesionales en Ecuador"
+      >
+        {/* Badges de Especialidades */}
+        <div className="pt-4 border-t border-slate-700/60">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-white/10 text-[#38BDF8] flex items-center justify-center shrink-0 border border-white/10">
+                <Calculator className="w-4 h-4" />
               </div>
-
-              {/* Badges de Especialidades */}
-              <div className="pt-6 border-t border-slate-100">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 text-xs text-[#172B3A]">
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-full bg-[#EBF3FA] text-[#005BB2] flex items-center justify-center shrink-0 border border-blue-100">
-                      <Calculator className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <strong className="block font-bold text-[#172B3A] text-xs sm:text-[13px]">Contabilidad</strong>
-                      <span className="text-slate-500 text-[11px]">NIIF & Balances</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-full bg-[#EBF3FA] text-[#005BB2] flex items-center justify-center shrink-0 border border-blue-100">
-                      <Receipt className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <strong className="block font-bold text-[#172B3A] text-xs sm:text-[13px]">Tributación SRI</strong>
-                      <span className="text-slate-500 text-[11px]">Declaraciones & Anexos</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-full bg-[#FFF0E6] text-[#FC6412] flex items-center justify-center shrink-0 border border-orange-100">
-                      <TrendingUp className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <strong className="block font-bold text-[#172B3A] text-xs sm:text-[13px]">Finanzas</strong>
-                      <span className="text-slate-500 text-[11px]">Control Estratégico</span>
-                    </div>
-                  </div>
-                </div>
+              <div>
+                <strong className="block font-bold text-white text-xs leading-tight">Contabilidad</strong>
+                <span className="text-slate-400 text-[10px]">NIIF & Balances</span>
               </div>
-            </motion.div>
+            </div>
 
-            {/* Columna Derecha: ÚNICA FORMA azul para la imagen con corte diagonal */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.55, delay: 0.1 }}
-              className="lg:col-span-5 relative flex items-end justify-center min-h-[360px] sm:min-h-[420px] lg:min-h-[460px] overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-[#005BB2] lg:[clip-path:polygon(14%_0,100%_0,100%_100%,0%_100%)] z-0 rounded-2xl lg:rounded-none">
-                <div className="absolute top-8 right-8 w-60 h-60 rounded-full border-2 border-white/20 pointer-events-none" />
-                <div className="absolute top-16 right-16 w-40 h-40 rounded-full border border-white/25 pointer-events-none" />
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-white/10 text-[#38BDF8] flex items-center justify-center shrink-0 border border-white/10">
+                <Receipt className="w-4 h-4" />
               </div>
-
-              <div className="relative z-10 w-full h-full flex items-end justify-center lg:[clip-path:polygon(14%_0,100%_0,100%_100%,0%_100%)]">
-                <img
-                  src={heroImg}
-                  alt="Servicios contables y tributarios profesionales en Ecuador"
-                  className="w-full h-72 sm:h-80 lg:h-[420px] object-cover object-top drop-shadow-xl"
-                  loading="lazy"
-                  referrerPolicy="no-referrer"
-                />
+              <div>
+                <strong className="block font-bold text-white text-xs leading-tight">Tributación SRI</strong>
+                <span className="text-slate-400 text-[10px]">Declaraciones & Anexos</span>
               </div>
+            </div>
 
-              {/* Curva / Onda Blanca Inferior */}
-              <div className="absolute -bottom-0.5 left-0 right-0 w-full z-20 pointer-events-none">
-                <svg
-                  viewBox="0 0 1440 180"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-full h-14 sm:h-20 text-white"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M0,180 L0,80 Q720,160 1440,30 L1440,180 Z"
-                    fill="#FFFFFF"
-                  />
-                </svg>
-                <div className="absolute bottom-2 right-8 w-7 h-7 rounded-full border-2 border-[#005BB2]/30 pointer-events-none hidden sm:block" />
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-[#FC6412]/20 text-[#FC6412] flex items-center justify-center shrink-0 border border-[#FC6412]/30">
+                <TrendingUp className="w-4 h-4" />
               </div>
-            </motion.div>
-
+              <div>
+                <strong className="block font-bold text-white text-xs leading-tight">Finanzas</strong>
+                <span className="text-slate-400 text-[10px]">Control Estratégico</span>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </PageHero>
 
-      {/* 2. Catálogo Interactivo con Pestañas y Animación */}
-      <section className="py-16 bg-white">
+      {/* 2. Catálogo Oficial de Servicios (Tarjetas con Hover Deslizante estilo Card-7) */}
+      <section className="py-16 sm:py-20 bg-[#F8FAFC]">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          {/* Barra de Filtros */}
-          <div className="flex flex-wrap items-center justify-center gap-2 mb-12" role="tablist">
-            {serviceCategories.map((cat) => {
-              const isActive = selectedCategory === cat.id;
+          
+          <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
+            <h2 className="text-3xl sm:text-4xl font-extrabold text-[#172B3A] tracking-tight">
+              Nuestros Servicios
+            </h2>
+          </div>
+
+          {/* Tarjetas Centradas (3 en primera fila, 2 en segunda fila centradas) */}
+          <div className="flex flex-wrap justify-center gap-7">
+            {servicesData.map((service) => {
+              const waUrl = createWhatsAppUrl(service.whatsappMessage);
+              const serviceImg = getServiceImage(service.id);
               return (
-                <button
-                  key={cat.id}
-                  role="tab"
-                  aria-selected={isActive}
-                  onClick={() => setSelectedCategory(cat.id)}
-                  className={`px-4 py-2.5 rounded-lg text-xs font-semibold whitespace-nowrap transition-all duration-150 focus:outline-none focus-visible:ring-2 focus-visible:ring-[#005BB2] ${
-                    isActive
-                      ? 'bg-[#005BB2] text-white shadow-xs'
-                      : 'bg-slate-100 text-[#172B3A] hover:bg-slate-200/80'
-                  }`}
-                >
-                  {cat.label}
-                </button>
+                <div key={service.id} className="w-full sm:w-[350px] lg:w-[370px] flex justify-center">
+                  <ServiceCard
+                    imageUrl={serviceImg}
+                    imageAlt={service.title}
+                    title={service.title}
+                    tagline={service.tagline}
+                    highlights={service.highlights}
+                    whatsappUrl={waUrl}
+                  />
+                </div>
               );
             })}
           </div>
 
-          {/* Grilla de Tarjetas con Transiciones Fluidas */}
-          <motion.div
-            layout
-            className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 gap-6"
-          >
-            <AnimatePresence mode="popLayout">
-              {filteredServices.map((service) => {
-                const waUrl = createWhatsAppUrl(service.whatsappMessage);
-                return (
-                  <motion.div
-                    key={service.id}
-                    layout
-                    initial={{ opacity: 0, scale: 0.98 }}
-                    animate={{ opacity: 1, scale: 1 }}
-                    exit={{ opacity: 0, scale: 0.98 }}
-                    transition={{ duration: 0.25 }}
-                    whileHover={{ y: -4 }}
-                    className="group flex flex-col justify-between bg-white rounded-2xl border border-slate-200/90 p-6 sm:p-8 hover:border-[#005BB2]/50 hover:shadow-lg transition-all duration-300 text-left"
-                  >
-                    <div className="space-y-4">
-                      <div className="flex items-center justify-between">
-                        <div className="p-3 rounded-xl bg-blue-50/80 group-hover:bg-[#005BB2] text-[#005BB2] group-hover:text-white transition-colors duration-200">
-                          {getServiceIcon(service.iconName)}
-                        </div>
-                        <span className="text-[11px] font-semibold text-slate-500 uppercase tracking-wider">
-                          {service.categoryLabel}
-                        </span>
-                      </div>
-
-                      <div>
-                        <h3 className="text-xl font-bold text-[#172B3A] group-hover:text-[#005BB2] transition-colors">
-                          {service.title}
-                        </h3>
-                        <p className="text-xs font-semibold text-[#FC6412] mt-1 italic">
-                          "{service.tagline}"
-                        </p>
-                        <p className="text-sm text-[#64748B] leading-relaxed mt-2">
-                          {service.description}
-                        </p>
-                      </div>
-
-                      {/* Entregables y puntos clave del PDF */}
-                      <div className="space-y-3 pt-3 border-t border-slate-100 text-xs">
-                        {service.detailedHighlights?.map((item, idx) => (
-                          <div key={idx} className="flex items-start gap-2.5">
-                            <Check className="w-4 h-4 text-[#FC6412] shrink-0 mt-0.5" />
-                            <div>
-                              <strong className="font-semibold text-[#172B3A]">{item.title}: </strong>
-                              <span className="text-slate-600 leading-relaxed">{item.description}</span>
-                            </div>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-
-                    {/* Acciones */}
-                    <div className="pt-6 mt-4 border-t border-slate-100 flex items-center justify-between gap-3">
-                      <a
-                        href={waUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="inline-flex items-center justify-center gap-2 w-full sm:w-auto px-5 py-2.5 rounded-lg text-xs font-semibold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 transition-all shadow-2xs"
-                      >
-                        <MessageSquare className="w-4 h-4" />
-                        <span>Consultar por WhatsApp</span>
-                      </a>
-
-                      <Link
-                        to="/contacto"
-                        className="hidden sm:inline-flex items-center text-xs font-semibold text-[#005BB2] hover:underline"
-                      >
-                        <span>Formulario formal →</span>
-                      </Link>
-                    </div>
-                  </motion.div>
-                );
-              })}
-            </AnimatePresence>
-          </motion.div>
         </div>
       </section>
 
       {/* 3. Preguntas Frecuentes Contables y Tributarias de Ecuador */}
-      <section className="py-16 bg-[#F3F6FA] border-t border-slate-200/80">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-          <div className="text-center space-y-3">
-            <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#005BB2] uppercase tracking-wider">
-              <HelpCircle className="w-4 h-4" />
-              <span>Dudas Frecuentes</span>
-            </div>
-            <h2 className="text-2xl sm:text-3xl font-extrabold text-[#172B3A]">
+      <section className="py-16 sm:py-20 bg-white border-t border-slate-100">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+          <div className="text-center space-y-2">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#172B3A] tracking-tight">
               Preguntas Frecuentes sobre la Gestión Contable
             </h2>
+            <p className="text-sm text-[#64748B] max-w-xl mx-auto">
+              Respuestas directas a las consultas más habituales de autónomos, pymes y empresas en Ecuador.
+            </p>
           </div>
 
-          <div className="space-y-4">
-            <div className="p-6 rounded-2xl bg-white border border-slate-200 space-y-2">
-              <h3 className="text-sm font-bold text-[#172B3A]">
-                ¿Quiénes están obligados a llevar contabilidad en Ecuador?
-              </h3>
-              <p className="text-xs text-[#64748B] leading-relaxed">
-                De acuerdo a la Ley de Régimen Tributario Interno, están obligadas a llevar contabilidad todas
-                las sociedades y las personas naturales que operen con un capital propio superior a $180,000,
-                tengan ingresos brutos anuales superiores a $300,000 o costos y gastos anuales superiores a $240,000.
-              </p>
-            </div>
+          {/* Rejilla de 2 columnas con la paleta oficial MH (#005BB2 y #FC6412) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+            {faqItems.map((faq, idx) => {
+              const isOpen = openIndices.includes(idx);
+              return (
+                <div
+                  key={idx}
+                  onClick={() => toggleFaq(idx)}
+                  className="bg-[#005BB2] hover:bg-[#004e9a] text-white rounded-2xl p-4 sm:p-5 flex flex-col justify-center cursor-pointer select-none border border-blue-600/40 shadow-sm transition-all duration-200 group"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <h3 className="text-sm sm:text-[15px] font-bold text-white text-left leading-snug">
+                      {faq.question}
+                    </h3>
+                    <div
+                      className={`w-7 h-7 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#FC6412] transition-transform duration-200 ${
+                        isOpen ? 'rotate-45' : 'rotate-0'
+                      }`}
+                    >
+                      <Plus className="w-5 h-5 stroke-[2.5]" />
+                    </div>
+                  </div>
 
-            <div className="p-6 rounded-2xl bg-white border border-slate-200 space-y-2">
-              <h3 className="text-sm font-bold text-[#172B3A]">
-                ¿Cómo funciona el régimen RIMPE (Negocio Popular vs. Emprendedor)?
-              </h3>
-              <p className="text-xs text-[#64748B] leading-relaxed">
-                El RIMPE Negocio Popular aplica a personas naturales con ingresos brutos de hasta $20,000 anuales.
-                El RIMPE Emprendedor aplica a personas y sociedades con ingresos entre $20,001 y $300,000 anuales.
-                En MH Contabilidad le ayudamos a clasificar correctamente sus actividades para aplicar las tarifas
-                impositivas y retenciones correctas.
-              </p>
-            </div>
-
-            <div className="p-6 rounded-2xl bg-white border border-slate-200 space-y-2">
-              <h3 className="text-sm font-bold text-[#172B3A]">
-                ¿Qué necesito para migrar mi contabilidad a MH Contabilidad?
-              </h3>
-              <p className="text-xs text-[#64748B] leading-relaxed">
-                Únicamente necesitamos su clave de acceso al SRI en Línea, los últimos estados financieros o
-                declaraciones presentadas, y su archivo de comprobantes electrónicos. Nosotros nos encargamos de
-                la revisión, conciliación de saldos y continuidad ordenada.
-              </p>
-            </div>
-          </div>
-
-          {/* Banner de Llamada a Contacto */}
-          <div className="text-center pt-4">
-            <Link
-              to="/contacto"
-              className="inline-flex items-center gap-2 px-6 py-3 rounded-lg text-xs font-bold text-white bg-[#005BB2] hover:bg-[#004a91] hover:-translate-y-0.5 transition-all shadow-xs"
-            >
-              <span>Solicitar cotización personalizada de servicios</span>
-              <ArrowRight className="w-4 h-4" />
-            </Link>
+                  {isOpen && (
+                    <div className="pt-3 mt-2.5 border-t border-white/20 text-left">
+                      <p className="text-xs sm:text-[13px] text-blue-100 leading-relaxed font-normal">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

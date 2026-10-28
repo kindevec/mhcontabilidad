@@ -4,17 +4,18 @@ import {
   Search,
   CheckCircle2,
   Receipt,
-  MessageSquare,
   HelpCircle,
   Clock,
   Sparkles,
   PhoneCall,
   Laptop,
 } from 'lucide-react';
+import { WhatsAppIcon } from '../components/WhatsAppIcon';
 import { siteConfig } from '../data/siteConfig';
 import { motion } from 'motion/react';
+import { PageHero } from '../components/PageHero';
 import { validateEcuadorianDocument } from '../services/contactService';
-import digitalPortalImg from '../assets/images/digital_fintech_portal_1792700528199.jpg';
+import digitalPortalImg from '../assets/images/digital_fintech_portal_1792700528199.webp';
 
 export const OnlineServicesPage: React.FC = () => {
   const [docType, setDocType] = useState<'RUC' | 'CEDULA' | 'PASAPORTE'>('RUC');
@@ -72,124 +73,54 @@ export const OnlineServicesPage: React.FC = () => {
   };
 
   const waClientUrl = searchFeedback
-    ? `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent(
-        `Hola Jorge Hernández / MH Contabilidad, requiero asistencia y reporte de ${searchFeedback.queryLabel} para la identificación ${searchFeedback.docNumber}.`
-      )}`
-    : `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent(
-        'Hola Jorge Hernández / MH Contabilidad, quisiera consultar información sobre mis reportes contables en línea.'
-      )}`;
+    ? `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent(`Hola Jorge Hernandez / MH Contabilidad, requiero asistencia y reporte de ${searchFeedback.queryLabel} para la identificacion ${searchFeedback.docNumber}.`)}`
+    : `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Jorge Hernandez / MH Contabilidad, quisiera consultar informacion sobre mis reportes contables en linea.')}`;
 
   return (
     <div className="space-y-0">
-      {/* 1. Encabezado de Portal Clientes sin contenedores: única forma para la imagen derecha */}
-      <section className="relative pt-28 pb-16 lg:pt-32 lg:pb-20 overflow-hidden bg-white border-b border-slate-100">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 min-h-[460px] items-center relative">
-            
-            {/* Columna Izquierda: Información Portal Clientes */}
-            <motion.div
-              initial={{ opacity: 0, x: -20 }}
-              animate={{ opacity: 1, x: 0 }}
-              transition={{ duration: 0.5 }}
-              className="lg:col-span-7 py-6 sm:py-8 lg:py-10 flex flex-col justify-between space-y-6 z-10 relative"
-            >
-              <div className="space-y-4">
-                <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#005BB2] uppercase tracking-wider">
-                  <span className="w-2.5 h-0.5 bg-[#FC6412]" />
-                  <span>Portal de Clientes</span>
-                  <span aria-hidden="true" className="text-slate-300">·</span>
-                  <span>MH Contabilidad</span>
-                </div>
-
-                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-extrabold text-[#172B3A] tracking-tight leading-[1.15]">
-                  Portal Clientes: Consultas y Conectividad Digital
-                </h1>
-
-                <p className="text-base sm:text-lg text-[#64748B] leading-relaxed max-w-xl">
-                  En MH Contabilidad combinamos asesoría personalizada con herramientas tecnológicas modernas.
-                  Consulte la información de sus estados de cuenta, comprobantes y reportes contables con agilidad.
-                </p>
+      {/* 1. Encabezado de Portal Clientes estilo Inicio */}
+      <PageHero
+        titleLine1="Portal Clientes"
+        titleHighlight="Consultas y Conectividad Digital"
+        description="En MH Contabilidad combinamos asesoría personalizada con herramientas tecnológicas modernas. Consulte la información de sus estados de cuenta, comprobantes y reportes contables con agilidad."
+        image={digitalPortalImg}
+        imageAlt="Plataforma de contabilidad digital y reportes financieros de MH Contabilidad"
+      >
+        {/* Badges de Conectividad */}
+        <div className="pt-4 border-t border-slate-700/60">
+          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-white/10 text-[#38BDF8] flex items-center justify-center shrink-0 border border-white/10">
+                <Receipt className="w-4 h-4" />
               </div>
-
-              {/* Badges de Conectividad */}
-              <div className="pt-6 border-t border-slate-100">
-                <div className="grid grid-cols-1 sm:grid-cols-3 gap-5 text-xs text-[#172B3A]">
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-full bg-[#EBF3FA] text-[#005BB2] flex items-center justify-center shrink-0 border border-blue-100">
-                      <Receipt className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <strong className="block font-bold text-[#172B3A] text-xs sm:text-[13px]">Comprobantes</strong>
-                      <span className="text-slate-500 text-[11px]">Facturas & Retenciones</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-full bg-[#EBF3FA] text-[#005BB2] flex items-center justify-center shrink-0 border border-blue-100">
-                      <Laptop className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <strong className="block font-bold text-[#172B3A] text-xs sm:text-[13px]">Perseo ERP</strong>
-                      <span className="text-slate-500 text-[11px]">Integración API</span>
-                    </div>
-                  </div>
-
-                  <div className="flex items-center gap-3">
-                    <div className="w-11 h-11 rounded-full bg-[#FFF0E6] text-[#FC6412] flex items-center justify-center shrink-0 border border-orange-100">
-                      <Clock className="w-5 h-5" />
-                    </div>
-                    <div>
-                      <strong className="block font-bold text-[#172B3A] text-xs sm:text-[13px]">Disponibilidad</strong>
-                      <span className="text-slate-500 text-[11px]">Gestión Oportuna</span>
-                    </div>
-                  </div>
-                </div>
+              <div>
+                <strong className="block font-bold text-white text-xs leading-tight">Comprobantes</strong>
+                <span className="text-slate-400 text-[10px]">Facturas & Retenciones</span>
               </div>
-            </motion.div>
+            </div>
 
-            {/* Columna Derecha: ÚNICA FORMA azul para la imagen con corte diagonal */}
-            <motion.div
-              initial={{ opacity: 0, scale: 0.96 }}
-              animate={{ opacity: 1, scale: 1 }}
-              transition={{ duration: 0.55, delay: 0.1 }}
-              className="lg:col-span-5 relative flex items-end justify-center min-h-[360px] sm:min-h-[420px] lg:min-h-[460px] overflow-hidden"
-            >
-              <div className="absolute inset-0 bg-[#005BB2] lg:[clip-path:polygon(14%_0,100%_0,100%_100%,0%_100%)] z-0 rounded-2xl lg:rounded-none">
-                <div className="absolute top-8 right-8 w-60 h-60 rounded-full border-2 border-white/20 pointer-events-none" />
-                <div className="absolute top-16 right-16 w-40 h-40 rounded-full border border-white/25 pointer-events-none" />
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-white/10 text-[#38BDF8] flex items-center justify-center shrink-0 border border-white/10">
+                <Laptop className="w-4 h-4" />
               </div>
-
-              <div className="relative z-10 w-full h-full flex items-end justify-center lg:[clip-path:polygon(14%_0,100%_0,100%_100%,0%_100%)]">
-                <img
-                  src={digitalPortalImg}
-                  alt="Plataforma de contabilidad digital y reportes financieros de MH Contabilidad"
-                  className="w-full h-72 sm:h-80 lg:h-[420px] object-cover object-top drop-shadow-xl"
-                  loading="lazy"
-                  referrerPolicy="no-referrer"
-                />
+              <div>
+                <strong className="block font-bold text-white text-xs leading-tight">Perseo ERP</strong>
+                <span className="text-slate-400 text-[10px]">Integración API</span>
               </div>
+            </div>
 
-              {/* Curva / Onda Blanca Inferior */}
-              <div className="absolute -bottom-0.5 left-0 right-0 w-full z-20 pointer-events-none">
-                <svg
-                  viewBox="0 0 1440 180"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                  className="w-full h-14 sm:h-20 text-white"
-                  preserveAspectRatio="none"
-                >
-                  <path
-                    d="M0,180 L0,80 Q720,160 1440,30 L1440,180 Z"
-                    fill="#FFFFFF"
-                  />
-                </svg>
-                <div className="absolute bottom-2 right-8 w-7 h-7 rounded-full border-2 border-[#005BB2]/30 pointer-events-none hidden sm:block" />
+            <div className="flex items-center gap-2">
+              <div className="w-8 h-8 rounded-full bg-white/10 text-[#FC6412] flex items-center justify-center shrink-0 border border-white/10">
+                <Clock className="w-4 h-4" />
               </div>
-            </motion.div>
-
+              <div>
+                <strong className="block font-bold text-white text-xs leading-tight">Disponibilidad</strong>
+                <span className="text-slate-400 text-[10px]">Gestión Oportuna</span>
+              </div>
+            </div>
           </div>
         </div>
-      </section>
+      </PageHero>
 
       {/* 2. Beneficios Digitales para Clientes */}
       <section className="py-14 bg-white">
@@ -352,7 +283,7 @@ export const OnlineServicesPage: React.FC = () => {
                   >
                     <div className="flex items-start gap-3">
                       <div className="p-2 rounded-lg bg-[#005BB2] text-white shrink-0 mt-0.5">
-                        <MessageSquare className="w-4 h-4" />
+                        <WhatsAppIcon className="w-4 h-4" />
                       </div>
                       <div className="space-y-1 text-xs">
                         <strong className="block text-sm text-[#005BB2]">
@@ -373,7 +304,7 @@ export const OnlineServicesPage: React.FC = () => {
                         rel="noopener noreferrer"
                         className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold text-white bg-[#FC6412] hover:bg-[#e05308] transition-colors shadow-2xs"
                       >
-                        <MessageSquare className="w-4 h-4" />
+                        <WhatsAppIcon className="w-4 h-4" />
                         <span>Recibir reporte por WhatsApp con su asesor</span>
                       </a>
                     </div>
@@ -443,9 +374,7 @@ export const OnlineServicesPage: React.FC = () => {
                 </p>
                 <div className="pt-1">
                   <a
-                    href={`https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent(
-                      'Hola Jorge Hernández / MH Contabilidad, requiero asistencia personalizada con mis comprobantes.'
-                    )}`}
+                    href={`https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Jorge Hernandez / MH Contabilidad, requiero asistencia personalizada con mis comprobantes.')}`}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="inline-flex items-center gap-2 text-xs font-bold text-[#005BB2] hover:text-[#004a91] transition-colors underline underline-offset-4"
