@@ -8,32 +8,32 @@ export const StatsBanner: React.FC = () => {
 
   return (
     <section className="w-full bg-[#005BB2] border-b border-blue-950/20 shadow-xs relative z-20 overflow-hidden text-white">
-      <div className="max-w-[1920px] mx-auto px-4 sm:px-6 lg:px-8 py-1.5 sm:py-2 lg:py-2.5 flex flex-col xl:flex-row items-center justify-between gap-3 sm:gap-4 lg:gap-6">
+      <div className="max-w-[1920px] mx-auto px-3 sm:px-6 lg:px-8 py-2 sm:py-2.5 flex flex-col xl:flex-row items-center justify-between gap-3 sm:gap-4 lg:gap-6">
         {/* BLOQUE 1: Cifras Clave en Fondo Azul (A la izquierda) */}
-        <div className="flex items-center justify-around sm:justify-start gap-4 sm:gap-6 shrink-0">
+        <div className="flex items-center justify-around sm:justify-start gap-4 sm:gap-6 w-full sm:w-auto shrink-0">
           {/* Cifra 1 */}
           <div className="flex items-center gap-2">
-            <div className="text-lg sm:text-xl lg:text-[22px] font-black text-white tracking-tight leading-none">
+            <div className="text-base sm:text-xl lg:text-[22px] font-black text-white tracking-tight leading-none">
               99.8%
             </div>
-            <p className="text-[9.5px] sm:text-[10px] font-semibold text-sky-100 uppercase tracking-wider leading-tight">
+            <p className="text-[9px] sm:text-[10px] font-semibold text-sky-100 uppercase tracking-wider leading-tight">
               Cumplimiento SRI<br className="hidden sm:inline" /> sin multas
             </p>
           </div>
 
           {/* Cifra 2 */}
           <div className="flex items-center gap-2">
-            <div className="text-lg sm:text-xl lg:text-[22px] font-black text-white tracking-tight leading-none">
+            <div className="text-base sm:text-xl lg:text-[22px] font-black text-white tracking-tight leading-none">
               +10 Años
             </div>
-            <p className="text-[9.5px] sm:text-[10px] font-semibold text-sky-100 uppercase tracking-wider leading-tight">
+            <p className="text-[9px] sm:text-[10px] font-semibold text-sky-100 uppercase tracking-wider leading-tight">
               Experiencia<br className="hidden sm:inline" /> contable real
             </p>
           </div>
         </div>
 
         {/* BLOQUE 2: 4 Íconos Limpios con Título PERFECTAMENTE CENTRADOS (sin líneas de separación) */}
-        <div className="flex-1 flex flex-wrap items-center justify-center gap-4 sm:gap-6 lg:gap-8 my-1 xl:my-0">
+        <div className="flex-1 flex flex-wrap items-center justify-center gap-3 sm:gap-6 lg:gap-8 my-1 xl:my-0">
           {/* Ícono 1 */}
           <div className="flex items-center gap-1.5">
             <ShieldCheck className="w-4 h-4 text-sky-200 shrink-0 drop-shadow-xs" />
@@ -68,7 +68,7 @@ export const StatsBanner: React.FC = () => {
         </div>
 
         {/* BLOQUE 3: Botones de Acción en Naranja (A la derecha) */}
-        <div className="flex items-center gap-2 shrink-0 pt-0.5 xl:pt-0">
+        <div className="flex items-center justify-center gap-2 w-full sm:w-auto shrink-0 pt-0.5 xl:pt-0">
           {/* Botón 1: Ver Servicios (Naranja) */}
           <Link
             to="/servicios"

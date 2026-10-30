@@ -75,26 +75,27 @@ export const PageHero: React.FC<PageHeroProps> = ({
 
         {/* Fondo móvil adaptado (pantallas pequeñas < 768px) */}
         <div className="md:hidden absolute inset-0 flex flex-col">
-          <div className="h-[52%] w-full bg-[#0A131F] relative">
+          <div className="h-[56%] w-full bg-[#0A131F] relative">
             <div className="absolute bottom-0 left-0 w-16 h-8 bg-[#005BB2]" />
           </div>
-          <div className="h-[48%] w-full relative overflow-hidden">
+          <div className="h-[44%] w-full relative overflow-hidden">
             <img
               src={image}
               alt={imageAlt}
               className="w-full h-full object-cover object-center"
               loading="eager"
             />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0A131F]/90 via-transparent to-transparent pointer-events-none" />
             <div className="absolute top-0 left-0 right-0 h-1 bg-[#FC6412]" />
           </div>
         </div>
       </div>
 
       <div className="relative z-10 max-w-[1600px] w-full mx-auto px-4 sm:px-8 lg:px-12">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center min-h-[480px] lg:min-h-[540px] xl:min-h-[580px]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center min-h-[460px] sm:min-h-[480px] lg:min-h-[540px] xl:min-h-[580px]">
           
           {/* Columna Izquierda: Información oficial sobre el fondo oscuro */}
-          <div className="lg:col-span-6 xl:col-span-5 pt-28 sm:pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-16 space-y-4 sm:space-y-5 text-left">
+          <div className="lg:col-span-6 xl:col-span-5 pt-24 xs:pt-28 sm:pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-16 space-y-4 sm:space-y-5 text-left">
             {badge && (
               <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#38BDF8] uppercase tracking-wider">
                 <span className="w-2.5 h-0.5 bg-[#FC6412]" />
@@ -102,7 +103,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
               </div>
             )}
 
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.15]">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.15]">
               <span className="block">{titleLine1}</span>
               <span className="text-[#38BDF8] block mt-1 sm:mt-2">{titleHighlight}</span>
             </h1>

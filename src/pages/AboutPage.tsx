@@ -101,7 +101,7 @@ export const AboutPage: React.FC = () => {
                 {/* Columna 2 del Collage: Foto circular superior + Foto rectangular curva inferior */}
                 <div className="space-y-4">
                   {/* Foto Circular con borde decorativo punteado / continuo */}
-                  <div className="relative w-40 h-40 sm:w-48 sm:h-48 mx-auto rounded-full overflow-hidden shadow-lg border-4 border-white ring-4 ring-[#FC6412]/30 group">
+                  <div className="relative w-32 h-32 xs:w-36 xs:h-36 sm:w-48 sm:h-48 mx-auto rounded-full overflow-hidden shadow-lg border-4 border-white ring-4 ring-[#FC6412]/30 group">
                     <img
                       src={equipoReunionImg}
                       alt="Reunión del equipo de consultoría contable MH"
@@ -139,7 +139,7 @@ export const AboutPage: React.FC = () => {
             {/* Columna Derecha: Contenido Institucional con Estilo "Our System Inspires You More" */}
             <div className="lg:col-span-6 space-y-6">
               {/* Título Principal con resalte bimetálico */}
-              <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-[#172B3A] tracking-tight leading-[1.15]">
+              <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-[#172B3A] tracking-tight leading-[1.15]">
                 Nuestro Orden Contable <span className="text-[#FC6412]">Impulsa</span> Tu Crecimiento.
               </h2>
 
@@ -210,8 +210,8 @@ export const AboutPage: React.FC = () => {
 
         <div className="relative z-10 max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Encabezado: Título limpio centrado sin texto secundario */}
-          <div className="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
-            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight text-white drop-shadow-sm">
+          <div className="text-center max-w-3xl mx-auto mb-10 sm:mb-16">
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[42px] font-extrabold tracking-tight text-white drop-shadow-sm">
               Nuestros Valores Comerciales
             </h2>
           </div>
@@ -220,7 +220,7 @@ export const AboutPage: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border border-white/10 shadow-2xl overflow-hidden rounded-none">
             
             {/* Bloque 1: DESTACADO AMARILLO/NARANJA KINDEV (#F5A623 / #FC6412) */}
-            <div className="bg-[#E58A1F] text-slate-950 p-8 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-black/10 select-none group transition-all duration-300 hover:brightness-105">
+            <div className="bg-[#E58A1F] text-slate-950 p-6 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-black/10 select-none group transition-all duration-300 hover:brightness-105">
               <div className="w-16 h-16 rounded-none flex items-center justify-center text-slate-950">
                 <Laptop className="w-12 h-12 stroke-[1.8]" />
               </div>
@@ -233,7 +233,7 @@ export const AboutPage: React.FC = () => {
             </div>
 
             {/* Bloque 2: Fondo Oscuro Transparente */}
-            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-8 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-white/10 select-none group transition-all duration-300">
+            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-6 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-white/10 select-none group transition-all duration-300">
               <div className="w-16 h-16 rounded-none flex items-center justify-center text-white">
                 <PhoneCall className="w-12 h-12 stroke-[1.8]" />
               </div>
@@ -246,7 +246,7 @@ export const AboutPage: React.FC = () => {
             </div>
 
             {/* Bloque 3: Fondo Oscuro Transparente */}
-            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-8 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-white/10 select-none group transition-all duration-300">
+            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-6 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-white/10 select-none group transition-all duration-300">
               <div className="w-16 h-16 rounded-none flex items-center justify-center text-white">
                 <Shield className="w-12 h-12 stroke-[1.8]" />
               </div>
@@ -259,7 +259,7 @@ export const AboutPage: React.FC = () => {
             </div>
 
             {/* Bloque 4: Fondo Oscuro Transparente */}
-            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-8 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-white/10 select-none group transition-all duration-300">
+            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-6 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-white/10 select-none group transition-all duration-300">
               <div className="w-16 h-16 rounded-none flex items-center justify-center text-white">
                 <TrendingUp className="w-12 h-12 stroke-[1.8]" />
               </div>
@@ -272,7 +272,7 @@ export const AboutPage: React.FC = () => {
             </div>
 
             {/* Bloque 5: Fondo Oscuro Transparente */}
-            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-8 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-white/10 select-none group transition-all duration-300">
+            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-6 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-white/10 select-none group transition-all duration-300">
               <div className="w-16 h-16 rounded-none flex items-center justify-center text-white">
                 <Users2 className="w-12 h-12 stroke-[1.8]" />
               </div>
@@ -285,7 +285,7 @@ export const AboutPage: React.FC = () => {
             </div>
 
             {/* Bloque 6: Fondo Oscuro Transparente */}
-            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-8 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-white/10 select-none group transition-all duration-300">
+            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-6 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-white/10 select-none group transition-all duration-300">
               <div className="w-16 h-16 rounded-none flex items-center justify-center text-white">
                 <FileCheck2 className="w-12 h-12 stroke-[1.8]" />
               </div>

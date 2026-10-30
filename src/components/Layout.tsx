@@ -9,7 +9,7 @@ import { ScrollToTop } from './ScrollToTop';
 export const Layout: React.FC = () => {
 
   return (
-    <div className="min-h-screen bg-white text-[#172B3A] flex flex-col selection:bg-[#FC6412]/20 selection:text-[#005BB2]">
+    <div className="min-h-screen bg-white text-[#172B3A] flex flex-col selection:bg-[#FC6412]/20 selection:text-[#005BB2] overflow-x-clip">
       {/* Scroll to top al navegar a una nueva ruta */}
       <ScrollToTop />
 
@@ -17,7 +17,7 @@ export const Layout: React.FC = () => {
       <Navbar />
 
       {/* Contenido dinámico de cada página con renderizado inmediato y fluido */}
-      <main id="main-content" className="flex-1 pb-16 lg:pb-0">
+      <main id="main-content" className="flex-1 pb-20 sm:pb-24 lg:pb-0">
         <Outlet />
       </main>
 

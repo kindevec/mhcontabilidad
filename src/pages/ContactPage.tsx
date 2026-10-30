@@ -148,59 +148,59 @@ export const ContactPage: React.FC = () => {
             <div className="lg:col-span-5 space-y-6">
               
               {/* Rejilla 2x2 de Canales de Contacto con fondo azul corporativo (#005BB2) */}
-              <div className="grid grid-cols-2 gap-4 sm:gap-5">
+              <div className="grid grid-cols-2 gap-3 sm:gap-5">
                 
                 {/* 1. Teléfono */}
-                <div className="bg-[#005BB2] hover:bg-[#004e9a] text-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 flex flex-col items-center justify-center text-center space-y-2 border border-blue-600/40 shadow-sm transition-all duration-300 group">
-                  <Phone className="w-8 h-8 text-[#FC6412] group-hover:scale-110 transition-transform duration-300 stroke-[2.2]" />
-                  <h4 className="text-sm sm:text-base font-bold text-white">
+                <div className="bg-[#005BB2] hover:bg-[#004e9a] text-white rounded-2xl sm:rounded-3xl p-3.5 xs:p-4 sm:p-6 flex flex-col items-center justify-center text-center space-y-1.5 sm:space-y-2 border border-blue-600/40 shadow-sm transition-all duration-300 group">
+                  <Phone className="w-6 h-6 sm:w-8 sm:h-8 text-[#FC6412] group-hover:scale-110 transition-transform duration-300 stroke-[2.2]" />
+                  <h4 className="text-xs sm:text-base font-bold text-white">
                     Teléfono
                   </h4>
                   <a
                     href={`tel:${siteConfig.phone.whatsappNumber}`}
-                    className="text-xs sm:text-[13px] text-blue-100 hover:text-white transition-colors font-medium break-all"
+                    className="text-[11px] sm:text-[13px] text-blue-100 hover:text-white transition-colors font-medium break-all"
                   >
                     {siteConfig.phone.display}
                   </a>
                 </div>
 
                 {/* 2. WhatsApp */}
-                <div className="bg-[#005BB2] hover:bg-[#004e9a] text-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 flex flex-col items-center justify-center text-center space-y-2 border border-blue-600/40 shadow-sm transition-all duration-300 group">
-                  <WhatsAppIcon className="w-8 h-8 text-[#FC6412] group-hover:scale-110 transition-transform duration-300" />
-                  <h4 className="text-sm sm:text-base font-bold text-white">
+                <div className="bg-[#005BB2] hover:bg-[#004e9a] text-white rounded-2xl sm:rounded-3xl p-3.5 xs:p-4 sm:p-6 flex flex-col items-center justify-center text-center space-y-1.5 sm:space-y-2 border border-blue-600/40 shadow-sm transition-all duration-300 group">
+                  <WhatsAppIcon className="w-6 h-6 sm:w-8 sm:h-8 text-[#FC6412] group-hover:scale-110 transition-transform duration-300" />
+                  <h4 className="text-xs sm:text-base font-bold text-white">
                     WhatsApp
                   </h4>
                   <a
                     href={`https://wa.me/${siteConfig.phone.whatsappNumber}`}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="text-xs sm:text-[13px] text-blue-100 hover:text-white transition-colors font-medium break-all"
+                    className="text-[11px] sm:text-[13px] text-blue-100 hover:text-white transition-colors font-medium break-all"
                   >
                     {siteConfig.phone.display}
                   </a>
                 </div>
 
                 {/* 3. Email */}
-                <div className="bg-[#005BB2] hover:bg-[#004e9a] text-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 flex flex-col items-center justify-center text-center space-y-2 border border-blue-600/40 shadow-sm transition-all duration-300 group">
-                  <Mail className="w-8 h-8 text-[#FC6412] group-hover:scale-110 transition-transform duration-300 stroke-[2.2]" />
-                  <h4 className="text-sm sm:text-base font-bold text-white">
+                <div className="bg-[#005BB2] hover:bg-[#004e9a] text-white rounded-2xl sm:rounded-3xl p-3.5 xs:p-4 sm:p-6 flex flex-col items-center justify-center text-center space-y-1.5 sm:space-y-2 border border-blue-600/40 shadow-sm transition-all duration-300 group">
+                  <Mail className="w-6 h-6 sm:w-8 sm:h-8 text-[#FC6412] group-hover:scale-110 transition-transform duration-300 stroke-[2.2]" />
+                  <h4 className="text-xs sm:text-base font-bold text-white">
                     Email
                   </h4>
                   <a
                     href={`mailto:${siteConfig.email.general}`}
-                    className="text-xs sm:text-[13px] text-blue-100 hover:text-white transition-colors font-medium break-all"
+                    className="text-[10px] sm:text-[13px] text-blue-100 hover:text-white transition-colors font-medium break-all"
                   >
                     {siteConfig.email.general}
                   </a>
                 </div>
 
                 {/* 4. Sede & Cobertura */}
-                <div className="bg-[#005BB2] hover:bg-[#004e9a] text-white rounded-2xl sm:rounded-3xl p-5 sm:p-6 flex flex-col items-center justify-center text-center space-y-2 border border-blue-600/40 shadow-sm transition-all duration-300 group">
-                  <MapPin className="w-8 h-8 text-[#FC6412] group-hover:scale-110 transition-transform duration-300 stroke-[2.2]" />
-                  <h4 className="text-sm sm:text-base font-bold text-white">
+                <div className="bg-[#005BB2] hover:bg-[#004e9a] text-white rounded-2xl sm:rounded-3xl p-3.5 xs:p-4 sm:p-6 flex flex-col items-center justify-center text-center space-y-1.5 sm:space-y-2 border border-blue-600/40 shadow-sm transition-all duration-300 group">
+                  <MapPin className="w-6 h-6 sm:w-8 sm:h-8 text-[#FC6412] group-hover:scale-110 transition-transform duration-300 stroke-[2.2]" />
+                  <h4 className="text-xs sm:text-base font-bold text-white">
                     Sede
                   </h4>
-                  <p className="text-xs sm:text-[13px] text-blue-100 font-medium leading-tight">
+                  <p className="text-[10px] sm:text-[13px] text-blue-100 font-medium leading-tight">
                     Quito · Guayaquil · Ecuador
                   </p>
                 </div>
@@ -227,7 +227,7 @@ export const ContactPage: React.FC = () => {
             {/* Columna Derecha: Formulario Directo sin contenedor de caja */}
             <div id="formulario-contacto" className="lg:col-span-7 space-y-6 scroll-mt-24">
               <div className="space-y-2 text-left">
-                <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-black text-[#172B3A] tracking-tight leading-[1.15]">
+                <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[40px] font-black text-[#172B3A] tracking-tight leading-[1.15]">
                   Ponte en Contacto
                 </h2>
                 <p className="text-sm sm:text-base text-[#64748B] leading-relaxed max-w-xl">

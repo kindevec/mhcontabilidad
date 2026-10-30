@@ -97,14 +97,14 @@ export const HeroAccordionBanner: React.FC = () => {
       </div>
 
       {/* Contenedor Móvil (< 768px): Cuadrícula ergonómica 2x2 adaptada al pulgar */}
-      <div className="grid grid-cols-2 md:hidden gap-2 px-1">
+      <div className="grid grid-cols-2 md:hidden gap-2 px-1 sm:px-1.5">
         {pillars.map((item) => {
           const Icon = item.icon;
           return (
             <Link
               key={item.id}
               to={item.link}
-              className={`flex flex-col items-center justify-center text-center p-3.5 rounded-xl bg-gradient-to-b ${item.bgGradient} text-white shadow-md border-t-2 ${
+              className={`flex flex-col items-center justify-center text-center p-2.5 sm:p-3.5 rounded-xl bg-gradient-to-b ${item.bgGradient} text-white shadow-md border-t-2 ${
                 item.accentBar.includes('FC6412') ? 'border-t-[#FC6412]' : 'border-t-[#38BDF8]'
               } active:scale-[0.98] transition-transform`}
             >

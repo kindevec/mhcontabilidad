@@ -66,16 +66,16 @@ export const WhyChooseUsSection: React.FC = () => {
         </svg>
 
         {/* Contenido Principal Izquierdo */}
-        <div className="relative z-20 w-full lg:w-[58%] xl:w-[56%] px-6 sm:px-10 lg:pl-12 lg:pr-14 py-12 sm:py-16 flex flex-col justify-center bg-white">
+        <div className="relative z-20 w-full lg:w-[58%] xl:w-[56%] px-4 sm:px-10 lg:pl-12 lg:pr-14 py-10 sm:py-16 flex flex-col justify-center bg-white">
           <div className="max-w-3xl space-y-6 text-left">
             
             {/* Título Principal */}
-            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-black text-[#172B3A] tracking-tight leading-[1.15]">
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[42px] font-black text-[#172B3A] tracking-tight leading-[1.15]">
               ¿Por qué contratarnos?
             </h2>
 
             {/* Cita / Metodología de Acompañamiento */}
-            <p className="text-sm sm:text-base text-[#475569] leading-relaxed font-normal italic border-l-2 border-[#FC6412] pl-4">
+            <p className="text-sm sm:text-base text-[#475569] leading-relaxed font-normal italic border-l-2 border-[#FC6412] pl-3 sm:pl-4">
               "Trabajamos con un proceso estructurado paso a paso para que delegues tus obligaciones contables y tributarias con total tranquilidad y te dediques 100% a hacer crecer tu empresa."
             </p>
 
@@ -101,7 +101,7 @@ export const WhyChooseUsSection: React.FC = () => {
               </div>
 
               {/* 4 Nodos en línea de tiempo ondulada con arcos entre ellos */}
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-6 lg:gap-7 relative z-10">
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-3.5 sm:gap-6 lg:gap-7 relative z-10">
                 {processItems.map((item, idx) => {
                   const IconComp = item.icon;
                   // Desplazamiento vertical ascendente en escritorio
@@ -144,9 +144,9 @@ export const WhyChooseUsSection: React.FC = () => {
                 href={whatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="inline-flex items-center justify-center gap-2.5 px-9 py-3.5 bg-[#FC6412] hover:bg-[#e05308] text-white text-sm font-bold shadow-md hover:shadow-lg transition-all rounded-none uppercase tracking-wider"
+                className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 sm:px-9 py-3 sm:py-3.5 bg-[#FC6412] hover:bg-[#e05308] text-white text-xs sm:text-sm font-bold shadow-md hover:shadow-lg transition-all rounded-none uppercase tracking-wider text-center"
               >
-                <WhatsAppIcon className="w-4 h-4" />
+                <WhatsAppIcon className="w-4 h-4 shrink-0" />
                 <span>Agendar Asesoría</span>
               </a>
             </div>

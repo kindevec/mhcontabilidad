@@ -62,30 +62,31 @@ export const HeroSection: React.FC = () => {
 
         {/* Fondo móvil adaptado (pantallas pequeñas < 768px) */}
         <div className="md:hidden absolute inset-0 flex flex-col">
-          <div className="h-[52%] w-full bg-[#0A131F] relative">
+          <div className="h-[56%] w-full bg-[#0A131F] relative">
             <div className="absolute bottom-0 left-0 w-16 h-8 bg-[#005BB2]" />
           </div>
-          <div className="h-[48%] w-full relative overflow-hidden">
+          <div className="h-[44%] w-full relative overflow-hidden">
             <img
               src={mhHeroBannerImg}
               alt="Servicios tributarios en Ecuador - MH Contabilidad"
               className="w-full h-full object-cover object-center"
               loading="eager"
-            fetchPriority="high"
-            decoding="async"
+              fetchPriority="high"
+              decoding="async"
             />
+            <div className="absolute inset-0 bg-gradient-to-b from-[#0A131F]/90 via-transparent to-transparent pointer-events-none" />
             <div className="absolute top-0 left-0 right-0 h-1 bg-[#FC6412]" />
           </div>
         </div>
       </div>
 
       <div className="relative z-10 max-w-[1720px] w-full mx-auto px-4 sm:px-6 lg:pl-5 lg:pr-8 xl:pl-6 xl:pr-10">
-        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[580px] lg:min-h-[640px] xl:min-h-[680px]">
+        <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[520px] sm:min-h-[580px] lg:min-h-[640px] xl:min-h-[680px]">
           
           {/* Columna Izquierda: Información oficial desplazada a la izquierda sobre el fondo oscuro */}
-          <div className="lg:col-span-5 xl:col-span-5 pt-28 sm:pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-20 space-y-6 sm:space-y-7 text-left">
+          <div className="lg:col-span-5 xl:col-span-5 pt-24 xs:pt-28 sm:pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-20 space-y-5 sm:space-y-7 text-left">
             {/* Título Principal con salto de línea tras 'Contable' */}
-            <h1 className="text-3xl sm:text-4xl lg:text-5xl xl:text-[52px] font-black text-white tracking-tight leading-[1.15]">
+            <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl xl:text-[52px] font-black text-white tracking-tight leading-[1.15]">
               <span className="block">Tu Respaldo Contable</span>
               <span className="text-[#38BDF8] block mt-1 sm:mt-2">Tu Impulso Estratégico</span>
             </h1>

@@ -70,20 +70,20 @@ export const SystemAccessSection: React.FC = () => {
                   <div className="rounded-xl overflow-hidden bg-white text-slate-800 text-xs">
                     
                     {/* Barra superior de la plataforma */}
-                    <div className="h-8 bg-slate-900 text-white px-3.5 flex items-center justify-between border-b border-slate-800">
+                    <div className="min-h-8 py-1 bg-slate-900 text-white px-3 flex flex-wrap items-center justify-between gap-1.5 border-b border-slate-800">
                       <div className="flex items-center gap-1.5">
-                        <span className="w-2.5 h-2.5 rounded-full bg-red-400" />
-                        <span className="w-2.5 h-2.5 rounded-full bg-amber-400" />
-                        <span className="w-2.5 h-2.5 rounded-full bg-emerald-400" />
-                        <div className="ml-2 flex items-center gap-1.5 font-bold text-white text-[11px] tracking-tight">
-                          <Database className="w-3.5 h-3.5 text-[#FC6412]" />
-                          <span>MH Plataforma Contable</span>
+                        <span className="w-2 h-2 rounded-full bg-red-400 shrink-0" />
+                        <span className="w-2 h-2 rounded-full bg-amber-400 shrink-0" />
+                        <span className="w-2 h-2 rounded-full bg-emerald-400 shrink-0" />
+                        <div className="ml-1.5 flex items-center gap-1.5 font-bold text-white text-[10px] sm:text-[11px] tracking-tight">
+                          <Database className="w-3.5 h-3.5 text-[#FC6412] shrink-0" />
+                          <span className="truncate">MH Plataforma Contable</span>
                         </div>
                       </div>
                       <div className="flex items-center gap-1.5">
-                        <span className="px-2.5 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-semibold text-[10px] flex items-center gap-1.5 border border-emerald-500/30">
+                        <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-300 font-semibold text-[9px] sm:text-[10px] flex items-center gap-1.5 border border-emerald-500/30 whitespace-nowrap">
                           <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                          SRI En línea | Conexión Activa
+                          SRI En línea
                         </span>
                       </div>
                     </div>
@@ -180,7 +180,7 @@ export const SystemAccessSection: React.FC = () => {
               </div>
 
               {/* 2. SMARTPHONE MÁS GRANDE A LA DERECHA (iPhone Mockup) */}
-              <div className="absolute -right-2 sm:-right-1 lg:right-1 bottom-1 sm:bottom-4 w-36 sm:w-48 lg:w-52 bg-slate-900 rounded-[28px] sm:rounded-[36px] p-2 sm:p-2.5 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.65)] border-2 sm:border-[3.5px] border-slate-800 z-20">
+              <div className="absolute right-0 sm:-right-1 lg:right-1 bottom-1 sm:bottom-4 w-32 xs:w-36 sm:w-48 lg:w-52 bg-slate-900 rounded-[28px] sm:rounded-[36px] p-2 sm:p-2.5 shadow-[0_30px_70px_-15px_rgba(0,0,0,0.65)] border-2 sm:border-[3.5px] border-slate-800 z-20">
                 <div className="rounded-[22px] sm:rounded-[30px] overflow-hidden bg-white text-[10px] sm:text-[11px] p-2.5 sm:p-3 space-y-2.5">
                   {/* Dynamic Island */}
                   <div className="w-12 h-3 bg-slate-900 rounded-full mx-auto" />

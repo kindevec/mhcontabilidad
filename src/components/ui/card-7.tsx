@@ -59,14 +59,14 @@ export const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
               {title}
             </h3>
 
-            {/* Contenido revelado exclusivamente al pasar el cursor: Frase y Entregables */}
-            <div className="max-h-0 opacity-0 overflow-hidden transition-all duration-500 ease-in-out group-hover:max-h-64 group-hover:opacity-100 space-y-2.5">
-              <p className="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed pt-1 border-t border-white/10">
+            {/* Contenido: Visible en móvil para pantallas táctiles y con despliegue en hover en desktop */}
+            <div className="max-h-24 sm:max-h-0 opacity-100 sm:opacity-0 overflow-hidden transition-all duration-500 ease-in-out sm:group-hover:max-h-64 sm:group-hover:opacity-100 space-y-2.5">
+              <p className="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed pt-1 border-t border-white/10 line-clamp-2 sm:line-clamp-none">
                 {tagline}
               </p>
 
               {highlights.length > 0 && (
-                <ul className="space-y-1.5 pt-0.5">
+                <ul className="hidden sm:block space-y-1.5 pt-0.5">
                   {highlights.map((h, idx) => (
                     <li key={idx} className="flex items-start gap-2 text-xs text-slate-100 font-medium">
                       <CheckCircle2 className="w-4 h-4 text-[#FC6412] shrink-0 mt-0.5" />

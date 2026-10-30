@@ -79,7 +79,7 @@ export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ centerLabel 
   const renderCard = (item: ServiceCardData, key: React.Key) => (
     <div
       key={key}
-      className="relative w-80 sm:w-96 h-[480px] sm:h-[540px] rounded-none overflow-hidden shadow-xl border border-slate-200/80 bg-slate-900 group select-none transition-transform duration-300 hover:scale-[1.02] shrink-0"
+      className="relative w-[280px] xs:w-80 sm:w-96 h-[450px] sm:h-[540px] rounded-none overflow-hidden shadow-xl border border-slate-200/80 bg-slate-900 group select-none transition-transform duration-300 hover:scale-[1.02] shrink-0"
     >
       <img
         src={item.img}
@@ -91,7 +91,7 @@ export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ centerLabel 
       <div className="absolute inset-0 bg-gradient-to-t from-[#172B3A] via-[#172B3A]/80 to-transparent pointer-events-none" />
 
       {/* Contenido: Título, Frase y Dos Botones centrados */}
-      <div className="relative z-10 p-6 sm:p-8 h-full flex flex-col justify-end items-center text-white text-center space-y-3">
+      <div className="relative z-10 p-5 sm:p-8 h-full flex flex-col justify-end items-center text-white text-center space-y-3">
         <h4 className="text-lg sm:text-2xl font-bold leading-snug text-white drop-shadow-sm line-clamp-2">
           {item.title}
         </h4>

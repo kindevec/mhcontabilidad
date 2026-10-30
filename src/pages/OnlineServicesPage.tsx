@@ -320,7 +320,7 @@ export const OnlineServicesPage: React.FC = () => {
                         href={waClientUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold text-white bg-[#FC6412] hover:bg-[#e05308] transition-colors shadow-2xs"
+                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold text-white bg-[#FC6412] hover:bg-[#e05308] transition-colors shadow-2xs text-center"
                       >
                         <WhatsAppIcon className="w-4 h-4" />
                         <span>Recibir reporte por WhatsApp con su asesor</span>
