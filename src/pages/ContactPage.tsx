@@ -114,39 +114,28 @@ export const ContactPage: React.FC = () => {
         image={consultingTeamImg}
         imageAlt="Atención y asesoría contable profesional MH Contabilidad"
       >
-        {/* Badges de Disponibilidad */}
-        <div className="pt-4 border-t border-slate-700/60">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-white/10 text-[#38BDF8] flex items-center justify-center shrink-0 border border-white/10">
-                <WhatsAppIcon className="w-4 h-4" />
-              </div>
-              <div>
-                <strong className="block font-bold text-white text-xs leading-tight">WhatsApp</strong>
-                <span className="text-slate-400 text-[10px]">{siteConfig.phone.display}</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-white/10 text-[#38BDF8] flex items-center justify-center shrink-0 border border-white/10">
-                <Mail className="w-4 h-4" />
-              </div>
-              <div>
-                <strong className="block font-bold text-white text-xs leading-tight">Correo Directo</strong>
-                <span className="text-slate-400 text-[10px]">{siteConfig.email.general}</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-white/10 text-[#FC6412] flex items-center justify-center shrink-0 border border-white/10">
-                <Clock className="w-4 h-4" />
-              </div>
-              <div>
-                <strong className="block font-bold text-white text-xs leading-tight">Horario</strong>
-                <span className="text-slate-400 text-[10px]">08:30 – 18:00</span>
-              </div>
-            </div>
-          </div>
+        {/* Accesos Rápidos */}
+        <div className="pt-4 flex flex-wrap items-center gap-3">
+          <a
+            href={`https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola MH Contabilidad, requiero asesoría contable personalizada.')}`}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200"
+          >
+            <WhatsAppIcon className="w-4 h-4 shrink-0" />
+            <span>Consultar Aquí</span>
+          </a>
+          <a
+            href="#formulario-contacto"
+            onClick={(e) => {
+              e.preventDefault();
+              document.getElementById('formulario-contacto')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer"
+          >
+            <Send className="w-4 h-4 shrink-0" />
+            <span>Enviar Mensaje</span>
+          </a>
         </div>
       </PageHero>
 
@@ -236,7 +225,7 @@ export const ContactPage: React.FC = () => {
             </div>
 
             {/* Columna Derecha: Formulario Directo sin contenedor de caja */}
-            <div className="lg:col-span-7 space-y-6">
+            <div id="formulario-contacto" className="lg:col-span-7 space-y-6 scroll-mt-24">
               <div className="space-y-2 text-left">
                 <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-black text-[#172B3A] tracking-tight leading-[1.15]">
                   Ponte en Contacto

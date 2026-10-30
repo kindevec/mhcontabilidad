@@ -150,7 +150,7 @@ export const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* 4. Bloque Destacado de Web de Sistema (Tu Contabilidad con MH conectada a Perseo) */}
+      {/* 4. Bloque Destacado de Web de Sistema (Tu Contabilidad con nuestro Sistema Contable) */}
       <SystemAccessSection />
 
       {/* 5. Sección de Testimonios: ¿Qué opinan nuestros clientes? */}

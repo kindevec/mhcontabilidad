@@ -27,11 +27,11 @@ export const SystemAccessSection: React.FC = () => {
           {/* Columna Izquierda: Información directa sobre fondo azul con Botón Naranja */}
           <div className="lg:col-span-5 space-y-5 text-left">
             <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-white tracking-tight leading-[1.14]">
-              Tu Contabilidad con MH conectada al Sistema Perseo
+              Tu Contabilidad con nuestro Sistema Contable
             </h2>
 
             <p className="text-sm sm:text-base text-blue-100/90 leading-relaxed max-w-xl">
-              En MH Contabilidad unificamos nuestra asesoría experta con la tecnología del sistema contable Perseo. Automatiza tu facturación electrónica con el SRI, sincroniza tus ventas y accede a reportes claros en tiempo real.
+              En MH Contabilidad unificamos nuestra asesoría experta con la tecnología de nuestro sistema contable. Automatiza tu facturación electrónica con el SRI, sincroniza tus ventas y accede a reportes claros en tiempo real.
             </p>
 
             {/* 4 Íconos grandes directos sin contenedor con solo su texto */}
@@ -187,7 +187,7 @@ export const SystemAccessSection: React.FC = () => {
                   
                   {/* Contenido móvil */}
                   <div className="space-y-0.5 text-left">
-                    <span className="text-[8px] sm:text-[9px] text-[#FC6412] font-bold uppercase tracking-wider">App Móvil</span>
+                    <span className="text-[8px] sm:text-[9px] text-[#FC6412] font-bold uppercase tracking-wider">Web Móvil</span>
                     <p className="font-bold text-[#172B3A] text-xs sm:text-sm leading-none">MH Contabilidad</p>
                   </div>
 

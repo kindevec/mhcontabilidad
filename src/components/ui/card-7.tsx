@@ -87,7 +87,7 @@ export const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
               className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] active:bg-[#c94703] transition-all duration-300 shadow-md hover:shadow-lg group-hover:shadow-orange-500/20"
             >
               <WhatsAppIcon className="w-4 h-4" />
-              <span>Consultar por WhatsApp</span>
+              <span>Consultar aquí</span>
               <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
             </a>
           </div>

@@ -5,6 +5,7 @@ import { MHLogo } from './MHLogo';
 import { siteConfig } from '../data/siteConfig';
 import { servicesData } from '../data/services';
 import { WhatsAppIcon } from './WhatsAppIcon';
+import { TikTokIcon } from './TikTokIcon';
 import { MapPin, Phone, Mail, Clock, Instagram, Facebook, ArrowUp } from 'lucide-react';
 
 const kindevIcon = '/kindev_icon.webp';
@@ -90,6 +91,16 @@ export const Footer: React.FC = () => {
                 >
                   <Instagram className="w-3.5 h-3.5 text-white stroke-[2.2]" />
                 </motion.a>
+                <motion.a
+                  href="https://tiktok.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="TikTok MH Contabilidad"
+                  whileTap={{ scale: 0.95 }}
+                  className="w-7 h-7 rounded-lg bg-gradient-to-tr from-[#005BB2] via-[#006CD6] to-[#00488F] flex items-center justify-center text-white shadow-xs"
+                >
+                  <TikTokIcon className="w-3.5 h-3.5 text-white" />
+                </motion.a>
               </div>
             </div>
 
@@ -138,6 +149,18 @@ export const Footer: React.FC = () => {
                   className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#005BB2] via-[#006CD6] to-[#00488F] hover:from-[#0070DD] hover:to-[#005BB2] flex items-center justify-center text-white shadow-[0_0_10px_rgba(0,91,178,0.35)] transition-all"
                 >
                   <Instagram className="w-4 h-4 text-white stroke-[2.2]" />
+                </motion.a>
+
+                <motion.a
+                  href="https://tiktok.com"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  aria-label="TikTok MH Contabilidad"
+                  whileHover={{ scale: 1.12, y: -1 }}
+                  whileTap={{ scale: 0.95 }}
+                  className="w-8 h-8 rounded-lg bg-gradient-to-tr from-[#005BB2] via-[#006CD6] to-[#00488F] hover:from-[#0070DD] hover:to-[#005BB2] flex items-center justify-center text-white shadow-[0_0_10px_rgba(0,91,178,0.35)] transition-all"
+                >
+                  <TikTokIcon className="w-4 h-4 text-white" />
                 </motion.a>
               </div>
             </div>

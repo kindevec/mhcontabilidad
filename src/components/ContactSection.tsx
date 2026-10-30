@@ -375,7 +375,7 @@ export const ContactSection: React.FC = () => {
                     <option value="Declaraciones Tributarias SRI">Declaraciones Tributarias SRI</option>
                     <option value="Elaboración de Estados Financieros">Elaboración de Estados Financieros</option>
                     <option value="Constitución y Formalización de RUC">Constitución y Formalización de RUC</option>
-                    <option value="Integración con Sistema Perseo">Integración y Soporte Sistema Perseo</option>
+                    <option value="Sistema Contable de MH Contabilidad">Sistema Contable de MH Contabilidad</option>
                     <option value="Otro Requerimiento">Otro Requerimiento Personalizado</option>
                   </select>
                 </div>

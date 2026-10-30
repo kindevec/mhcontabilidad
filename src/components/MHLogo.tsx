@@ -20,9 +20,9 @@ export const MHLogo: React.FC<MHLogoProps> = ({ variant = 'full', className = ''
       />
 
       {variant !== 'compact' && (
-        <div className="flex flex-col justify-center leading-tight text-left">
+        <div className="flex flex-col items-center justify-center leading-tight text-center">
           {/* Título Principal con palabras alternadas: Azul y Negro */}
-          <div className="flex items-center gap-1.5">
+          <div className="flex items-center justify-center gap-1.5">
             <span
               className={`text-lg sm:text-xl font-black tracking-tight ${
                 isLight ? 'text-sky-400' : 'text-[#005BB2]'
@@ -40,7 +40,7 @@ export const MHLogo: React.FC<MHLogoProps> = ({ variant = 'full', className = ''
           </div>
 
           {/* Subtítulo con palabras alternadas: Naranja, Azul, Negro y Naranja */}
-          <div className="flex items-center gap-1 text-[9px] sm:text-[10px] tracking-wider uppercase font-bold pt-0.5">
+          <div className="flex items-center justify-center gap-1 text-[9px] sm:text-[10px] tracking-wider uppercase font-bold pt-0.5">
             <span className={isLight ? 'text-orange-400' : 'text-[#FC6412]'}>
               SERVICIOS
             </span>

@@ -4,11 +4,11 @@ import {
   Search,
   CheckCircle2,
   Receipt,
-  HelpCircle,
   Clock,
   Sparkles,
   PhoneCall,
   Laptop,
+  Plus,
 } from 'lucide-react';
 import { WhatsAppIcon } from '../components/WhatsAppIcon';
 import { siteConfig } from '../data/siteConfig';
@@ -29,6 +29,37 @@ export const OnlineServicesPage: React.FC = () => {
     docNumber: string;
     queryLabel: string;
   } | null>(null);
+
+  const [openFaqIndices, setOpenFaqIndices] = useState<number[]>([]);
+
+  const toggleFaq = (idx: number) => {
+    setOpenFaqIndices((prev) =>
+      prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
+    );
+  };
+
+  const faqItems = [
+    {
+      question: '¿Cómo recibo los balances y declaraciones mensuales de mi empresa?',
+      answer:
+        'Mensualmente, una vez ingresados y conciliados los comprobantes, su asesor le envía un informe resumen detallado en formato PDF y los respaldos de las declaraciones aceptadas por el SRI vía correo electrónico y WhatsApp.',
+    },
+    {
+      question: '¿Puedo integrar la contabilidad de mi empresa con el sistema contable de MH Contabilidad?',
+      answer:
+        'Sí. Trabajamos directamente con el sistema contable de MH Contabilidad para estructurar sus catálogos contables, auditar la emisión de facturas electrónicas y generar los anexos transaccionales (ATS) sin duplicar trabajo administrativo.',
+    },
+    {
+      question: '¿Cómo solicito un certificado o estado tributario actualizado?',
+      answer:
+        'Puede solicitarlo directamente desde el canal de WhatsApp o mediante la consulta rápida en este portal ingresando su RUC. Nuestro equipo valida el estado en el SRI y emite su reporte en minutos.',
+    },
+    {
+      question: '¿Qué soporte técnico recibo para el acceso y firma electrónica?',
+      answer:
+        'Brindamos acompañamiento en la instalación de certificados de firma electrónica, configuración del facturador del SRI o sistemas contables, y resolución de dudas operativas.',
+    },
+  ];
 
   const getQueryLabel = (type: string) => {
     switch (type) {
@@ -86,39 +117,26 @@ export const OnlineServicesPage: React.FC = () => {
         image={digitalPortalImg}
         imageAlt="Plataforma de contabilidad digital y reportes financieros de MH Contabilidad"
       >
-        {/* Badges de Conectividad */}
-        <div className="pt-4 border-t border-slate-700/60">
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs">
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-white/10 text-[#38BDF8] flex items-center justify-center shrink-0 border border-white/10">
-                <Receipt className="w-4 h-4" />
-              </div>
-              <div>
-                <strong className="block font-bold text-white text-xs leading-tight">Comprobantes</strong>
-                <span className="text-slate-400 text-[10px]">Facturas & Retenciones</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-white/10 text-[#38BDF8] flex items-center justify-center shrink-0 border border-white/10">
-                <Laptop className="w-4 h-4" />
-              </div>
-              <div>
-                <strong className="block font-bold text-white text-xs leading-tight">Perseo ERP</strong>
-                <span className="text-slate-400 text-[10px]">Integración API</span>
-              </div>
-            </div>
-
-            <div className="flex items-center gap-2">
-              <div className="w-8 h-8 rounded-full bg-white/10 text-[#FC6412] flex items-center justify-center shrink-0 border border-white/10">
-                <Clock className="w-4 h-4" />
-              </div>
-              <div>
-                <strong className="block font-bold text-white text-xs leading-tight">Disponibilidad</strong>
-                <span className="text-slate-400 text-[10px]">Gestión Oportuna</span>
-              </div>
-            </div>
-          </div>
+        {/* Accesos Rápidos */}
+        <div className="pt-4 flex flex-wrap items-center gap-3">
+          <a
+            href={siteConfig.systemUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200"
+          >
+            <Laptop className="w-4 h-4 shrink-0" />
+            <span>Acceder al Sistema Contable</span>
+          </a>
+          <a
+            href={waClientUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200"
+          >
+            <WhatsAppIcon className="w-4 h-4 shrink-0" />
+            <span>Consultar</span>
+          </a>
         </div>
       </PageHero>
 
@@ -167,10 +185,10 @@ export const OnlineServicesPage: React.FC = () => {
                 <Laptop className="w-5 h-5" />
               </div>
               <h3 className="text-base font-bold text-[#172B3A]">
-                Conexión con Software ERP
+                Conexión con Sistema Contable
               </h3>
               <p className="text-xs text-[#64748B] leading-relaxed">
-                Compatibilidad y asesoría para clientes que emplean el sistema contable Perseo y plataformas electrónicas.
+                Compatibilidad y asesoría para clientes que emplean el sistema contable de MH Contabilidad y plataformas electrónicas.
               </p>
             </motion.div>
           </div>
@@ -330,7 +348,7 @@ export const OnlineServicesPage: React.FC = () => {
                     Acompañamiento en Sistemas Contables
                   </h3>
                   <p className="text-xs text-[#64748B] leading-relaxed">
-                    Si su negocio utiliza <strong>Perseo ERP</strong> u otro software contable, en MH Contabilidad
+                    Si su negocio utiliza el <strong>sistema contable de MH Contabilidad</strong> u otro software contable, en MH Contabilidad
                     le asesoramos en la conciliación de módulos de facturación, retenciones y cierres contables.
                   </p>
                 </div>
@@ -388,41 +406,51 @@ export const OnlineServicesPage: React.FC = () => {
         </div>
       </section>
 
-      {/* 3. Preguntas de Servicios en Línea para Clientes */}
-      <section className="py-16 bg-[#F3F6FA] border-t border-slate-200/80">
-        <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-8">
+      {/* 3. Preguntas de Servicios en Línea para Clientes (Mismo diseño acordeón oficial que Servicios) */}
+      <section className="py-16 sm:py-20 bg-white border-t border-slate-100">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           <div className="text-center space-y-2">
-            <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#005BB2] uppercase tracking-wider">
-              <HelpCircle className="w-4 h-4" />
-              <span>Preguntas Frecuentes</span>
-            </div>
-            <h2 className="text-2xl font-extrabold text-[#172B3A]">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#172B3A] tracking-tight">
               Preguntas sobre el Portal de Clientes
             </h2>
+            <p className="text-sm text-[#64748B] max-w-xl mx-auto">
+              Respuestas directas a las consultas más habituales sobre consultas en línea, reportes y gestión tributaria.
+            </p>
           </div>
 
-          <div className="space-y-4">
-            <div className="p-5 rounded-2xl bg-white border border-slate-200 space-y-1.5">
-              <h3 className="text-sm font-bold text-[#172B3A]">
-                ¿Cómo recibo los balances y declaraciones mensuales de mi empresa?
-              </h3>
-              <p className="text-xs text-[#64748B] leading-relaxed">
-                Mensualmente, una vez ingresados y conciliados los comprobantes, su asesor le envía un informe
-                resumen detallado en formato PDF y los respaldos de las declaraciones aceptadas por el SRI vía
-                correo electrónico y WhatsApp.
-              </p>
-            </div>
+          {/* Rejilla de 2 columnas con la paleta oficial MH (#005BB2 y #FC6412) */}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+            {faqItems.map((faq, idx) => {
+              const isOpen = openFaqIndices.includes(idx);
+              return (
+                <div
+                  key={idx}
+                  onClick={() => toggleFaq(idx)}
+                  className="bg-[#005BB2] hover:bg-[#004e9a] text-white rounded-2xl p-4 sm:p-5 flex flex-col justify-center cursor-pointer select-none border border-blue-600/40 shadow-sm transition-all duration-200 group"
+                >
+                  <div className="flex items-center justify-between gap-4">
+                    <h3 className="text-sm sm:text-[15px] font-bold text-white text-left leading-snug">
+                      {faq.question}
+                    </h3>
+                    <div
+                      className={`w-7 h-7 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#FC6412] transition-transform duration-200 ${
+                        isOpen ? 'rotate-45' : 'rotate-0'
+                      }`}
+                    >
+                      <Plus className="w-5 h-5 stroke-[2.5]" />
+                    </div>
+                  </div>
 
-            <div className="p-5 rounded-2xl bg-white border border-slate-200 space-y-1.5">
-              <h3 className="text-sm font-bold text-[#172B3A]">
-                ¿Puedo integrar la contabilidad de mi empresa si ya uso Perseo Software?
-              </h3>
-              <p className="text-xs text-[#64748B] leading-relaxed">
-                Sí. Trabajamos directamente con la plataforma Perseo para revisar sus catálogos contables,
-                auditar la emisión de facturas electrónicas y generar los anexos transaccionales (ATS) sin
-                duplicar trabajo administrativo.
-              </p>
-            </div>
+                  {isOpen && (
+                    <div className="pt-3 mt-2.5 border-t border-white/20 text-left">
+                      <p className="text-xs sm:text-[13px] text-blue-100 leading-relaxed font-normal">
+                        {faq.answer}
+                      </p>
+                    </div>
+                  )}
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

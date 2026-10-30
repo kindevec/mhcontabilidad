@@ -1,6 +1,4 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
-import { ArrowRight } from 'lucide-react';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { Marquee } from './ui/cta-with-marquee';
 import { siteConfig } from '../data/siteConfig';
@@ -101,24 +99,17 @@ export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ centerLabel 
           {item.tagline}
         </p>
 
-        {/* Dos Botones: Consultar y Detalles cuadrados y centrados */}
-        <div className="pt-3 flex flex-wrap items-center justify-center gap-3">
+        {/* Botón oficial: Consultar aquí */}
+        <div className="pt-3 flex items-center justify-center">
           <a
             href={getWhatsappUrl(item.whatsappMessage)}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center gap-2 px-5 py-2.5 rounded-none text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] active:bg-[#c94703] transition-colors shadow-sm whitespace-nowrap"
+            className="inline-flex items-center gap-2 px-6 py-2.5 rounded-none text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] active:bg-[#c94703] transition-colors shadow-sm whitespace-nowrap"
           >
             <WhatsAppIcon className="w-4 h-4" />
-            <span>Consultar</span>
+            <span>Consultar aquí</span>
           </a>
-          <Link
-            to={item.detailsUrl}
-            className="inline-flex items-center gap-1.5 px-5 py-2.5 rounded-none text-xs sm:text-sm font-semibold text-white/90 hover:text-white bg-white/20 hover:bg-white/30 border border-white/25 transition-all whitespace-nowrap"
-          >
-            <span>Detalles</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
         </div>
       </div>
     </div>

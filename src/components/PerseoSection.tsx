@@ -85,11 +85,11 @@ export const PerseoSection: React.FC = () => {
             <span>Módulo Tecnológico</span>
           </div>
           <h2 className="text-2xl sm:text-3xl lg:text-4xl font-extrabold text-[#172B3A] tracking-tight">
-            Consultas e Integración con Sistema Contable Perseo
+            Consultas e Integración con Sistema Contable de MH Contabilidad
           </h2>
           <p className="text-base text-[#64748B] leading-relaxed">
-            Plataforma preparada contractualmente para la interoperabilidad con la API oficial del software
-            contable Perseo, permitiendo vincular servicios y automatizar consultas de clientes y estados de cuenta.
+            Plataforma preparada contractualmente para la interoperabilidad con el sistema
+            contable de MH Contabilidad, permitiendo vincular servicios y automatizar consultas de clientes y estados de cuenta.
           </p>
         </div>
 
@@ -130,7 +130,7 @@ export const PerseoSection: React.FC = () => {
               <div className="flex items-start justify-between border-b border-slate-100 pb-5">
                 <div>
                   <h3 className="text-lg font-bold text-[#172B3A]">
-                    Consulta automatizada en Perseo
+                    Consulta automatizada en el sistema contable de MH Contabilidad
                   </h3>
                   <p className="text-xs text-[#64748B] mt-1">
                     Ingrese los datos de su empresa o identificación fiscal para localizar sus registros en el sistema.
@@ -226,12 +226,12 @@ export const PerseoSection: React.FC = () => {
                     {isSubmitting ? (
                       <>
                         <RefreshCw className="w-4 h-4 animate-spin" />
-                        <span>Verificando conexión en Perseo...</span>
+                        <span>Verificando conexión en el sistema contable...</span>
                       </>
                     ) : (
                       <>
                         <Search className="w-4 h-4" />
-                        <span>Consultar en Sistema Perseo</span>
+                        <span>Consultar en Sistema Contable de MH Contabilidad</span>
                       </>
                     )}
                   </button>
@@ -251,7 +251,7 @@ export const PerseoSection: React.FC = () => {
                     <Info className="w-4 h-4 shrink-0 mt-0.5 text-amber-700" />
                     <div className="space-y-1">
                       <p className="font-bold text-amber-950">
-                        Estado de la Integración Perseo
+                        Estado del Sistema Contable de MH Contabilidad
                       </p>
                       <p className="leading-relaxed text-amber-900">
                         {queryResult.message}
@@ -276,10 +276,10 @@ export const PerseoSection: React.FC = () => {
               <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b border-slate-100 pb-5">
                 <div>
                   <h3 className="text-lg font-bold text-[#172B3A]">
-                    Estado de Conexión del Servicio Perseo
+                    Estado de Conexión del Sistema Contable de MH Contabilidad
                   </h3>
                   <p className="text-xs text-[#64748B] mt-1">
-                    Inspección técnica de la capa de integración backend para la API de Perseo.
+                    Inspección técnica de la capa de integración backend para el sistema contable de MH Contabilidad.
                   </p>
                 </div>
 
@@ -299,7 +299,7 @@ export const PerseoSection: React.FC = () => {
                 <div className="flex items-center gap-2">
                   <span className="w-2.5 h-2.5 rounded-full bg-amber-500" />
                   <span className="text-xs font-bold text-[#172B3A]">
-                    Estado: {configStatus?.isConfigured ? 'Conectado a Perseo Cloud' : 'En espera de credenciales API oficiales'}
+                    Estado: {configStatus?.isConfigured ? 'Conectado a Sistema MH Cloud' : 'En espera de credenciales API oficiales'}
                   </span>
                 </div>
                 <p className="text-xs text-[#64748B] leading-relaxed">

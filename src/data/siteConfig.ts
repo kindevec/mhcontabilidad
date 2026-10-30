@@ -99,5 +99,10 @@ export const siteConfig: SiteConfig = {
       url: "https://wa.me/593968392931",
       isConfirmed: true,
     },
+    {
+      name: "TikTok",
+      url: "https://tiktok.com",
+      isConfirmed: true,
+    },
   ],
 };

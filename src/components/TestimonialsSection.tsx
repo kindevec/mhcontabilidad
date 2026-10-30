@@ -17,7 +17,7 @@ const testimonials: TestimonialItem[] = [
     name: 'Carlos Mendoza',
     role: 'Gerente General · Inversiones Los Andes',
     comment:
-      'Tener a MH Contabilidad y su sincronización con Perseo nos devolvió el control absoluto de nuestros números. Declaraciones a tiempo y cero multas con el SRI.',
+      'Tener a MH Contabilidad y su sistema contable de MH Contabilidad nos devolvió el control absoluto de nuestros números. Declaraciones a tiempo y cero multas con el SRI.',
     avatar: 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&w=200&h=200&q=80',
     rating: 5,
   },
