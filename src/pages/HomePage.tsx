@@ -13,7 +13,7 @@ import { SystemAccessSection } from '../components/SystemAccessSection';
 import { TestimonialsSection } from '../components/TestimonialsSection';
 import { LeaveNumbersSection } from '../components/LeaveNumbersSection';
 import teamGroupImg from '../assets/images/equipo_mh_completo_panoramico.webp';
-import teamGroupMobileImg from '../assets/images/equipo_mh_completo_movil.webp';
+import teamGroupMobileImg from '../assets/images/equipo_mh_completo_movil.webp?v=3';
 import { motion, AnimatePresence } from 'motion/react';
 
 export const HomePage: React.FC = () => {
