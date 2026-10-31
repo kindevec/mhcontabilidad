@@ -115,7 +115,7 @@ export const ContactPage: React.FC = () => {
         imageAlt="Atención y asesoría contable profesional MH Contabilidad"
       >
         {/* Accesos Rápidos */}
-        <div className="pt-4 flex flex-wrap items-center gap-3">
+        <div className="pt-4 flex flex-wrap items-center justify-center sm:justify-start gap-3">
           <a
             href={`https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola MH Contabilidad, requiero asesoría contable personalizada.')}`}
             target="_blank"
@@ -207,8 +207,8 @@ export const ContactPage: React.FC = () => {
 
               </div>
 
-              {/* Mapa Google Maps Interactivo en contenedor cuadrado sin puntas redondeadas y mayor tamaño vertical */}
-              <div className="rounded-none overflow-hidden border border-slate-300 shadow-md h-80 sm:h-96 lg:h-[400px] w-full relative">
+              {/* Mapa Google Maps Interactivo a ancho completo en móvil y encuadrado en desktop */}
+              <div className="-mx-4 sm:mx-0 rounded-none overflow-hidden border-y sm:border border-slate-300 shadow-md h-80 sm:h-96 lg:h-[400px] relative">
                 <iframe
                   title="Ubicación y Cobertura MH Contabilidad Ecuador"
                   src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d255347.3486337226!2d-78.58550186981882!3d-0.1865988878906963!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x91d59a4002422c9f%3A0x44b4b6930f5e2e7f!2sQuito%2C%20Ecuador!5e0!3m2!1ses!2sec!4v1700000000000!5m2!1ses!2sec"

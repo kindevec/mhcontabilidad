@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { Star, Quote } from 'lucide-react';
-import { Marquee } from './ui/cta-with-marquee';
 
 interface TestimonialItem {
   id: string;
@@ -69,6 +68,102 @@ const testimonials: TestimonialItem[] = [
 ];
 
 export const TestimonialsSection: React.FC = () => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isInteracting, setIsInteracting] = useState(false);
+  const isDraggingRef = useRef(false);
+  const startXRef = useRef(0);
+  const startScrollLeftRef = useRef(0);
+  const interactionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Cuadruplicamos la lista para garantizar un ciclo infinito continuo y sin vacíos
+  const infiniteTestimonials = [
+    ...testimonials,
+    ...testimonials,
+    ...testimonials,
+    ...testimonials,
+  ];
+
+  // Envoltorio cíclico infinito invisible al ojo
+  const handleBoundaryWrap = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const singleSetWidth = el.scrollWidth / 4;
+    if (singleSetWidth <= 0) return;
+
+    if (el.scrollLeft >= singleSetWidth * 2.5) {
+      el.scrollLeft -= singleSetWidth;
+    } else if (el.scrollLeft <= singleSetWidth * 0.5) {
+      el.scrollLeft += singleSetWidth;
+    }
+  }, []);
+
+  // Posicionar en el segundo bloque al cargar para permitir deslizamiento previo inmediato
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const singleSetWidth = el.scrollWidth / 4;
+    if (singleSetWidth > 0 && el.scrollLeft === 0) {
+      el.scrollLeft = singleSetWidth;
+    }
+  }, []);
+
+  const pauseTemporarily = (duration = 2200) => {
+    setIsInteracting(true);
+    if (interactionTimeoutRef.current) clearTimeout(interactionTimeoutRef.current);
+    interactionTimeoutRef.current = setTimeout(() => {
+      setIsInteracting(false);
+    }, duration);
+  };
+
+  // Deslizamiento continuo infinito a 60fps
+  useEffect(() => {
+    let lastTime = performance.now();
+    let animId: number;
+
+    const autoSlide = (currentTime: number) => {
+      const delta = (currentTime - lastTime) / 1000;
+      lastTime = currentTime;
+
+      if (!isInteracting && scrollRef.current && !isDraggingRef.current) {
+        const el = scrollRef.current;
+        el.scrollLeft += 32 * delta; // 32 px/segundo de deslizamiento fluido
+        handleBoundaryWrap();
+      }
+
+      animId = requestAnimationFrame(autoSlide);
+    };
+
+    animId = requestAnimationFrame(autoSlide);
+    return () => cancelAnimationFrame(animId);
+  }, [isInteracting, handleBoundaryWrap]);
+
+  // Arrastre con ratón (Desktop)
+  const handleMouseDown = (e: React.MouseEvent) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    isDraggingRef.current = true;
+    startXRef.current = e.pageX - el.offsetLeft;
+    startScrollLeftRef.current = el.scrollLeft;
+    setIsInteracting(true);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDraggingRef.current || !scrollRef.current) return;
+    e.preventDefault();
+    const el = scrollRef.current;
+    const x = e.pageX - el.offsetLeft;
+    const walk = (x - startXRef.current) * 1.5;
+    el.scrollLeft = startScrollLeftRef.current - walk;
+    handleBoundaryWrap();
+  };
+
+  const handleMouseUpOrLeave = () => {
+    if (isDraggingRef.current) {
+      isDraggingRef.current = false;
+      pauseTemporarily(1800);
+    }
+  };
+
   return (
     <section className="py-14 sm:py-20 bg-[#F8FAFC] border-y border-slate-200/80 relative overflow-hidden">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -85,13 +180,32 @@ export const TestimonialsSection: React.FC = () => {
           </p>
         </div>
 
-        {/* Carrusel delimitado al ancho de 4 columnas (max-w-7xl) deslizándose continuamente */}
-        <div className="w-full overflow-hidden py-3">
-          <Marquee speed={26} pauseOnHover className="[--gap:1.5rem]">
-            {testimonials.map((t) => (
+        {/* Carrusel infinito y deslizante idéntico al carrusel de servicios */}
+        <div className="relative w-full group/slider py-2">
+          <div
+            ref={scrollRef}
+            onScroll={handleBoundaryWrap}
+            onMouseDown={handleMouseDown}
+            onMouseMove={handleMouseMove}
+            onMouseUp={handleMouseUpOrLeave}
+            onMouseLeave={() => {
+              handleMouseUpOrLeave();
+              setIsInteracting(false);
+            }}
+            onMouseEnter={() => setIsInteracting(true)}
+            onTouchStart={() => setIsInteracting(true)}
+            onTouchEnd={() => pauseTemporarily(2000)}
+            className="w-full flex items-stretch gap-4 sm:gap-6 overflow-x-auto select-none cursor-grab active:cursor-grabbing px-2 sm:px-4 py-2"
+            style={{
+              scrollbarWidth: 'none',
+              msOverflowStyle: 'none',
+              WebkitOverflowScrolling: 'touch',
+            }}
+          >
+            {infiniteTestimonials.map((t, idx) => (
               <div
-                key={t.id}
-                className="relative w-[270px] sm:w-[285px] lg:w-[290px] min-h-[300px] bg-white p-6 rounded-3xl rounded-br-[42px] border-b-4 border-b-[#005BB2] border-t border-r border-l border-slate-100 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between shrink-0 select-none group"
+                key={`testimonial-${t.id}-${idx}`}
+                className="relative w-[280px] sm:w-[310px] min-h-[300px] bg-white p-6 rounded-3xl rounded-br-[42px] border-b-4 border-b-[#005BB2] border-t border-r border-l border-slate-100 shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col justify-between shrink-0 select-none group"
               >
                 {/* Badge de comilla superior derecha en círculo AZUL corporativo #005BB2 */}
                 <div className="absolute top-5 right-5 w-8 h-8 rounded-full bg-[#005BB2] text-white flex items-center justify-center shadow-sm group-hover:bg-[#FC6412] transition-colors duration-300">
@@ -136,7 +250,7 @@ export const TestimonialsSection: React.FC = () => {
                 </div>
               </div>
             ))}
-          </Marquee>
+          </div>
         </div>
       </div>
     </section>

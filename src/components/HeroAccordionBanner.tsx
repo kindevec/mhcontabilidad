@@ -1,5 +1,4 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState } from 'react';
 import { Calculator, ShieldCheck, TrendingUp, FileCheck } from 'lucide-react';
 
 interface PillarItem {
@@ -57,64 +56,62 @@ const pillars: PillarItem[] = [
 ];
 
 export const HeroAccordionBanner: React.FC = () => {
+  const [activePillar, setActivePillar] = useState<string | null>(null);
+
+  const togglePillar = (id: string) => {
+    setActivePillar((prev) => (prev === id ? null : id));
+  };
+
   return (
     <div className="w-full select-none" aria-label="Pilares de servicio MH Contabilidad">
-      {/* Contenedor Desktop: Acordeón plegado 3D con clip-path geométrico */}
-      <div className="hidden md:grid grid-cols-4 gap-0 relative filter drop-shadow-xl">
+      {/* Contenedor Adaptado con Acordeón Plegado 3D (diseño idéntico de PC adaptado en escala a móvil) */}
+      <div className="grid grid-cols-4 gap-0 relative filter drop-shadow-md sm:drop-shadow-xl">
         {pillars.map((item, idx) => {
           const Icon = item.icon;
+          const isActive = activePillar === item.id;
           return (
-            <Link
+            <div
               key={item.id}
-              to={item.link}
+              onClick={() => togglePillar(item.id)}
               style={{ clipPath: item.clipPathDesktop }}
-              className={`relative group flex flex-col items-center justify-center text-center px-4 py-6 lg:py-7 bg-gradient-to-b ${item.bgGradient} text-white transition-all duration-300 hover:brightness-110 -ml-[1px] first:ml-0 overflow-hidden cursor-pointer`}
+              className={`relative group flex flex-col items-center justify-center text-center px-1 xs:px-2 sm:px-3 md:px-4 py-3.5 xs:py-4.5 sm:py-5 md:py-6 lg:py-7 bg-gradient-to-b ${item.bgGradient} text-white transition-all duration-300 ${
+                isActive ? 'brightness-110' : 'hover:brightness-110'
+              } -ml-[1px] first:ml-0 overflow-hidden cursor-pointer select-none`}
             >
               {/* Franja superior de acento con colores de marca MH */}
               <div
-                className={`absolute top-0 left-0 right-0 h-1.5 bg-gradient-to-r ${item.accentBar} opacity-90 group-hover:opacity-100 group-hover:h-2 transition-all duration-300`}
+                className={`absolute top-0 left-0 right-0 h-1 sm:h-1.5 bg-gradient-to-r ${item.accentBar} ${
+                  isActive ? 'opacity-100 h-2' : 'opacity-90 group-hover:opacity-100 group-hover:h-2'
+                } transition-all duration-300`}
               />
 
               {/* Efecto de pliegue / luz en la arista */}
               <div
                 className={`absolute inset-y-0 ${
-                  idx % 2 === 0 ? 'right-0 bg-black/20 w-3' : 'left-0 bg-white/10 w-3'
+                  idx % 2 === 0 ? 'right-0 bg-black/20 w-1.5 sm:w-2.5 md:w-3' : 'left-0 bg-white/10 w-1.5 sm:w-2.5 md:w-3'
                 } pointer-events-none`}
               />
 
-              {/* Icono corporativo */}
-              <div className="relative mb-2.5 flex items-center justify-center w-11 h-11 rounded-full bg-white/10 backdrop-blur-sm border border-white/20 group-hover:scale-110 group-hover:bg-[#FC6412] group-hover:border-[#FC6412] transition-all duration-300 shadow-inner">
-                <Icon className="w-5 h-5 lg:w-6 lg:h-6 text-white" />
+              {/* Icono corporativo en halo esmerilado con cambio de color al pasar el cursor o pulsar */}
+              <div
+                className={`relative mb-1.5 sm:mb-2 md:mb-2.5 flex items-center justify-center w-7 h-7 xs:w-8 xs:h-8 sm:w-10 sm:h-10 md:w-11 md:h-11 rounded-full ${
+                  isActive
+                    ? 'bg-[#FC6412] border-[#FC6412] scale-110 shadow-lg'
+                    : 'bg-white/10 backdrop-blur-sm border border-white/20 group-hover:scale-110 group-hover:bg-[#FC6412] group-hover:border-[#FC6412]'
+                } transition-all duration-300 shadow-inner shrink-0`}
+              >
+                <Icon className="w-3.5 h-3.5 xs:w-4 xs:h-4 sm:w-5 sm:h-5 md:w-5 md:h-5 lg:w-6 lg:h-6 text-white" />
               </div>
 
-              {/* Título en alta jerarquía */}
-              <h3 className="text-xs lg:text-[13px] font-black tracking-wider text-white uppercase leading-snug group-hover:text-amber-200 transition-colors">
+              {/* Título en alta jerarquía con cambio de color */}
+              <h3
+                className={`text-[8px] xs:text-[9.5px] sm:text-[11px] md:text-xs lg:text-[13px] font-black tracking-tight xs:tracking-normal sm:tracking-wider uppercase leading-[1.15] ${
+                  isActive ? 'text-amber-200' : 'text-white group-hover:text-amber-200'
+                } transition-colors px-0.5`}
+              >
                 {item.title}
               </h3>
-            </Link>
-          );
-        })}
-      </div>
-
-      {/* Contenedor Móvil (< 768px): Cuadrícula ergonómica 2x2 adaptada al pulgar */}
-      <div className="grid grid-cols-2 md:hidden gap-2 px-1 sm:px-1.5">
-        {pillars.map((item) => {
-          const Icon = item.icon;
-          return (
-            <Link
-              key={item.id}
-              to={item.link}
-              className={`flex flex-col items-center justify-center text-center p-2.5 sm:p-3.5 rounded-xl bg-gradient-to-b ${item.bgGradient} text-white shadow-md border-t-2 ${
-                item.accentBar.includes('FC6412') ? 'border-t-[#FC6412]' : 'border-t-[#38BDF8]'
-              } active:scale-[0.98] transition-transform`}
-            >
-              <div className="mb-1.5 p-2 rounded-lg bg-white/10">
-                <Icon className="w-5 h-5 text-white" />
-              </div>
-              <h3 className="text-[11px] font-black tracking-wide uppercase text-white leading-tight">
-                {item.title}
-              </h3>
-            </Link>
+            </div>
           );
         })}
       </div>

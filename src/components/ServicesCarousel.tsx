@@ -1,6 +1,5 @@
-import React from 'react';
+import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { WhatsAppIcon } from './WhatsAppIcon';
-import { Marquee } from './ui/cta-with-marquee';
 import { siteConfig } from '../data/siteConfig';
 
 // Fotografías profesionales reales para los 5 servicios oficiales
@@ -73,13 +72,109 @@ export interface ServicesCarouselProps {
 }
 
 export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ centerLabel }) => {
+  const scrollRef = useRef<HTMLDivElement>(null);
+  const [isInteracting, setIsInteracting] = useState(false);
+  const isDraggingRef = useRef(false);
+  const startXRef = useRef(0);
+  const startScrollLeftRef = useRef(0);
+  const interactionTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
+  // Cuadruplicamos la lista para garantizar un ciclo infinito continuo y sin vacíos
+  const infiniteServices = [
+    ...officialServices,
+    ...officialServices,
+    ...officialServices,
+    ...officialServices,
+  ];
+
   const getWhatsappUrl = (msg: string) =>
     `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent(msg)}`;
+
+  // Envoltorio cíclico infinito invisible al ojo
+  const handleBoundaryWrap = useCallback(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const singleSetWidth = el.scrollWidth / 4;
+    if (singleSetWidth <= 0) return;
+
+    if (el.scrollLeft >= singleSetWidth * 2.5) {
+      el.scrollLeft -= singleSetWidth;
+    } else if (el.scrollLeft <= singleSetWidth * 0.5) {
+      el.scrollLeft += singleSetWidth;
+    }
+  }, []);
+
+  // Posicionar en el segundo bloque al cargar para permitir deslizamiento previo inmediato
+  useEffect(() => {
+    const el = scrollRef.current;
+    if (!el) return;
+    const singleSetWidth = el.scrollWidth / 4;
+    if (singleSetWidth > 0 && el.scrollLeft === 0) {
+      el.scrollLeft = singleSetWidth;
+    }
+  }, []);
+
+  const pauseTemporarily = (duration = 2200) => {
+    setIsInteracting(true);
+    if (interactionTimeoutRef.current) clearTimeout(interactionTimeoutRef.current);
+    interactionTimeoutRef.current = setTimeout(() => {
+      setIsInteracting(false);
+    }, duration);
+  };
+
+  // Deslizamiento continuo infinito a 60fps
+  useEffect(() => {
+    let lastTime = performance.now();
+    let animId: number;
+
+    const autoSlide = (currentTime: number) => {
+      const delta = (currentTime - lastTime) / 1000;
+      lastTime = currentTime;
+
+      if (!isInteracting && scrollRef.current && !isDraggingRef.current) {
+        const el = scrollRef.current;
+        el.scrollLeft += 36 * delta; // 36 px/segundo de deslizamiento fluido
+        handleBoundaryWrap();
+      }
+
+      animId = requestAnimationFrame(autoSlide);
+    };
+
+    animId = requestAnimationFrame(autoSlide);
+    return () => cancelAnimationFrame(animId);
+  }, [isInteracting, handleBoundaryWrap]);
+
+  // Arrastre con ratón (Desktop)
+  const handleMouseDown = (e: React.MouseEvent) => {
+    const el = scrollRef.current;
+    if (!el) return;
+    isDraggingRef.current = true;
+    startXRef.current = e.pageX - el.offsetLeft;
+    startScrollLeftRef.current = el.scrollLeft;
+    setIsInteracting(true);
+  };
+
+  const handleMouseMove = (e: React.MouseEvent) => {
+    if (!isDraggingRef.current || !scrollRef.current) return;
+    e.preventDefault();
+    const el = scrollRef.current;
+    const x = e.pageX - el.offsetLeft;
+    const walk = (x - startXRef.current) * 1.5;
+    el.scrollLeft = startScrollLeftRef.current - walk;
+    handleBoundaryWrap();
+  };
+
+  const handleMouseUpOrLeave = () => {
+    if (isDraggingRef.current) {
+      isDraggingRef.current = false;
+      pauseTemporarily(1800);
+    }
+  };
 
   const renderCard = (item: ServiceCardData, key: React.Key) => (
     <div
       key={key}
-      className="relative w-[280px] xs:w-80 sm:w-96 h-[450px] sm:h-[540px] rounded-none overflow-hidden shadow-xl border border-slate-200/80 bg-slate-900 group select-none transition-transform duration-300 hover:scale-[1.02] shrink-0"
+      className="relative w-[280px] xs:w-80 sm:w-96 h-[440px] sm:h-[520px] rounded-none overflow-hidden shadow-xl border border-slate-200/80 bg-slate-900 group select-none transition-transform duration-300 hover:scale-[1.01] shrink-0"
     >
       <img
         src={item.img}
@@ -90,7 +185,7 @@ export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ centerLabel 
       {/* Degradado oscuro para garantizar legibilidad del texto */}
       <div className="absolute inset-0 bg-gradient-to-t from-[#172B3A] via-[#172B3A]/80 to-transparent pointer-events-none" />
 
-      {/* Contenido: Título, Frase y Dos Botones centrados */}
+      {/* Contenido: Título, Frase y Botón centrados */}
       <div className="relative z-10 p-5 sm:p-8 h-full flex flex-col justify-end items-center text-white text-center space-y-3">
         <h4 className="text-lg sm:text-2xl font-bold leading-snug text-white drop-shadow-sm line-clamp-2">
           {item.title}
@@ -124,11 +219,31 @@ export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ centerLabel 
         </div>
       )}
 
-      {/* Carrusel en UNA SOLA FILA HORIZONTAL a ancho completo */}
-      <div className="w-full overflow-hidden py-2">
-        <Marquee speed={32} pauseOnHover className="[--gap:2rem]">
-          {officialServices.map((item, idx) => renderCard(item, `card-${idx}`))}
-        </Marquee>
+      {/* Contenedor deslizante interactivo e infinito */}
+      <div className="relative w-full group/slider py-2">
+        {/* Pista deslizante infinita con soporte táctil nativo en móvil y drag en desktop */}
+        <div
+          ref={scrollRef}
+          onScroll={handleBoundaryWrap}
+          onMouseDown={handleMouseDown}
+          onMouseMove={handleMouseMove}
+          onMouseUp={handleMouseUpOrLeave}
+          onMouseLeave={() => {
+            handleMouseUpOrLeave();
+            setIsInteracting(false);
+          }}
+          onMouseEnter={() => setIsInteracting(true)}
+          onTouchStart={() => setIsInteracting(true)}
+          onTouchEnd={() => pauseTemporarily(2000)}
+          className="w-full flex items-center gap-4 sm:gap-6 overflow-x-auto select-none cursor-grab active:cursor-grabbing px-4 sm:px-8 py-1"
+          style={{
+            scrollbarWidth: 'none',
+            msOverflowStyle: 'none',
+            WebkitOverflowScrolling: 'touch',
+          }}
+        >
+          {infiniteServices.map((item, idx) => renderCard(item, `service-infinite-${idx}`))}
+        </div>
       </div>
     </div>
   );

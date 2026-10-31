@@ -95,7 +95,7 @@ export const ServicesPage: React.FC = () => {
         imageAlt="Servicios contables y tributarios profesionales en Ecuador"
       >
         {/* Accesos Rápidos */}
-        <div className="pt-4 flex flex-wrap items-center gap-3">
+        <div className="pt-4 flex flex-wrap items-center justify-center sm:justify-start gap-3">
           <a
             href={createWhatsAppUrl('Hola MH Contabilidad, deseo cotizar un servicio contable y tributario para mi empresa.')}
             target="_blank"

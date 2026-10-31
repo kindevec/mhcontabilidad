@@ -118,7 +118,7 @@ export const OnlineServicesPage: React.FC = () => {
         imageAlt="Plataforma de contabilidad digital y reportes financieros de MH Contabilidad"
       >
         {/* Accesos Rápidos */}
-        <div className="pt-4 flex flex-wrap items-center gap-3">
+        <div className="pt-4 flex flex-wrap items-center justify-center sm:justify-start gap-3">
           <a
             href={siteConfig.systemUrl}
             target="_blank"

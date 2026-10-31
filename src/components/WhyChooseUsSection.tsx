@@ -70,7 +70,7 @@ export const WhyChooseUsSection: React.FC = () => {
           <div className="max-w-3xl space-y-6 text-left">
             
             {/* Título Principal */}
-            <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[42px] font-black text-[#172B3A] tracking-tight leading-[1.15]">
+            <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[42px] font-black text-[#172B3A] tracking-tight leading-[1.15] text-center sm:text-left">
               ¿Por qué contratarnos?
             </h2>
 

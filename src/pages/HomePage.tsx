@@ -13,6 +13,7 @@ import { SystemAccessSection } from '../components/SystemAccessSection';
 import { TestimonialsSection } from '../components/TestimonialsSection';
 import { LeaveNumbersSection } from '../components/LeaveNumbersSection';
 import teamGroupImg from '../assets/images/equipo_mh_completo_panoramico.webp';
+import teamGroupMobileImg from '../assets/images/equipo_mh_completo_movil.webp';
 import { motion, AnimatePresence } from 'motion/react';
 
 export const HomePage: React.FC = () => {
@@ -46,12 +47,12 @@ export const HomePage: React.FC = () => {
       <HeroSection />
 
       {/* Cinta Acordeón Plegada 3D justo donde termina el Hero (calibrada más abajo) */}
-      <div className="relative z-30 max-w-[1500px] w-full mx-auto px-4 sm:px-6 lg:px-8 -mt-4 sm:-mt-6 lg:-mt-7 mb-6 sm:mb-8">
+      <div className="relative z-30 max-w-[1500px] w-full mx-auto px-2 xs:px-4 sm:px-6 lg:px-8 -mt-4 sm:-mt-6 lg:-mt-7 mb-2 sm:mb-4">
         <HeroAccordionBanner />
       </div>
 
       {/* 2. Sección Nuestros Servicios: Encabezado centrado ARRIBA y carrusel debajo a ancho completo (w-full) */}
-      <section className="relative isolate z-10 py-12 sm:py-16 bg-white overflow-hidden border-y border-slate-100 w-full">
+      <section className="relative isolate z-10 pt-6 sm:pt-8 pb-8 sm:pb-10 bg-white overflow-hidden border-y border-slate-100 w-full">
         <div className="w-full">
           <ServicesCarousel
             centerLabel={
@@ -81,7 +82,7 @@ export const HomePage: React.FC = () => {
       {/* 3. Sección Quiénes Somos / Nuestra Convicción con foto grupal que empieza después del título y contenedor interactivo centrado */}
       <section className="relative bg-[#F8FAFC] border-y border-slate-200/80 overflow-hidden">
         {/* Encabezado: Título principal centrado que precede a la imagen */}
-        <div className="text-center pt-10 sm:pt-12 pb-5 sm:pb-6 relative z-10 bg-[#F8FAFC]">
+        <div className="text-center pt-6 sm:pt-7 pb-4 sm:pb-5 relative z-10 bg-[#F8FAFC]">
           <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-extrabold text-[#172B3A] tracking-tight leading-tight">
             Quiénes somos
           </h2>
@@ -91,15 +92,18 @@ export const HomePage: React.FC = () => {
         <div className="relative w-full h-[580px] sm:h-[600px] lg:h-[620px] overflow-hidden bg-slate-900">
           {/* Foto grupal completa como fondo anclada para ocupar todo el espacio vertical de la sección */}
           <div className="absolute inset-0 z-0">
-            <img
-              src={teamGroupImg}
-              alt="Equipo de consultores y asesores de MH Contabilidad en Ecuador"
-              className="w-full h-full object-cover object-center filter brightness-[0.88]"
-              loading="lazy"
-              referrerPolicy="no-referrer"
-            />
+            <picture>
+              <source media="(max-width: 639px)" srcSet={teamGroupMobileImg} />
+              <img
+                src={teamGroupImg}
+                alt="Equipo de consultores y asesores de MH Contabilidad en Ecuador"
+                className="w-full h-full object-cover object-top sm:object-center filter brightness-[0.92] sm:brightness-[0.88]"
+                loading="lazy"
+                referrerPolicy="no-referrer"
+              />
+            </picture>
             {/* Overlay sutil para realzar la nitidez de la foto y el contenedor */}
-            <div className="absolute inset-0 bg-slate-950/40" />
+            <div className="absolute inset-0 bg-slate-950/30 sm:bg-slate-950/40" />
           </div>
 
           <div className="relative z-10 w-full h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8 lg:pb-10 flex justify-center items-end">

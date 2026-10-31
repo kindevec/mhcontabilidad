@@ -17,7 +17,7 @@ export const Layout: React.FC = () => {
       <Navbar />
 
       {/* Contenido dinámico de cada página con renderizado inmediato y fluido */}
-      <main id="main-content" className="flex-1 pb-20 sm:pb-24 lg:pb-0">
+      <main id="main-content" className="flex-1">
         <Outlet />
       </main>
 

@@ -56,7 +56,7 @@ export const LeaveNumbersSection: React.FC = () => {
       </div>
 
       {/* 2. Tarjeta Split Central (Formulario Blanco sin contenedores solo con líneas + Bloque Azul Marino con Logo oficial) */}
-      <div className="w-full max-w-6xl mx-auto px-0 sm:px-6 lg:px-8 -mt-20 sm:-mt-24 pb-16 sm:pb-20 relative z-10">
+      <div className="w-full max-w-6xl mx-auto px-0 sm:px-6 lg:px-8 -mt-20 sm:-mt-24 pb-8 sm:pb-12 relative z-10">
         <div className="w-full bg-white rounded-none sm:rounded-2xl shadow-2xl overflow-hidden grid grid-cols-1 lg:grid-cols-12 border-y sm:border border-slate-100">
           
           {/* Lado Izquierdo (Fondo Blanco): Formulario limpio solo con líneas inferiores (sin cajas contenedoras) */}

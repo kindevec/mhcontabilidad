@@ -45,7 +45,7 @@ export const AboutPage: React.FC = () => {
         imageAlt="Equipo de consultoría contable MH Contabilidad"
       >
         {/* Accesos Rápidos */}
-        <div className="pt-4 flex flex-wrap items-center gap-3">
+        <div className="pt-4 flex flex-wrap items-center justify-center sm:justify-start gap-3">
           <Link
             to="/servicios"
             className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200"
