@@ -216,83 +216,83 @@ export const AboutPage: React.FC = () => {
             </h2>
           </div>
 
-          {/* Cuadrícula de 6 bloques compactos idéntica al diseño de referencia (2 filas x 3 columnas) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-0 border border-white/10 shadow-2xl overflow-hidden rounded-none">
+          {/* Cuadrícula de 6 bloques compactos (2 columnas en móvil, 3 en desktop) */}
+          <div className="grid grid-cols-2 lg:grid-cols-3 gap-0 border border-white/10 shadow-2xl overflow-hidden rounded-none">
             
             {/* Bloque 1: DESTACADO AMARILLO/NARANJA KINDEV (#F5A623 / #FC6412) */}
-            <div className="bg-[#E58A1F] text-slate-950 p-6 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-black/10 select-none group transition-all duration-300 hover:brightness-105">
-              <div className="w-16 h-16 rounded-none flex items-center justify-center text-slate-950">
-                <Laptop className="w-12 h-12 stroke-[1.8]" />
+            <div className="bg-[#E58A1F] text-slate-950 p-4 sm:p-9 flex flex-col items-center text-center justify-center space-y-2 sm:space-y-3 border border-black/10 select-none group transition-all duration-300 hover:brightness-105">
+              <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-none flex items-center justify-center text-slate-950">
+                <Laptop className="w-7 h-7 sm:w-12 sm:h-12 stroke-[1.8]" />
               </div>
-              <h3 className="text-sm sm:text-base font-extrabold uppercase tracking-wider text-slate-950">
+              <h3 className="text-xs sm:text-base font-extrabold uppercase tracking-wider text-slate-950">
                 CLARIDAD ABSOLUTA
               </h3>
-              <p className="text-xs text-slate-900/90 leading-relaxed font-medium max-w-xs">
+              <p className="text-[10px] sm:text-xs text-slate-900/90 leading-relaxed font-medium max-w-xs">
                 Explicamos las finanzas y los impuestos en un idioma simple, directo y sin tecnicismos complejos.
               </p>
             </div>
 
             {/* Bloque 2: Fondo Oscuro Transparente */}
-            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-6 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-white/10 select-none group transition-all duration-300">
-              <div className="w-16 h-16 rounded-none flex items-center justify-center text-white">
-                <PhoneCall className="w-12 h-12 stroke-[1.8]" />
+            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-4 sm:p-9 flex flex-col items-center text-center justify-center space-y-2 sm:space-y-3 border border-white/10 select-none group transition-all duration-300">
+              <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-none flex items-center justify-center text-white">
+                <PhoneCall className="w-7 h-7 sm:w-12 sm:h-12 stroke-[1.8]" />
               </div>
-              <h3 className="text-sm sm:text-base font-extrabold uppercase tracking-wider text-white">
+              <h3 className="text-xs sm:text-base font-extrabold uppercase tracking-wider text-white">
                 CERCANÍA PROACTIVA
               </h3>
-              <p className="text-xs text-slate-300 leading-relaxed font-normal max-w-xs">
+              <p className="text-[10px] sm:text-xs text-slate-300 leading-relaxed font-normal max-w-xs">
                 Monitoreamos activamente el negocio y nos anticipamos a contingencias o ahorros fiscales.
               </p>
             </div>
 
             {/* Bloque 3: Fondo Oscuro Transparente */}
-            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-6 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-white/10 select-none group transition-all duration-300">
-              <div className="w-16 h-16 rounded-none flex items-center justify-center text-white">
-                <Shield className="w-12 h-12 stroke-[1.8]" />
+            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-4 sm:p-9 flex flex-col items-center text-center justify-center space-y-2 sm:space-y-3 border border-white/10 select-none group transition-all duration-300">
+              <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-none flex items-center justify-center text-white">
+                <Shield className="w-7 h-7 sm:w-12 sm:h-12 stroke-[1.8]" />
               </div>
-              <h3 className="text-sm sm:text-base font-extrabold uppercase tracking-wider text-white">
+              <h3 className="text-xs sm:text-base font-extrabold uppercase tracking-wider text-white">
                 PRECISIÓN SEGURA
               </h3>
-              <p className="text-xs text-slate-300 leading-relaxed font-normal max-w-xs">
+              <p className="text-[10px] sm:text-xs text-slate-300 leading-relaxed font-normal max-w-xs">
                 Máximo rigor técnico y actualización normativa para un cumplimiento fiscal impecable ante el SRI.
               </p>
             </div>
 
             {/* Bloque 4: Fondo Oscuro Transparente */}
-            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-6 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-white/10 select-none group transition-all duration-300">
-              <div className="w-16 h-16 rounded-none flex items-center justify-center text-white">
-                <TrendingUp className="w-12 h-12 stroke-[1.8]" />
+            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-4 sm:p-9 flex flex-col items-center text-center justify-center space-y-2 sm:space-y-3 border border-white/10 select-none group transition-all duration-300">
+              <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-none flex items-center justify-center text-white">
+                <TrendingUp className="w-7 h-7 sm:w-12 sm:h-12 stroke-[1.8]" />
               </div>
-              <h3 className="text-sm sm:text-base font-extrabold uppercase tracking-wider text-white">
+              <h3 className="text-xs sm:text-base font-extrabold uppercase tracking-wider text-white">
                 VISIÓN DE CRECIMIENTO
               </h3>
-              <p className="text-xs text-slate-300 leading-relaxed font-normal max-w-xs">
+              <p className="text-[10px] sm:text-xs text-slate-300 leading-relaxed font-normal max-w-xs">
                 Soluciones contables escalables que se adaptan al tamaño actual y proyectan el crecimiento futuro.
               </p>
             </div>
 
             {/* Bloque 5: Fondo Oscuro Transparente */}
-            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-6 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-white/10 select-none group transition-all duration-300">
-              <div className="w-16 h-16 rounded-none flex items-center justify-center text-white">
-                <Users2 className="w-12 h-12 stroke-[1.8]" />
+            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-4 sm:p-9 flex flex-col items-center text-center justify-center space-y-2 sm:space-y-3 border border-white/10 select-none group transition-all duration-300">
+              <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-none flex items-center justify-center text-white">
+                <Users2 className="w-7 h-7 sm:w-12 sm:h-12 stroke-[1.8]" />
               </div>
-              <h3 className="text-sm sm:text-base font-extrabold uppercase tracking-wider text-white">
+              <h3 className="text-xs sm:text-base font-extrabold uppercase tracking-wider text-white">
                 ALIADOS COTIDIANOS
               </h3>
-              <p className="text-xs text-slate-300 leading-relaxed font-normal max-w-xs">
+              <p className="text-[10px] sm:text-xs text-slate-300 leading-relaxed font-normal max-w-xs">
                 Trato humano y personalizado; estamos a un mensaje de distancia para resolver dudas en el momento.
               </p>
             </div>
 
             {/* Bloque 6: Fondo Oscuro Transparente */}
-            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-6 sm:p-9 flex flex-col items-center text-center justify-center space-y-3 border border-white/10 select-none group transition-all duration-300">
-              <div className="w-16 h-16 rounded-none flex items-center justify-center text-white">
-                <FileCheck2 className="w-12 h-12 stroke-[1.8]" />
+            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-4 sm:p-9 flex flex-col items-center text-center justify-center space-y-2 sm:space-y-3 border border-white/10 select-none group transition-all duration-300">
+              <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-none flex items-center justify-center text-white">
+                <FileCheck2 className="w-7 h-7 sm:w-12 sm:h-12 stroke-[1.8]" />
               </div>
-              <h3 className="text-sm sm:text-base font-extrabold uppercase tracking-wider text-white">
+              <h3 className="text-xs sm:text-base font-extrabold uppercase tracking-wider text-white">
                 BLINDAJE TRIBUTARIO
               </h3>
-              <p className="text-xs text-slate-300 leading-relaxed font-normal max-w-xs">
+              <p className="text-[10px] sm:text-xs text-slate-300 leading-relaxed font-normal max-w-xs">
                 Control contable que protege tu patrimonio, evita multas y brinda absoluta paz mental.
               </p>
             </div>
