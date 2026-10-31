@@ -39,11 +39,16 @@ export const ServicesPage: React.FC = () => {
   };
 
   const [openIndices, setOpenIndices] = useState<number[]>([]);
+  const [activeServiceId, setActiveServiceId] = useState<string | null>(null);
 
   const toggleFaq = (idx: number) => {
     setOpenIndices((prev) =>
       prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
     );
+  };
+
+  const handleToggleService = (id: string) => {
+    setActiveServiceId((prev) => (prev === id ? null : id));
   };
 
   const faqItems = [
@@ -111,7 +116,7 @@ export const ServicesPage: React.FC = () => {
       </PageHero>
 
       {/* 2. Catálogo Oficial de Servicios (Tarjetas con Hover Deslizante estilo Card-7) */}
-      <section id="servicios" className="py-16 sm:py-20 bg-[#F8FAFC] scroll-mt-20">
+      <section id="servicios" className="pt-10 pb-6 sm:py-20 bg-[#F8FAFC] scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
@@ -120,13 +125,22 @@ export const ServicesPage: React.FC = () => {
             </h2>
           </div>
 
-          {/* Tarjetas Centradas (3 en primera fila, 2 en segunda fila centradas) */}
-          <div className="flex flex-wrap justify-center gap-7">
-            {servicesData.map((service) => {
+          {/* Tarjetas: 2 por fila en móvil (< sm), 3 y 2 centradas en PC (sm+) */}
+          <div className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-2.5 sm:gap-7">
+            {servicesData.map((service, idx) => {
               const waUrl = createWhatsAppUrl(service.whatsappMessage);
               const serviceImg = getServiceImage(service.id);
+              const isLast = idx === servicesData.length - 1 && servicesData.length % 2 !== 0;
+
               return (
-                <div key={service.id} className="w-full sm:w-[350px] lg:w-[370px] flex justify-center">
+                <div
+                  key={service.id}
+                  className={`w-full sm:w-[350px] lg:w-[370px] flex justify-center ${
+                    isLast
+                      ? 'col-span-2 flex justify-center [&>div]:w-[calc(50%-5px)] sm:[&>div]:w-full'
+                      : ''
+                  }`}
+                >
                   <ServiceCard
                     imageUrl={serviceImg}
                     imageAlt={service.title}
@@ -134,6 +148,8 @@ export const ServicesPage: React.FC = () => {
                     tagline={service.tagline}
                     highlights={service.highlights}
                     whatsappUrl={waUrl}
+                    isActive={activeServiceId === service.id}
+                    onToggle={() => handleToggleService(service.id)}
                   />
                 </div>
               );
@@ -144,8 +160,8 @@ export const ServicesPage: React.FC = () => {
       </section>
 
       {/* 3. Preguntas Frecuentes Contables y Tributarias de Ecuador */}
-      <section className="py-16 sm:py-20 bg-white border-t border-slate-100">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
+      <section className="pt-6 pb-14 sm:py-20 bg-white border-t border-slate-100">
+        <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-10">
           <div className="text-center space-y-2">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#172B3A] tracking-tight">
               Preguntas Frecuentes sobre la Gestión Contable
@@ -155,32 +171,32 @@ export const ServicesPage: React.FC = () => {
             </p>
           </div>
 
-          {/* Rejilla de 2 columnas con la paleta oficial MH (#005BB2 y #FC6412) */}
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-4 sm:gap-5">
+          {/* Rejilla: 2 preguntas por fila en móvil (< md) y en desktop (md+) */}
+          <div className="grid grid-cols-2 gap-2.5 sm:gap-5">
             {faqItems.map((faq, idx) => {
               const isOpen = openIndices.includes(idx);
               return (
                 <div
                   key={idx}
                   onClick={() => toggleFaq(idx)}
-                  className="bg-[#005BB2] hover:bg-[#004e9a] text-white rounded-2xl p-4 sm:p-5 flex flex-col justify-center cursor-pointer select-none border border-blue-600/40 shadow-sm transition-all duration-200 group"
+                  className="bg-[#005BB2] hover:bg-[#004e9a] text-white rounded-2xl p-2.5 xs:p-3 sm:p-5 flex flex-col justify-start cursor-pointer select-none border border-blue-600/40 shadow-sm transition-all duration-200 group"
                 >
-                  <div className="flex items-center justify-between gap-4">
-                    <h3 className="text-sm sm:text-[15px] font-bold text-white text-left leading-snug">
+                  <div className="flex items-start justify-between gap-1.5 sm:gap-4">
+                    <h3 className="text-[11px] xs:text-xs sm:text-[15px] font-bold text-white text-left leading-snug">
                       {faq.question}
                     </h3>
                     <div
-                      className={`w-7 h-7 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#FC6412] transition-transform duration-200 ${
+                      className={`w-5 h-5 sm:w-7 sm:h-7 rounded-full bg-white/10 flex items-center justify-center shrink-0 text-[#FC6412] transition-transform duration-200 ${
                         isOpen ? 'rotate-45' : 'rotate-0'
                       }`}
                     >
-                      <Plus className="w-5 h-5 stroke-[2.5]" />
+                      <Plus className="w-3.5 h-3.5 sm:w-5 sm:h-5 stroke-[2.5]" />
                     </div>
                   </div>
 
                   {isOpen && (
-                    <div className="pt-3 mt-2.5 border-t border-white/20 text-left">
-                      <p className="text-xs sm:text-[13px] text-blue-100 leading-relaxed font-normal">
+                    <div className="pt-2 sm:pt-3 mt-2 sm:mt-2.5 border-t border-white/20 text-left">
+                      <p className="text-[10px] xs:text-xs sm:text-[13px] text-blue-100 leading-relaxed font-normal">
                         {faq.answer}
                       </p>
                     </div>

@@ -84,7 +84,7 @@ export const HeroSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[520px] sm:min-h-[580px] lg:min-h-[640px] xl:min-h-[680px]">
           
           {/* Columna Izquierda: Información oficial desplazada a la izquierda sobre el fondo oscuro */}
-          <div className="lg:col-span-5 xl:col-span-5 pt-24 xs:pt-28 sm:pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-20 space-y-5 sm:space-y-7 text-left">
+          <div className="lg:col-span-5 xl:col-span-5 pt-24 xs:pt-28 sm:pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-20 space-y-5 sm:space-y-7 text-center lg:text-left">
             {/* Título Principal con salto de línea tras 'Contable' */}
             <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl xl:text-[52px] font-black text-white tracking-tight leading-[1.15]">
               <span className="block">Tu Respaldo Contable</span>

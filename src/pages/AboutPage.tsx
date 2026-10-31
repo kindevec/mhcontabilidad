@@ -65,7 +65,7 @@ export const AboutPage: React.FC = () => {
       </PageHero>
 
       {/* 2. Quiénes Somos (Composición Asimétrica con Collage Orgánico y Elementos Destacados) */}
-      <section className="py-16 sm:py-24 bg-white overflow-hidden">
+      <section className="pt-12 pb-8 sm:py-24 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
             
@@ -139,12 +139,12 @@ export const AboutPage: React.FC = () => {
             {/* Columna Derecha: Contenido Institucional con Estilo "Our System Inspires You More" */}
             <div className="lg:col-span-6 space-y-6">
               {/* Título Principal con resalte bimetálico */}
-              <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-[#172B3A] tracking-tight leading-[1.15]">
+              <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-[#172B3A] tracking-tight leading-[1.15] text-center lg:text-left">
                 Nuestro Orden Contable <span className="text-[#FC6412]">Impulsa</span> Tu Crecimiento.
               </h2>
 
               {/* Textos Oficiales Solicitados */}
-              <div className="space-y-4 text-sm sm:text-base text-slate-600 leading-relaxed font-normal">
+              <div className="space-y-4 text-sm sm:text-base text-slate-600 leading-relaxed font-normal text-justify lg:text-left">
                 <p>
                   En el mundo de los negocios, detrás de cada gran idea, de cada pyme que se consolida y de cada mediana empresa que se expande, hay una realidad inevitable: <strong>los números</strong>. Sin embargo, sabemos que tú no fundaste tu negocio para pasar horas ordenando facturas, descifrando leyes fiscales complejas o preocupándote por sorpresas de última hora con los impuestos.
                 </p>

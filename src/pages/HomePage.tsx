@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import {
   ArrowRight,
@@ -17,6 +17,26 @@ import { motion, AnimatePresence } from 'motion/react';
 
 export const HomePage: React.FC = () => {
   const [isTeamHovered, setIsTeamHovered] = useState(false);
+  const teamContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleOutsideInteraction = (e: MouseEvent | TouchEvent) => {
+      if (
+        isTeamHovered &&
+        teamContainerRef.current &&
+        !teamContainerRef.current.contains(e.target as Node)
+      ) {
+        setIsTeamHovered(false);
+      }
+    };
+
+    document.addEventListener('click', handleOutsideInteraction);
+    document.addEventListener('touchstart', handleOutsideInteraction);
+    return () => {
+      document.removeEventListener('click', handleOutsideInteraction);
+      document.removeEventListener('touchstart', handleOutsideInteraction);
+    };
+  }, [isTeamHovered]);
 
   const whatsappGeneralUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Jorge Hernandez / MH Contabilidad, requiero asesoria contable y tributaria personalizada.')}`;
 
@@ -69,7 +89,7 @@ export const HomePage: React.FC = () => {
 
         {/* Banner con la imagen del equipo que inicia estrictamente después del título */}
         <div className="relative w-full h-[580px] sm:h-[600px] lg:h-[620px] overflow-hidden bg-slate-900">
-          {/* Foto grupal completa como fondo anclada arriba para que no se corten las cabezas */}
+          {/* Foto grupal completa como fondo anclada para ocupar todo el espacio vertical de la sección */}
           <div className="absolute inset-0 z-0">
             <img
               src={teamGroupImg}
@@ -83,23 +103,29 @@ export const HomePage: React.FC = () => {
           </div>
 
           <div className="relative z-10 w-full h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8 lg:pb-10 flex justify-center items-end">
-            {/* Contenedor Azul Semitransparente Cuadrado: Se expande ÚNICAMENTE al pasar el mouse sobre él */}
+            {/* Contenedor Azul Semitransparente Cuadrado: Se expande al tocar (móvil) o pasar el mouse (PC) y se recoge al tocar fuera */}
             <motion.div
+              ref={teamContainerRef}
               layout
               transition={{ duration: 0.35, ease: 'easeOut' }}
+              onClick={(e) => {
+                e.stopPropagation();
+                setIsTeamHovered((prev) => !prev);
+              }}
               onMouseEnter={() => setIsTeamHovered(true)}
               onMouseLeave={() => setIsTeamHovered(false)}
-              className="w-full max-w-2xl bg-[#002D5A]/85 hover:bg-[#002D5A]/95 backdrop-blur-md text-white p-6 sm:p-7 lg:p-8 rounded-none shadow-2xl border border-white/20 transition-all space-y-4 cursor-pointer"
+              className="w-full max-w-2xl bg-[#002D5A]/85 hover:bg-[#002D5A]/95 backdrop-blur-md text-white p-6 sm:p-7 lg:p-8 rounded-none shadow-2xl border border-white/20 transition-all space-y-4 cursor-pointer select-none"
             >
               {/* Frase / Convicción principal: Directa sin contenedor interior */}
               <p className="text-white font-bold text-sm sm:text-base lg:text-[16px] leading-relaxed tracking-tight text-center sm:text-left drop-shadow-sm">
                 “Nacimos con una convicción clara: la contabilidad no debería ser un dolor de cabeza, sino la herramienta más poderosa para tu crecimiento.”
               </p>
 
-              {/* Indicador interactivo en estado de reposo (cuando no se pasa el mouse) */}
+              {/* Indicador interactivo en estado de reposo (cuando no se pasa el mouse o toca) */}
               {!isTeamHovered && (
                 <div className="flex items-center justify-center gap-2 pt-1 text-[11px] sm:text-xs text-sky-200/90 font-medium tracking-wide">
-                  <span>Pasa el cursor aquí para ver la información completa</span>
+                  <span className="hidden sm:inline">Pasa el cursor aquí para ver la información completa</span>
+                  <span className="sm:hidden inline">Toca aquí para ver la información completa</span>
                   <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
                 </div>
               )}

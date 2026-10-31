@@ -13,6 +13,8 @@ export interface ServiceCardProps extends React.HTMLAttributes<HTMLDivElement> {
   overview?: string;
   highlights?: string[];
   whatsappUrl: string;
+  isActive?: boolean;
+  onToggle?: () => void;
 }
 
 export const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
@@ -25,6 +27,8 @@ export const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
       tagline,
       highlights = [],
       whatsappUrl,
+      isActive = false,
+      onToggle,
       ...props
     },
     ref
@@ -32,8 +36,9 @@ export const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
     return (
       <div
         ref={ref}
+        onClick={onToggle}
         className={cn(
-          'group relative w-full h-[420px] sm:h-[460px] overflow-hidden rounded-2xl border border-slate-200/90 bg-slate-950 shadow-md',
+          'group relative w-full h-[320px] xs:h-[350px] sm:h-[460px] overflow-hidden rounded-none sm:rounded-2xl border border-slate-200/90 bg-slate-950 shadow-md cursor-pointer sm:cursor-default',
           'transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-1.5 select-none',
           className
         )}
@@ -51,26 +56,34 @@ export const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
         <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-transparent pointer-events-none" />
 
         {/* Contenedor de Contenido */}
-        <div className="relative flex h-full flex-col justify-end p-6 sm:p-7 text-white z-10 gap-3">
+        <div className="relative flex h-full flex-col justify-end p-2.5 xs:p-3 sm:p-7 text-white z-10 gap-2 sm:gap-3">
           
-          {/* Título (siempre visible) y Bloque desplegable en hover */}
-          <div className="space-y-2">
-            <h3 className="text-xl sm:text-2xl font-extrabold text-white leading-tight drop-shadow-sm">
+          {/* Título (siempre visible y centrado en móvil) y Bloque desplegable */}
+          <div className="space-y-1 sm:space-y-2">
+            <h3 className="text-[11px] xs:text-xs sm:text-2xl font-extrabold text-white leading-snug sm:leading-tight drop-shadow-sm text-center sm:text-left line-clamp-2 sm:line-clamp-none">
               {title}
             </h3>
 
-            {/* Contenido: Visible en móvil para pantallas táctiles y con despliegue en hover en desktop */}
-            <div className="max-h-24 sm:max-h-0 opacity-100 sm:opacity-0 overflow-hidden transition-all duration-500 ease-in-out sm:group-hover:max-h-64 sm:group-hover:opacity-100 space-y-2.5">
-              <p className="text-xs sm:text-sm text-slate-200 font-medium leading-relaxed pt-1 border-t border-white/10 line-clamp-2 sm:line-clamp-none">
+            {/* Contenido extra: En móvil se despliega al tocar la tarjeta; en desktop se despliega en hover */}
+            <div
+              className={cn(
+                "overflow-hidden transition-all duration-300 ease-in-out space-y-1.5 sm:space-y-2",
+                isActive
+                  ? "max-h-64 opacity-100"
+                  : "max-h-0 opacity-0 pointer-events-none",
+                "sm:max-h-0 sm:opacity-0 sm:pointer-events-auto sm:group-hover:max-h-64 sm:group-hover:opacity-100"
+              )}
+            >
+              <p className="text-[10px] xs:text-xs sm:text-sm text-slate-200 font-medium leading-snug sm:leading-relaxed pt-1 border-t border-white/20 text-center sm:text-left line-clamp-3 sm:line-clamp-none">
                 {tagline}
               </p>
 
               {highlights.length > 0 && (
-                <ul className="hidden sm:block space-y-1.5 pt-0.5">
+                <ul className="space-y-1 sm:space-y-1.5 pt-0.5">
                   {highlights.map((h, idx) => (
-                    <li key={idx} className="flex items-start gap-2 text-xs text-slate-100 font-medium">
-                      <CheckCircle2 className="w-4 h-4 text-[#FC6412] shrink-0 mt-0.5" />
-                      <span className="leading-snug">{h}</span>
+                    <li key={idx} className="flex items-start gap-1.5 sm:gap-2 text-[9px] xs:text-[10px] sm:text-xs text-slate-100 font-medium text-left">
+                      <CheckCircle2 className="w-3 h-3 sm:w-4 sm:h-4 text-[#FC6412] shrink-0 mt-0.5" />
+                      <span className="leading-tight sm:leading-snug">{h}</span>
                     </li>
                   ))}
                 </ul>
@@ -79,16 +92,16 @@ export const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
           </div>
 
           {/* Botón de WhatsApp (siempre visible) */}
-          <div className="pt-1">
+          <div className="pt-0.5 sm:pt-1">
             <a
               href={whatsappUrl}
               target="_blank"
               rel="noopener noreferrer"
-              className="w-full inline-flex items-center justify-center gap-2 px-5 py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] active:bg-[#c94703] transition-all duration-300 shadow-md hover:shadow-lg group-hover:shadow-orange-500/20"
+              onClick={(e) => e.stopPropagation()}
+              className="w-full inline-flex items-center justify-center gap-1 sm:gap-2 px-1.5 sm:px-5 py-2 sm:py-3 rounded-none sm:rounded-xl text-[10px] xs:text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] active:bg-[#c94703] transition-all duration-300 shadow-md hover:shadow-lg group-hover:shadow-orange-500/20 text-center"
             >
-              <WhatsAppIcon className="w-4 h-4" />
+              <WhatsAppIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
               <span>Consultar aquí</span>
-              <ArrowRight className="w-4 h-4 ml-1 transition-transform group-hover:translate-x-1" />
             </a>
           </div>
 
