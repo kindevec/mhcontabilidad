@@ -93,7 +93,7 @@ export const ServicesPage: React.FC = () => {
         description="Garantizamos el estricto cumplimiento tributario ante el SRI y proporcionamos orden contable y financiero a empresas y autónomos en Ecuador."
         image={heroImg}
         imageAlt="Servicios contables y tributarios profesionales en Ecuador"
-        imageClassName="w-full h-full object-cover object-center md:object-contain md:object-right-bottom"
+        imageClassName="w-full h-full object-cover object-center"
       >
         {/* Accesos Rápidos */}
         <div className="pt-4 flex flex-wrap items-center justify-center gap-3">

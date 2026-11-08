@@ -4,6 +4,7 @@ interface PageHeroProps {
   badge?: string;
   titleLine1: string;
   titleHighlight: string;
+  titleClassName?: string;
   description?: string;
   image: string;
   imageAlt: string;
@@ -17,6 +18,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
   badge,
   titleLine1,
   titleHighlight,
+  titleClassName,
   description,
   image,
   imageAlt,
@@ -43,7 +45,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
             </div>
           )}
 
-          <h1 className="text-2xl xs:text-3xl font-black text-white tracking-tight leading-tight text-center">
+          <h1 className={`text-2xl xs:text-3xl font-black text-white tracking-tight leading-tight text-center ${titleClassName || ''}`}>
             <span className="block">{titleLine1}</span>
             <span className="text-[#38BDF8] block mt-1">{titleHighlight}</span>
           </h1>
@@ -142,7 +144,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
                 </div>
               )}
 
-              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.15] text-center">
+              <h1 className={`text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.15] text-center ${titleClassName || ''}`}>
                 <span className="block">{titleLine1}</span>
                 <span className="text-[#38BDF8] block mt-1 sm:mt-2">{titleHighlight}</span>
               </h1>
