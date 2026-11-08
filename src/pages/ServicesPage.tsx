@@ -9,12 +9,12 @@ import {
 import { WhatsAppIcon } from '../components/WhatsAppIcon';
 import { PageHero } from '../components/PageHero';
 import { ServiceCard } from '../components/ui/card-7';
-import heroImg from '../assets/images/hero_contabilidad_asesoria_1792699795005.webp';
-import contabilidadImg from '../assets/images/hero_contabilidad_asesoria_1792699795005.webp';
-import fiscalImg from '../assets/images/corporate_consulting_team_1792700513952.webp';
-import consultoriaImg from '../assets/images/hero_financial_advisor_skyline.webp';
-import nominaImg from '../assets/images/equipo_mh_contabilidad.webp';
-import tecnologiaImg from '../assets/images/digital_fintech_portal_1792700528199.webp';
+import heroImg from '../assets/images/hero_servicios_consultoria_reunion.webp?v=11';
+import contabilidadImg from '../assets/images/carrusel_contabilidad_orden.jpg?v=3';
+import fiscalImg from '../assets/images/carrusel_blindaje_fiscal.jpg?v=2';
+import consultoriaImg from '../assets/images/carrusel_consultoria_estrategica.jpg?v=3';
+import nominaImg from '../assets/images/carrusel_nomina_laboral.jpg?v=3';
+import tecnologiaImg from '../assets/images/carrusel_tecnologia_facturacion.jpg?v=2';
 
 export const ServicesPage: React.FC = () => {
   const getServiceImage = (serviceId: string) => {
@@ -88,14 +88,15 @@ export const ServicesPage: React.FC = () => {
     <div className="space-y-0">
       {/* 1. Encabezado de Servicios estilo Inicio */}
       <PageHero
-        titleLine1="Servicios Contables y Tributarios"
-        titleHighlight="Soluciones Integrales para tu Negocio"
+        titleLine1="Nuestros Servicios"
+        titleHighlight="y Soluciones Integrales"
         description="Garantizamos el estricto cumplimiento tributario ante el SRI y proporcionamos orden contable y financiero a empresas y autónomos en Ecuador."
         image={heroImg}
         imageAlt="Servicios contables y tributarios profesionales en Ecuador"
+        imageClassName="w-full h-full object-cover object-center md:object-contain md:object-right-bottom"
       >
         {/* Accesos Rápidos */}
-        <div className="pt-4 flex flex-wrap items-center justify-center sm:justify-start gap-3">
+        <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
           <a
             href={createWhatsAppUrl('Hola MH Contabilidad, deseo cotizar un servicio contable y tributario para mi empresa.')}
             target="_blank"
@@ -116,7 +117,7 @@ export const ServicesPage: React.FC = () => {
       </PageHero>
 
       {/* 2. Catálogo Oficial de Servicios (Tarjetas con Hover Deslizante estilo Card-7) */}
-      <section id="servicios" className="pt-10 pb-6 sm:py-20 bg-[#F8FAFC] scroll-mt-20">
+      <section id="servicios" className="pt-10 pb-4 sm:pt-16 sm:pb-8 bg-[#F8FAFC] scroll-mt-20">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           
           <div className="text-center max-w-2xl mx-auto mb-12 space-y-3">
@@ -160,7 +161,7 @@ export const ServicesPage: React.FC = () => {
       </section>
 
       {/* 3. Preguntas Frecuentes Contables y Tributarias de Ecuador */}
-      <section className="pt-6 pb-14 sm:py-20 bg-white border-t border-slate-100">
+      <section className="pt-5 sm:pt-8 pb-14 sm:pb-16 bg-white border-t border-slate-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-6 sm:space-y-10">
           <div className="text-center space-y-2">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#172B3A] tracking-tight">

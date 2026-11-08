@@ -105,7 +105,7 @@ export const Footer: React.FC = () => {
             </div>
 
             {/* Misión y Propuesta de Valor */}
-            <p className="text-[11px] sm:text-[12.5px] text-slate-300 font-medium leading-snug sm:leading-relaxed max-w-sm text-left">
+            <p className="text-[11px] sm:text-[12.5px] text-slate-300 font-medium leading-relaxed max-w-[325px] sm:max-w-[340px] text-justify hyphens-none text-pretty tracking-tight [text-justify:inter-word]">
               Firma de consultoría contable, tributaria y financiera en Ecuador. Claridad absoluta, blindaje riguroso ante el SRI y acompañamiento proactivo para el crecimiento seguro de tu empresa.
             </p>
 

@@ -12,8 +12,8 @@ import { HeroAccordionBanner } from '../components/HeroAccordionBanner';
 import { SystemAccessSection } from '../components/SystemAccessSection';
 import { TestimonialsSection } from '../components/TestimonialsSection';
 import { LeaveNumbersSection } from '../components/LeaveNumbersSection';
-import teamGroupImg from '../assets/images/equipo_mh_completo_panoramico.webp';
-import teamGroupMobileImg from '../assets/images/equipo_mh_completo_movil.webp?v=3';
+import teamGroupImg from '../assets/images/equipo_mh_completo_panoramico.webp?v=8';
+import teamGroupMobileImg from '../assets/images/equipo_mh_completo_movil.webp?v=5';
 import { motion, AnimatePresence } from 'motion/react';
 
 export const HomePage: React.FC = () => {
@@ -39,7 +39,7 @@ export const HomePage: React.FC = () => {
     };
   }, [isTeamHovered]);
 
-  const whatsappGeneralUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Jorge Hernandez / MH Contabilidad, requiero asesoria contable y tributaria personalizada.')}`;
+  const whatsappGeneralUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Ing. Mónica Herrera / MH Contabilidad, requiero asesoría contable y tributaria personalizada.')}`;
 
   return (
     <div className="space-y-0">
@@ -61,7 +61,7 @@ export const HomePage: React.FC = () => {
                   Nuestros servicios
                 </h2>
                 <p className="text-sm sm:text-base text-[#64748B] leading-relaxed max-w-xl">
-                  Acompañamos a autónomos, pymes y medianas empresas con orden contable riguroso, blindaje tributario y herramientas tecnológicas avanzadas.
+                  Acompañamos a autónomos, pymes, medianas y grandes empresas con orden contable riguroso, blindaje tributario y herramientas tecnológicas avanzadas.
                 </p>
 
                 <div className="pt-2 flex justify-center">
@@ -80,16 +80,16 @@ export const HomePage: React.FC = () => {
       </section>
 
       {/* 3. Sección Quiénes Somos / Nuestra Convicción con foto grupal que empieza después del título y contenedor interactivo centrado */}
-      <section className="relative bg-[#F8FAFC] border-y border-slate-200/80 overflow-hidden">
+      <section className="relative bg-white overflow-hidden">
         {/* Encabezado: Título principal centrado que precede a la imagen */}
-        <div className="text-center pt-6 sm:pt-7 pb-4 sm:pb-5 relative z-10 bg-[#F8FAFC]">
+        <div className="text-center pt-6 sm:pt-8 pb-4 sm:pb-6 relative z-10 bg-white">
           <h2 className="text-3xl sm:text-4xl lg:text-[40px] font-extrabold text-[#172B3A] tracking-tight leading-tight">
             Quiénes somos
           </h2>
         </div>
 
         {/* Banner con la imagen del equipo que inicia estrictamente después del título */}
-        <div className="relative w-full h-[580px] sm:h-[600px] lg:h-[620px] overflow-hidden bg-slate-900">
+        <div className="relative w-full h-[520px] sm:h-[580px] lg:h-[620px] overflow-hidden bg-slate-900">
           {/* Foto grupal completa como fondo anclada para ocupar todo el espacio vertical de la sección */}
           <div className="absolute inset-0 z-0">
             <picture>
@@ -97,13 +97,13 @@ export const HomePage: React.FC = () => {
               <img
                 src={teamGroupImg}
                 alt="Equipo de consultores y asesores de MH Contabilidad en Ecuador"
-                className="w-full h-full object-cover object-top sm:object-center filter brightness-[0.92] sm:brightness-[0.88]"
+                className="w-full h-full object-cover object-[25%_18%] filter brightness-105 sm:brightness-100 contrast-[1.02]"
                 loading="lazy"
                 referrerPolicy="no-referrer"
               />
             </picture>
-            {/* Overlay sutil para realzar la nitidez de la foto y el contenedor */}
-            <div className="absolute inset-0 bg-slate-950/30 sm:bg-slate-950/40" />
+            {/* Overlay focalizado en la base para dar máxima luminosidad y claridad al equipo */}
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent pointer-events-none" />
           </div>
 
           <div className="relative z-10 w-full h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8 lg:pb-10 flex justify-center items-end">
@@ -121,7 +121,7 @@ export const HomePage: React.FC = () => {
               className="w-full max-w-2xl bg-[#002D5A]/85 hover:bg-[#002D5A]/95 backdrop-blur-md text-white p-6 sm:p-7 lg:p-8 rounded-none shadow-2xl border border-white/20 transition-all space-y-4 cursor-pointer select-none"
             >
               {/* Frase / Convicción principal: Directa sin contenedor interior */}
-              <p className="text-white font-bold text-sm sm:text-base lg:text-[16px] leading-relaxed tracking-tight text-center sm:text-left drop-shadow-sm">
+              <p className="text-white font-bold text-sm sm:text-base lg:text-[16px] leading-relaxed tracking-tight text-center drop-shadow-sm">
                 “Nacimos con una convicción clara: la contabilidad no debería ser un dolor de cabeza, sino la herramienta más poderosa para tu crecimiento.”
               </p>
 
@@ -144,11 +144,11 @@ export const HomePage: React.FC = () => {
                     transition={{ duration: 0.3, ease: 'easeOut' }}
                     className="space-y-4 overflow-hidden pt-1"
                   >
-                    <p className="text-xs sm:text-[13px] text-slate-100 leading-relaxed font-normal">
+                    <p className="text-xs sm:text-[13px] text-slate-100 leading-relaxed font-normal text-justify">
                       En el mundo de los negocios, detrás de cada gran idea, de cada pyme que se consolida y de cada mediana empresa que se expande, hay una realidad inevitable: los números. Sin embargo, sabemos que tú no fundaste tu negocio para pasar horas ordenando facturas, descifrando leyes fiscales complejas o preocupándote por sorpresas de última hora con los impuestos.
                     </p>
 
-                    <p className="text-xs sm:text-[13px] text-slate-100 leading-relaxed font-normal">
+                    <p className="text-xs sm:text-[13px] text-slate-100 leading-relaxed font-normal text-justify">
                       Somos una firma de servicios contables y fiscales diseñada específicamente para ser el respaldo de autónomos, pymes y medianas empresas. Nos alejamos del modelo del contador tradicional y distante que solo aparece a final de mes. Nos convertimos en tus aliados estratégicos cotidianos, combinando el máximo rigor técnico con un trato cercano, humano y sin tecnicismos difíciles de entender.
                     </p>
 

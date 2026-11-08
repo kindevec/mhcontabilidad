@@ -25,27 +25,62 @@ import { motion } from 'motion/react';
 import { PageHero } from '../components/PageHero';
 import { MissionVisionSection } from '../components/MissionVisionSection';
 import { WhyChooseUsSection } from '../components/WhyChooseUsSection';
-import consultingTeamImg from '../assets/images/corporate_consulting_team_1792700513952.webp';
-import teamGroupImg from '../assets/images/equipo_mh_completo_panoramico.webp';
-import contabilidadImg from '../assets/images/hero_contabilidad_asesoria_1792699795005.webp';
-import equipoReunionImg from '../assets/images/equipo_mh_contabilidad.webp';
+import consultingTeamImg from '../assets/images/nosotros_equipo_institucional_hero.webp?v=21';
+import ordenPlanificacionImg from '../assets/images/nuestro_orden_planificacion.jpg';
+import ordenPuzzleImg from '../assets/images/nuestro_orden_puzzle.jpg';
+import ordenManosImg from '../assets/images/nuestro_orden_equipo_manos.jpg';
 import skylineCityImg from '../assets/images/hero_financial_advisor_skyline.webp';
 
+const commercialValues = [
+  {
+    icon: Laptop,
+    title: 'CLARIDAD ABSOLUTA',
+    description: 'Explicamos las finanzas y los impuestos en un idioma simple, directo y sin tecnicismos complejos.',
+  },
+  {
+    icon: PhoneCall,
+    title: 'CERCANÍA PROACTIVA',
+    description: 'Monitoreamos activamente el negocio y nos anticipamos a contingencias o ahorros fiscales.',
+  },
+  {
+    icon: Shield,
+    title: 'PRECISIÓN SEGURA',
+    description: 'Máximo rigor técnico y actualización normativa para un cumplimiento fiscal impecable ante el SRI.',
+  },
+  {
+    icon: TrendingUp,
+    title: 'VISIÓN DE CRECIMIENTO',
+    description: 'Soluciones contables escalables que se adaptan al tamaño actual y proyectan el crecimiento futuro.',
+  },
+  {
+    icon: Users2,
+    title: 'ALIADOS COTIDIANOS',
+    description: 'Trato humano y personalizado; estamos a un mensaje de distancia para resolver dudas en el momento.',
+  },
+  {
+    icon: FileCheck2,
+    title: 'BLINDAJE TRIBUTARIO',
+    description: 'Control contable que protege tu patrimonio, evita multas y brinda absoluta paz mental.',
+  },
+];
+
 export const AboutPage: React.FC = () => {
-  const whatsappUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Jorge Hernandez / MH Contabilidad, me gustaria conversar sobre sus servicios contables y tributarios.')}`;
+  const whatsappUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Ing. Mónica Herrera / MH Contabilidad, me gustaría conversar sobre sus servicios contables y tributarios.')}`;
 
   return (
     <div className="space-y-0">
       {/* 1. Encabezado Institucional estilo Inicio */}
       <PageHero
-        titleLine1="Tu Respaldo Contable"
-        titleHighlight="Tu Impulso Estratégico"
-        description={`Firma de servicios contables y fiscales diseñada para ser el respaldo estratégico de autónomos, pymes y medianas empresas en Ecuador, bajo el liderazgo de ${siteConfig.representative}.`}
+        titleLine1="Más que Asesores"
+        titleHighlight="Tus Aliados Estratégicos"
+        description={`Firma de servicios contables y fiscales diseñada para ser el respaldo estratégico de autónomos, pymes y medianas empresas en Ecuador, bajo el liderazgo de la ${siteConfig.representative}.`}
         image={consultingTeamImg}
         imageAlt="Equipo de consultoría contable MH Contabilidad"
+        imageClassName="object-cover object-[center_35%]"
+        diagonalOffset={20}
       >
         {/* Accesos Rápidos */}
-        <div className="pt-4 flex flex-wrap items-center justify-center sm:justify-start gap-3">
+        <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
           <Link
             to="/servicios"
             className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200"
@@ -65,7 +100,7 @@ export const AboutPage: React.FC = () => {
       </PageHero>
 
       {/* 2. Quiénes Somos (Composición Asimétrica con Collage Orgánico y Elementos Destacados) */}
-      <section className="pt-12 pb-8 sm:py-24 bg-white overflow-hidden">
+      <section className="pt-10 sm:pt-16 pb-6 sm:pb-10 bg-white overflow-hidden">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-14 items-center">
             
@@ -77,8 +112,8 @@ export const AboutPage: React.FC = () => {
                 <div className="space-y-4">
                   <div className="relative h-64 sm:h-76 rounded-[36px] rounded-tl-[60px] overflow-hidden shadow-lg border border-slate-100 group">
                     <img
-                      src={contabilidadImg}
-                      alt="Asesoría Contable Personalizada en MH Contabilidad"
+                      src={ordenPlanificacionImg}
+                      alt="Planificación y asesoría contable en MH Contabilidad"
                       className="w-full h-full object-cover object-center group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
@@ -103,22 +138,22 @@ export const AboutPage: React.FC = () => {
                   {/* Foto Circular con borde decorativo punteado / continuo */}
                   <div className="relative w-32 h-32 xs:w-36 xs:h-36 sm:w-48 sm:h-48 mx-auto rounded-full overflow-hidden shadow-lg border-4 border-white ring-4 ring-[#FC6412]/30 group">
                     <img
-                      src={equipoReunionImg}
-                      alt="Reunión del equipo de consultoría contable MH"
+                      src={ordenPuzzleImg}
+                      alt="Integración y soluciones contables MH"
                       className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
                   </div>
 
-                  {/* Foto con curvas suaves complementaria */}
-                  <div className="relative h-48 sm:h-56 rounded-[36px] rounded-br-[60px] overflow-hidden shadow-lg border border-slate-100 group">
+                  {/* Foto panorámica: encuadre nativo 25/14 sin espacios vacíos ni recortes de cabezas */}
+                  <div className="relative w-full aspect-[25/14] rounded-xl sm:rounded-2xl rounded-br-[36px] sm:rounded-br-[44px] overflow-hidden shadow-lg border border-slate-100 group">
                     <img
-                      src={teamGroupImg}
-                      alt="Equipo de trabajo MH Contabilidad Ecuador"
+                      src={ordenManosImg}
+                      alt="Compromiso y trabajo en equipo MH Contabilidad"
                       className="w-full h-full object-cover object-top group-hover:scale-105 transition-transform duration-500"
                       loading="lazy"
                     />
-                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/30 to-transparent pointer-events-none" />
+                    <div className="absolute inset-0 bg-gradient-to-t from-slate-900/15 to-transparent pointer-events-none" />
                   </div>
                 </div>
 
@@ -138,8 +173,8 @@ export const AboutPage: React.FC = () => {
 
             {/* Columna Derecha: Contenido Institucional con Estilo "Our System Inspires You More" */}
             <div className="lg:col-span-6 space-y-6">
-              {/* Título Principal con resalte bimetálico */}
-              <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-[#172B3A] tracking-tight leading-[1.15] text-center lg:text-left">
+              {/* Título Principal con resalte bimetálico centrado en móvil y PC */}
+              <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-[#172B3A] tracking-tight leading-[1.15] text-center">
                 Nuestro Orden Contable <span className="text-[#FC6412]">Impulsa</span> Tu Crecimiento.
               </h2>
 
@@ -216,87 +251,27 @@ export const AboutPage: React.FC = () => {
             </h2>
           </div>
 
-          {/* Cuadrícula de 6 bloques compactos (2 columnas en móvil, 3 en desktop) */}
+          {/* Cuadrícula de 6 bloques: Base oscura (#1C1815) e iluminación naranja (#E58A1F) en hover */}
           <div className="grid grid-cols-2 lg:grid-cols-3 gap-0 border border-white/10 shadow-2xl overflow-hidden rounded-none">
-            
-            {/* Bloque 1: DESTACADO AMARILLO/NARANJA KINDEV (#F5A623 / #FC6412) */}
-            <div className="bg-[#E58A1F] text-slate-950 p-4 sm:p-9 flex flex-col items-center text-center justify-center space-y-2 sm:space-y-3 border border-black/10 select-none group transition-all duration-300 hover:brightness-105">
-              <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-none flex items-center justify-center text-slate-950">
-                <Laptop className="w-7 h-7 sm:w-12 sm:h-12 stroke-[1.8]" />
-              </div>
-              <h3 className="text-xs sm:text-base font-extrabold uppercase tracking-wider text-slate-950">
-                CLARIDAD ABSOLUTA
-              </h3>
-              <p className="text-[10px] sm:text-xs text-slate-900/90 leading-relaxed font-medium max-w-xs">
-                Explicamos las finanzas y los impuestos en un idioma simple, directo y sin tecnicismos complejos.
-              </p>
-            </div>
-
-            {/* Bloque 2: Fondo Oscuro Transparente */}
-            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-4 sm:p-9 flex flex-col items-center text-center justify-center space-y-2 sm:space-y-3 border border-white/10 select-none group transition-all duration-300">
-              <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-none flex items-center justify-center text-white">
-                <PhoneCall className="w-7 h-7 sm:w-12 sm:h-12 stroke-[1.8]" />
-              </div>
-              <h3 className="text-xs sm:text-base font-extrabold uppercase tracking-wider text-white">
-                CERCANÍA PROACTIVA
-              </h3>
-              <p className="text-[10px] sm:text-xs text-slate-300 leading-relaxed font-normal max-w-xs">
-                Monitoreamos activamente el negocio y nos anticipamos a contingencias o ahorros fiscales.
-              </p>
-            </div>
-
-            {/* Bloque 3: Fondo Oscuro Transparente */}
-            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-4 sm:p-9 flex flex-col items-center text-center justify-center space-y-2 sm:space-y-3 border border-white/10 select-none group transition-all duration-300">
-              <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-none flex items-center justify-center text-white">
-                <Shield className="w-7 h-7 sm:w-12 sm:h-12 stroke-[1.8]" />
-              </div>
-              <h3 className="text-xs sm:text-base font-extrabold uppercase tracking-wider text-white">
-                PRECISIÓN SEGURA
-              </h3>
-              <p className="text-[10px] sm:text-xs text-slate-300 leading-relaxed font-normal max-w-xs">
-                Máximo rigor técnico y actualización normativa para un cumplimiento fiscal impecable ante el SRI.
-              </p>
-            </div>
-
-            {/* Bloque 4: Fondo Oscuro Transparente */}
-            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-4 sm:p-9 flex flex-col items-center text-center justify-center space-y-2 sm:space-y-3 border border-white/10 select-none group transition-all duration-300">
-              <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-none flex items-center justify-center text-white">
-                <TrendingUp className="w-7 h-7 sm:w-12 sm:h-12 stroke-[1.8]" />
-              </div>
-              <h3 className="text-xs sm:text-base font-extrabold uppercase tracking-wider text-white">
-                VISIÓN DE CRECIMIENTO
-              </h3>
-              <p className="text-[10px] sm:text-xs text-slate-300 leading-relaxed font-normal max-w-xs">
-                Soluciones contables escalables que se adaptan al tamaño actual y proyectan el crecimiento futuro.
-              </p>
-            </div>
-
-            {/* Bloque 5: Fondo Oscuro Transparente */}
-            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-4 sm:p-9 flex flex-col items-center text-center justify-center space-y-2 sm:space-y-3 border border-white/10 select-none group transition-all duration-300">
-              <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-none flex items-center justify-center text-white">
-                <Users2 className="w-7 h-7 sm:w-12 sm:h-12 stroke-[1.8]" />
-              </div>
-              <h3 className="text-xs sm:text-base font-extrabold uppercase tracking-wider text-white">
-                ALIADOS COTIDIANOS
-              </h3>
-              <p className="text-[10px] sm:text-xs text-slate-300 leading-relaxed font-normal max-w-xs">
-                Trato humano y personalizado; estamos a un mensaje de distancia para resolver dudas en el momento.
-              </p>
-            </div>
-
-            {/* Bloque 6: Fondo Oscuro Transparente */}
-            <div className="bg-[#1C1815]/90 hover:bg-[#1C1815] backdrop-blur-md text-white p-4 sm:p-9 flex flex-col items-center text-center justify-center space-y-2 sm:space-y-3 border border-white/10 select-none group transition-all duration-300">
-              <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-none flex items-center justify-center text-white">
-                <FileCheck2 className="w-7 h-7 sm:w-12 sm:h-12 stroke-[1.8]" />
-              </div>
-              <h3 className="text-xs sm:text-base font-extrabold uppercase tracking-wider text-white">
-                BLINDAJE TRIBUTARIO
-              </h3>
-              <p className="text-[10px] sm:text-xs text-slate-300 leading-relaxed font-normal max-w-xs">
-                Control contable que protege tu patrimonio, evita multas y brinda absoluta paz mental.
-              </p>
-            </div>
-
+            {commercialValues.map((val, idx) => {
+              const IconComp = val.icon;
+              return (
+                <div
+                  key={idx}
+                  className="valor-comercial-item bg-[#1C1815]/90 hover:!bg-[#E58A1F] backdrop-blur-md p-4 sm:p-9 flex flex-col items-center text-center justify-center space-y-2 sm:space-y-3 border border-white/10 select-none group transition-all duration-300 cursor-pointer"
+                >
+                  <div className="w-10 h-10 sm:w-16 sm:h-16 rounded-none flex items-center justify-center text-white group-hover:text-slate-950 transition-colors duration-300">
+                    <IconComp className="w-7 h-7 sm:w-12 sm:h-12 stroke-[1.8]" />
+                  </div>
+                  <h3 className="text-xs sm:text-base font-extrabold uppercase tracking-wider text-white group-hover:text-slate-950 transition-colors duration-300">
+                    {val.title}
+                  </h3>
+                  <p className="text-[10px] sm:text-xs text-slate-300 group-hover:text-slate-900/90 leading-relaxed font-normal group-hover:font-medium transition-colors duration-300 max-w-xs">
+                    {val.description}
+                  </p>
+                </div>
+              );
+            })}
           </div>
         </div>
       </section>

@@ -7,7 +7,7 @@ import { WhatsAppIcon } from './WhatsAppIcon';
 import { motion } from 'motion/react';
 
 export const Navbar: React.FC = () => {
-  const whatsappGeneralUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Jorge Hernandez / MH Contabilidad, requiero asesoria contable y tributaria personalizada.')}`;
+  const whatsappGeneralUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Ing. Mónica Herrera / MH Contabilidad, requiero asesoría contable y tributaria personalizada.')}`;
 
   return (
     <header className="fixed top-0 left-0 right-0 z-50 transition-all duration-300 bg-white/95 backdrop-blur-md shadow-xs border-b border-slate-200/80 py-2.5 sm:py-3">

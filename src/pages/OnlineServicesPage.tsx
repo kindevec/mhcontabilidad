@@ -1,26 +1,25 @@
 import React, { useState } from 'react';
 import {
-  FileText,
   Search,
-  CheckCircle2,
-  Receipt,
   Clock,
-  Sparkles,
-  PhoneCall,
+
   Laptop,
   Plus,
 } from 'lucide-react';
 import { WhatsAppIcon } from '../components/WhatsAppIcon';
+import { MHLogo } from '../components/MHLogo';
 import { siteConfig } from '../data/siteConfig';
 import { motion } from 'motion/react';
 import { PageHero } from '../components/PageHero';
 import { validateEcuadorianDocument } from '../services/contactService';
-import digitalPortalImg from '../assets/images/digital_fintech_portal_1792700528199.webp';
+import digitalPortalImg from '../assets/images/portal_hero_laptop.jpg';
 
 export const OnlineServicesPage: React.FC = () => {
   const [docType, setDocType] = useState<'RUC' | 'CEDULA' | 'PASAPORTE'>('RUC');
   const [docNumber, setDocNumber] = useState('');
-  const [queryType, setQueryType] = useState('estado_cuenta');
+  const [queryType, setQueryType] = useState('facturacion');
+  const [period, setPeriod] = useState('2026');
+  const [clientPhone, setClientPhone] = useState('');
 
   const [isSearching, setIsSearching] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
@@ -28,6 +27,8 @@ export const OnlineServicesPage: React.FC = () => {
     show: boolean;
     docNumber: string;
     queryLabel: string;
+    periodLabel: string;
+    clientPhone: string;
   } | null>(null);
 
   const [openFaqIndices, setOpenFaqIndices] = useState<number[]>([]);
@@ -63,14 +64,31 @@ export const OnlineServicesPage: React.FC = () => {
 
   const getQueryLabel = (type: string) => {
     switch (type) {
-      case 'estado_cuenta':
-        return 'Estado de Cuenta y Cartera Comercial';
-      case 'retenciones':
-        return 'Comprobantes de Retención Tributaria';
       case 'facturacion':
-        return 'Facturas Electrónicas y Reportes';
+        return 'Facturas Electrónicas y RIDE / XML';
+      case 'retenciones':
+        return 'Comprobantes de Retención SRI';
+      case 'estado_cuenta':
+        return 'Estado de Cuenta y Cartera (Saldos)';
+      case 'guias_remision':
+        return 'Liquidaciones y Guías de Remisión';
       default:
         return 'Consulta Contable';
+    }
+  };
+
+  const getPeriodLabel = (p: string) => {
+    switch (p) {
+      case '2026':
+        return 'Año Fiscal 2026';
+      case 'ultimo_mes':
+        return 'Último Mes Contable';
+      case '2025':
+        return 'Histórico Año 2025';
+      case 'todos':
+        return 'Todos los periodos';
+      default:
+        return 'Periodo Actual';
     }
   };
 
@@ -80,7 +98,7 @@ export const OnlineServicesPage: React.FC = () => {
     setSearchFeedback(null);
 
     if (!docNumber.trim()) {
-      setValidationError('Por favor ingrese su número de documento de identificación.');
+      setValidationError('Por favor ingrese su número de documento de identificación (RUC o Cédula).');
       return;
     }
 
@@ -92,6 +110,16 @@ export const OnlineServicesPage: React.FC = () => {
       }
     }
 
+    if (!clientPhone.trim()) {
+      setValidationError('Por favor ingrese su número de celular o WhatsApp para la validación segura de Perseo.');
+      return;
+    }
+
+    if (clientPhone.trim().length < 4) {
+      setValidationError('El número de celular o verificación debe tener al menos 4 dígitos.');
+      return;
+    }
+
     setIsSearching(true);
     setTimeout(() => {
       setIsSearching(false);
@@ -99,13 +127,15 @@ export const OnlineServicesPage: React.FC = () => {
         show: true,
         docNumber: docNumber.trim(),
         queryLabel: getQueryLabel(queryType),
+        periodLabel: getPeriodLabel(period),
+        clientPhone: clientPhone.trim(),
       });
     }, 700);
   };
 
   const waClientUrl = searchFeedback
-    ? `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent(`Hola Jorge Hernandez / MH Contabilidad, requiero asistencia y reporte de ${searchFeedback.queryLabel} para la identificacion ${searchFeedback.docNumber}.`)}`
-    : `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Jorge Hernandez / MH Contabilidad, quisiera consultar informacion sobre mis reportes contables en linea.')}`;
+    ? `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent(`Hola Jorge Hernandez / MH Contabilidad, requiero consultar en el sistema Perseo el reporte de ${searchFeedback.queryLabel} (${searchFeedback.periodLabel}) para el RUC/CI ${searchFeedback.docNumber} con contacto de verificación ${searchFeedback.clientPhone}.`)}`
+    : `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Jorge Hernandez / MH Contabilidad, quisiera consultar información sobre mis comprobantes en línea de Perseo.')}`;
 
   return (
     <div className="space-y-0">
@@ -140,274 +170,209 @@ export const OnlineServicesPage: React.FC = () => {
         </div>
       </PageHero>
 
-      {/* 2. Beneficios Digitales para Clientes */}
-      <section className="py-14 bg-white">
+      {/* 2. Módulo de Consulta para Clientes */}
+      <section className="pt-12 sm:pt-16 pb-6 sm:pb-10 bg-slate-50/70">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-16">
-            <motion.div
-              whileHover={{ y: -3 }}
-              transition={{ duration: 0.2 }}
-              className="p-6 rounded-2xl bg-[#F3F6FA] border border-slate-200/80 space-y-3"
-            >
-              <div className="p-3 w-fit rounded-xl bg-blue-100/70 text-[#005BB2]">
-                <FileText className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-[#172B3A]">
-                Gestión Centralizada
-              </h3>
-              <p className="text-xs text-[#64748B] leading-relaxed">
-                Toda la documentación contable y comprobantes de compras y ventas organizados para una rápida revisión.
-              </p>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ y: -3 }}
-              transition={{ duration: 0.2 }}
-              className="p-6 rounded-2xl bg-[#F3F6FA] border border-slate-200/80 space-y-3"
-            >
-              <div className="p-3 w-fit rounded-xl bg-orange-100/70 text-[#FC6412]">
-                <Receipt className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-[#172B3A]">
-                Trazabilidad Tributaria
-              </h3>
-              <p className="text-xs text-[#64748B] leading-relaxed">
-                Seguimiento puntual a retenciones en la fuente y declaraciones periódicas ante el SRI sin desfases.
-              </p>
-            </motion.div>
-
-            <motion.div
-              whileHover={{ y: -3 }}
-              transition={{ duration: 0.2 }}
-              className="p-6 rounded-2xl bg-[#F3F6FA] border border-slate-200/80 space-y-3"
-            >
-              <div className="p-3 w-fit rounded-xl bg-blue-100/70 text-[#005BB2]">
-                <Laptop className="w-5 h-5" />
-              </div>
-              <h3 className="text-base font-bold text-[#172B3A]">
-                Conexión con Sistema Contable
-              </h3>
-              <p className="text-xs text-[#64748B] leading-relaxed">
-                Compatibilidad y asesoría para clientes que emplean el sistema contable de MH Contabilidad y plataformas electrónicas.
-              </p>
-            </motion.div>
+          {/* Encabezado de Consulta en Línea */}
+          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12 space-y-3">
+            <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#172B3A] tracking-tight">
+              Consulte sus Comprobantes y Estado Contable
+            </h2>
+            <p className="text-sm text-[#64748B] leading-relaxed">
+              En este portal puede consultar y solicitar de manera rápida el estado de sus facturas electrónicas, retenciones tributarias y reportes contables al instante.
+            </p>
           </div>
-
           {/* Módulo Principal de Consulta al Cliente */}
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
-            {/* Columna Izquierda: Formulario de Autoservicio */}
-            <div className="lg:col-span-7">
-              <div className="bg-white rounded-2xl border border-slate-200 shadow-sm p-6 sm:p-10 space-y-6">
-                <div>
-                  <h2 className="text-xl font-bold text-[#172B3A]">
-                    Consulta de Comprobantes y Cartera
-                  </h2>
-                  <p className="text-xs text-[#64748B] mt-1">
-                    Ingrese su RUC o Cédula para solicitar la localización de sus reportes contables.
-                  </p>
+          <div className="max-w-3xl mx-auto">
+            <div className="bg-white rounded-none border border-slate-200 shadow-[6px_6px_0px_0px_#E2E8F0,0_25px_50px_-12px_rgba(0,0,0,0.12)] sm:shadow-[10px_10px_0px_0px_#E2E8F0,0_30px_60px_-12px_rgba(0,0,0,0.15)] p-6 sm:p-10 space-y-6 text-[#172B3A] relative">
+              <div className="space-y-2 border-b border-slate-200 pb-5">
+                <div className="flex items-center justify-between flex-wrap gap-3">
+                  <h3 className="text-xl sm:text-2xl font-black text-[#172B3A] tracking-tight flex items-center gap-2">
+                    <span>Búsqueda y Consulta Contable</span>
+                  </h3>
+                  <div className="shrink-0">
+                    <MHLogo className="h-9 sm:h-10 w-auto" />
+                  </div>
                 </div>
+                <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed">
+                  Ingrese sus datos fiscales y de contacto para consultar comprobantes electrónicos, retenciones y cartera en el sistema.
+                </p>
+              </div>
 
-                <form onSubmit={handleSearchSubmit} className="space-y-4">
-                  <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
-                    <div>
-                      <label
-                        htmlFor="user-doc-type"
-                        className="block text-xs font-semibold text-[#172B3A] mb-1.5"
-                      >
-                        Tipo de Identificación
-                      </label>
-                      <select
-                        id="user-doc-type"
-                        value={docType}
-                        onChange={(e) =>
-                          setDocType(e.target.value as 'RUC' | 'CEDULA' | 'PASAPORTE')
-                        }
-                        className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 bg-white text-xs font-medium text-[#172B3A] focus:outline-none focus:border-[#005BB2]"
-                      >
-                        <option value="RUC">RUC (13 dígitos - Ecuador)</option>
-                        <option value="CEDULA">Cédula de Identidad (10 dígitos)</option>
-                        <option value="PASAPORTE">Pasaporte</option>
-                      </select>
-                    </div>
-
-                    <div>
-                      <label
-                        htmlFor="user-doc-number"
-                        className="block text-xs font-semibold text-[#172B3A] mb-1.5"
-                      >
-                        Número de Documento
-                      </label>
-                      <input
-                        id="user-doc-number"
-                        type="text"
-                        placeholder={docType === 'RUC' ? '1790012345001' : '1712345678'}
-                        value={docNumber}
-                        onChange={(e) => setDocNumber(e.target.value)}
-                        maxLength={docType === 'RUC' ? 13 : docType === 'CEDULA' ? 10 : 20}
-                        className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 bg-white text-xs text-[#172B3A] font-mono focus:outline-none focus:border-[#005BB2]"
-                      />
-                    </div>
+              <form onSubmit={handleSearchSubmit} className="space-y-5">
+                {/* Fila 1: Tipo y Número de Documento */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      htmlFor="user-doc-type"
+                      className="block text-xs font-bold text-[#172B3A] uppercase tracking-wider mb-2"
+                    >
+                      Tipo de Identificación
+                    </label>
+                    <select
+                      id="user-doc-type"
+                      value={docType}
+                      onChange={(e) =>
+                        setDocType(e.target.value as 'RUC' | 'CEDULA' | 'PASAPORTE')
+                      }
+                      className="w-full px-4 py-3 rounded-none border border-[#005BB2] bg-white text-slate-900 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#005BB2] transition-all shadow-xs cursor-pointer"
+                    >
+                      <option value="RUC">RUC</option>
+                      <option value="CEDULA">Cédula de Identidad</option>
+                      <option value="PASAPORTE">Pasaporte</option>
+                    </select>
                   </div>
 
                   <div>
                     <label
-                      htmlFor="user-query-type"
-                      className="block text-xs font-semibold text-[#172B3A] mb-1.5"
+                      htmlFor="user-doc-number"
+                      className="block text-xs font-bold text-[#172B3A] uppercase tracking-wider mb-2"
                     >
-                      Información Solicitada
+                      Número de Identificación
+                    </label>
+                    <input
+                      id="user-doc-number"
+                      type="text"
+                      placeholder={docType === 'RUC' ? 'Ej: 1790012345001' : 'Ej: 1712345678'}
+                      value={docNumber}
+                      onChange={(e) => setDocNumber(e.target.value)}
+                      maxLength={docType === 'RUC' ? 13 : docType === 'CEDULA' ? 10 : 20}
+                      className="w-full px-4 py-3 rounded-none border border-[#005BB2] bg-white text-slate-900 font-mono text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#005BB2] transition-all shadow-xs placeholder-slate-400"
+                    />
+                  </div>
+                </div>
+
+                {/* Fila 2: Tipo de Información y Periodo */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+                  <div>
+                    <label
+                      htmlFor="user-query-type"
+                      className="block text-xs font-bold text-[#172B3A] uppercase tracking-wider mb-2"
+                    >
+                      Documento a Consultar
                     </label>
                     <select
                       id="user-query-type"
                       value={queryType}
                       onChange={(e) => setQueryType(e.target.value)}
-                      className="w-full px-3.5 py-2.5 rounded-lg border border-slate-200 bg-white text-xs font-medium text-[#172B3A] focus:outline-none focus:border-[#005BB2]"
+                      className="w-full px-4 py-3 rounded-none border border-[#005BB2] bg-white text-slate-900 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#005BB2] transition-all shadow-xs cursor-pointer"
                     >
-                      <option value="estado_cuenta">Estado de Cuenta Comercial y Cartera</option>
-                      <option value="retenciones">Comprobantes de Retención Emitidas SRI</option>
-                      <option value="facturacion">Facturas Electrónicas y Reportes Periódicos</option>
+                      <option value="facturacion">Facturas Electrónicas y RIDE / XML</option>
+                      <option value="retenciones">Comprobantes de Retención SRI</option>
+                      <option value="estado_cuenta">Estado de Cuenta y Cartera</option>
+                      <option value="guias_remision">Liquidaciones y Guías de Remisión</option>
                     </select>
                   </div>
 
-                  {validationError && (
-                    <div className="p-3 rounded-lg bg-red-50 border border-red-200 text-xs text-red-700">
-                      {validationError}
-                    </div>
-                  )}
-
-                  <div className="pt-2">
-                    <button
-                      type="submit"
-                      disabled={isSearching}
-                      className="inline-flex items-center justify-center gap-2 px-6 py-3 rounded-lg text-xs font-semibold text-white bg-[#005BB2] hover:bg-[#004a91] transition-all shadow-xs"
+                  <div>
+                    <label
+                      htmlFor="user-period"
+                      className="block text-xs font-bold text-[#172B3A] uppercase tracking-wider mb-2"
                     >
-                      {isSearching ? (
-                        <span>Consultando información...</span>
-                      ) : (
-                        <>
-                          <Search className="w-4 h-4" />
-                          <span>Consultar información</span>
-                        </>
-                      )}
-                    </button>
+                      Periodo / Año Fiscal
+                    </label>
+                    <select
+                      id="user-period"
+                      value={period}
+                      onChange={(e) => setPeriod(e.target.value)}
+                      className="w-full px-4 py-3 rounded-none border border-[#005BB2] bg-white text-slate-900 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#005BB2] transition-all shadow-xs cursor-pointer"
+                    >
+                      <option value="2026">Año Fiscal 2026</option>
+                      <option value="ultimo_mes">Último Mes Contable</option>
+                      <option value="2025">Histórico Año 2025</option>
+                      <option value="todos">Todos los periodos registrados</option>
+                    </select>
                   </div>
-                </form>
+                </div>
 
-                {/* Respuesta Limpia para el Usuario Comercial */}
-                {searchFeedback && (
-                  <motion.div
-                    initial={{ opacity: 0, y: 10 }}
-                    animate={{ opacity: 1, y: 0 }}
-                    className="p-5 rounded-xl border border-blue-200 bg-blue-50/80 space-y-3"
+                {/* Fila 3: Celular / WhatsApp */}
+                <div>
+                  <label
+                    htmlFor="user-client-phone"
+                    className="block text-xs font-bold text-[#172B3A] uppercase tracking-wider mb-2"
                   >
-                    <div className="flex items-start gap-3">
-                      <div className="p-2 rounded-lg bg-[#005BB2] text-white shrink-0 mt-0.5">
-                        <WhatsAppIcon className="w-4 h-4" />
-                      </div>
-                      <div className="space-y-1 text-xs">
-                        <strong className="block text-sm text-[#005BB2]">
-                          Solicitud registrada para {searchFeedback.docNumber}
-                        </strong>
-                        <p className="text-slate-700 leading-relaxed">
-                          Hemos procesado su requerimiento de <strong>{searchFeedback.queryLabel}</strong>.
-                          Para entregarle su reporte oficial con estricta reserva, su asesor le atenderá
-                          directamente a través de WhatsApp.
-                        </p>
-                      </div>
-                    </div>
-
-                    <div className="pt-2">
-                      <a
-                        href={waClientUrl}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="w-full sm:w-auto inline-flex items-center justify-center gap-2 px-4 py-2.5 rounded-lg text-xs font-semibold text-white bg-[#FC6412] hover:bg-[#e05308] transition-colors shadow-2xs text-center"
-                      >
-                        <WhatsAppIcon className="w-4 h-4" />
-                        <span>Recibir reporte por WhatsApp con su asesor</span>
-                      </a>
-                    </div>
-                  </motion.div>
-                )}
-              </div>
-            </div>
-
-            {/* Columna Derecha: Imagen Visual y Asistencia */}
-            <div className="lg:col-span-5 space-y-6">
-              <div className="rounded-2xl overflow-hidden border border-slate-200 shadow-sm bg-white">
-                <div className="aspect-16/10 overflow-hidden bg-slate-100">
-                  <img
-                    src={digitalPortalImg}
-                    alt="Plataforma de contabilidad digital y reportes financieros de MH Contabilidad"
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                    referrerPolicy="no-referrer"
+                    Celular o WhatsApp Registrado
+                  </label>
+                  <input
+                    id="user-client-phone"
+                    type="tel"
+                    placeholder="Ej: 0991234567 o últimos 4 dígitos"
+                    value={clientPhone}
+                    onChange={(e) => setClientPhone(e.target.value)}
+                    className="w-full px-4 py-3 rounded-none border border-[#005BB2] bg-white text-slate-900 font-mono text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#005BB2] transition-all shadow-xs placeholder-slate-400"
                   />
                 </div>
-                <div className="p-5 space-y-2">
-                  <h3 className="text-sm font-bold text-[#172B3A]">
-                    Acompañamiento en Sistemas Contables
-                  </h3>
-                  <p className="text-xs text-[#64748B] leading-relaxed">
-                    Si su negocio utiliza el <strong>sistema contable de MH Contabilidad</strong> u otro software contable, en MH Contabilidad
-                    le asesoramos en la conciliación de módulos de facturación, retenciones y cierres contables.
-                  </p>
-                </div>
-              </div>
 
-              {/* Tarjeta de Acceso a Sistema */}
-              <div className="p-6 rounded-2xl bg-gradient-to-br from-[#005BB2] to-[#003d75] text-white space-y-4 shadow-md">
-                <div className="flex items-center gap-2 text-xs font-semibold text-orange-300">
-                  <Laptop className="w-4 h-4" />
-                  <span>Web de Sistema Oficial</span>
-                </div>
-                <h4 className="text-base font-bold">
-                  Acceso a tu Plataforma Contable en Línea
-                </h4>
-                <p className="text-xs text-blue-100 leading-relaxed">
-                  Ingresa directamente a la plataforma para gestionar comprobantes, revisar ventas y sincronizar con tu programa contable integrado.
-                </p>
-                <div className="pt-2">
-                  <a
-                    href={siteConfig.systemUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-lg text-xs font-bold bg-[#FC6412] hover:bg-[#e05308] text-white transition-all shadow-xs"
-                  >
-                    <span>Ingresar a Web de Sistema →</span>
-                  </a>
-                </div>
-              </div>
+                {validationError && (
+                  <div className="p-3.5 rounded-none bg-red-50 border border-red-200 text-xs font-medium text-red-700 flex items-center gap-2">
+                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
+                    <span>{validationError}</span>
+                  </div>
+                )}
 
-              {/* Tarjeta de Asistencia */}
-              <div className="p-5 rounded-2xl bg-[#F3F6FA] border border-slate-200 text-[#172B3A] space-y-3">
-                <div className="flex items-center gap-2 text-xs font-semibold text-[#005BB2]">
-                  <PhoneCall className="w-4 h-4" />
-                  <span>Soporte Directo</span>
-                </div>
-                <h4 className="text-sm font-bold">
-                  ¿Necesitas asistencia inmediata con tus comprobantes?
-                </h4>
-                <p className="text-xs text-[#64748B] leading-relaxed">
-                  Contáctate con Jorge Hernández por WhatsApp para resolver dudas sobre tus obligaciones ante el SRI o el manejo de tu sistema.
-                </p>
-                <div className="pt-1">
-                  <a
-                    href={`https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Jorge Hernandez / MH Contabilidad, requiero asistencia personalizada con mis comprobantes.')}`}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="inline-flex items-center gap-2 text-xs font-bold text-[#005BB2] hover:text-[#004a91] transition-colors underline underline-offset-4"
+                <div className="pt-5 border-t border-slate-200 flex justify-center">
+                  <button
+                    type="submit"
+                    disabled={isSearching}
+                    className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-8 py-3.5 rounded-none text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md shadow-orange-950/20 transition-all duration-200 cursor-pointer disabled:opacity-60 disabled:cursor-not-allowed"
                   >
-                    <span>Conversar por WhatsApp ({siteConfig.phone.display}) →</span>
-                  </a>
+                    {isSearching ? (
+                      <>
+                        <Clock className="w-4 h-4 animate-spin" />
+                        <span>Consultando...</span>
+                      </>
+                    ) : (
+                      <>
+                        <Search className="w-4 h-4" />
+                        <span>Consultar</span>
+                      </>
+                    )}
+                  </button>
                 </div>
-              </div>
+              </form>
+
+              {/* Respuesta Limpia para el Usuario Comercial */}
+              {searchFeedback && (
+                <motion.div
+                  initial={{ opacity: 0, y: 10 }}
+                  animate={{ opacity: 1, y: 0 }}
+                  className="p-5 sm:p-6 rounded-none bg-blue-50/80 border border-blue-200 text-[#172B3A] space-y-4 shadow-sm"
+                >
+                  <div className="flex items-start gap-3">
+                    <div className="p-2.5 rounded-none bg-[#005BB2] text-white shrink-0 shadow-xs">
+                      <WhatsAppIcon className="w-5 h-5" />
+                    </div>
+                    <div className="space-y-1.5 text-xs sm:text-sm">
+                      <strong className="block text-base font-bold text-[#172B3A]">
+                        Solicitud validada para {searchFeedback.docNumber}
+                      </strong>
+                      <p className="text-[#64748B] leading-relaxed">
+                        Se ha localizado su registro en el sistema contable para <strong>{searchFeedback.queryLabel}</strong> ({searchFeedback.periodLabel}).
+                        Por protocolo de reserva fiscal del SRI, su asesor autorizado le despachará el RIDE en PDF y XML directamente al contacto registrado.
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="pt-2">
+                    <a
+                      href={waClientUrl}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-none text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] transition-all shadow-xs text-center cursor-pointer"
+                    >
+                      <WhatsAppIcon className="w-4 h-4" />
+                      <span>Recibir Comprobantes y Reporte por WhatsApp</span>
+                    </a>
+                  </div>
+                </motion.div>
+              )}
             </div>
           </div>
         </div>
       </section>
 
       {/* 3. Preguntas de Servicios en Línea para Clientes (Mismo diseño acordeón oficial que Servicios) */}
-      <section className="py-16 sm:py-20 bg-white border-t border-slate-100">
+      <section className="pt-8 sm:pt-10 pb-16 sm:pb-20 bg-white border-t border-slate-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           <div className="text-center space-y-2">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#172B3A] tracking-tight">

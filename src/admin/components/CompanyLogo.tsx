@@ -100,7 +100,7 @@ export const AdminAvatar: React.FC<{ className?: string }> = ({
       xmlns="http://www.w3.org/2000/svg"
       className="w-full h-full"
       role="img"
-      aria-label="Jorge Hernández Avatar"
+      aria-label="Ing. Mónica Herrera Avatar"
     >
       <rect width="64" height="64" fill="#005BB2" opacity="0.15" />
       <path

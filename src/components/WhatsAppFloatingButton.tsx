@@ -20,7 +20,7 @@ export const WhatsAppOfficialIcon: React.FC<{ className?: string }> = ({
 };
 
 export const WhatsAppFloatingButton: React.FC = () => {
-  const whatsappUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Jorge Hernandez / MH Contabilidad, requiero asesoria contable o tributaria para mi negocio.')}`;
+  const whatsappUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Ing. Mónica Herrera / MH Contabilidad, requiero asesoría contable o tributaria para mi negocio.')}`;
 
   const [isHovered, setIsHovered] = useState(false);
   const [isRevealedMobile, setIsRevealedMobile] = useState(false);

@@ -148,7 +148,7 @@ export const AboutSection: React.FC = () => {
                     href="#contacto"
                     className="inline-flex items-center text-xs font-semibold text-white hover:text-orange-200 transition-colors underline underline-offset-4"
                   >
-                    Conversar directamente con Jorge Hernández →
+                    Conversar directamente con Ing. Mónica Herrera →
                   </a>
                 </div>
               </div>

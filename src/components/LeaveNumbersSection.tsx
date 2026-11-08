@@ -22,7 +22,7 @@ export const LeaveNumbersSection: React.FC = () => {
     if (formData.hpField) return;
 
     const fullName = `${sanitize(formData.firstName)} ${sanitize(formData.lastName)}`.trim();
-    const text = `Hola Jorge Hernandez / MH Contabilidad, mi nombre es ${fullName}. Mi telefono es ${formData.phone}, correo: ${formData.email}. Servicio de interes: ${formData.service}. Mensaje: ${formData.message}`;
+    const text = `Hola Ing. Mónica Herrera / MH Contabilidad, mi nombre es ${fullName}. Mi telefono es ${formData.phone}, correo: ${formData.email}. Servicio de interes: ${formData.service}. Mensaje: ${formData.message}`;
     const waUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent(text)}`;
     window.open(waUrl, '_blank', 'noopener,noreferrer');
   };

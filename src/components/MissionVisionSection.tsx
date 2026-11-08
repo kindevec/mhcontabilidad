@@ -4,7 +4,7 @@ import contadoresImg from '../assets/images/mision_vision_contadores.webp';
 
 export const MissionVisionSection: React.FC = () => {
   return (
-    <section className="relative pt-4 sm:pt-16 pb-0 overflow-hidden border-y border-slate-100">
+    <section className="relative pt-3 sm:pt-8 pb-0 overflow-hidden border-y border-slate-100">
       {/* Fondo Dual Dividido 50/50 de extremo a extremo sin contenedores cerrados */}
       <div className="absolute inset-0 grid grid-cols-1 lg:grid-cols-2 pointer-events-none z-0">
         <div className="bg-white" />

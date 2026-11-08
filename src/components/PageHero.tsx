@@ -7,6 +7,9 @@ interface PageHeroProps {
   description?: string;
   image: string;
   imageAlt: string;
+  imageClassName?: string;
+  diagonalOffset?: number;
+  contentClassName?: string;
   children?: React.ReactNode;
 }
 
@@ -17,11 +20,14 @@ export const PageHero: React.FC<PageHeroProps> = ({
   description,
   image,
   imageAlt,
+  imageClassName,
+  diagonalOffset = 0,
+  contentClassName,
   children,
 }) => {
   return (
     <section
-      className="relative w-full overflow-hidden bg-[#0A131F] md:bg-[#F8FAFC] md:min-h-[480px] lg:min-h-[540px] xl:min-h-[580px]"
+      className="relative w-full overflow-hidden bg-[#0A131F] md:bg-[#F8FAFC] md:min-h-[560px] lg:min-h-[640px] xl:min-h-[700px]"
       aria-label={titleLine1}
     >
       {/* ============================================================== */}
@@ -59,14 +65,14 @@ export const PageHero: React.FC<PageHeroProps> = ({
         <div className="w-full h-1 bg-[#FC6412] relative z-10" />
 
         {/* Imagen inferior en móvil */}
-        <div className="w-full h-44 xs:h-52 relative overflow-hidden">
+        <div className="w-full h-56 xs:h-64 sm:h-72 relative overflow-hidden bg-[#0A131F]">
           <img
             src={image}
             alt={imageAlt}
-            className="w-full h-full object-cover object-center"
+            className={`w-full h-full object-cover ${imageClassName || 'object-center'}`}
             loading="eager"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A131F]/40 via-transparent to-transparent pointer-events-none" />
+          <div className="absolute inset-0 bg-gradient-to-t from-[#0A131F]/30 via-transparent to-transparent pointer-events-none" />
         </div>
       </div>
 
@@ -77,11 +83,11 @@ export const PageHero: React.FC<PageHeroProps> = ({
         {/* Fondo Geométrico en Diagonal con Aristas Facetadas estilo Active Business Growth */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden" aria-hidden="true">
           {/* Imagen integrada en la base derecha */}
-          <div className="absolute inset-y-0 right-0 w-[58%] lg:w-[62%] xl:w-[65%] overflow-hidden">
+          <div className="absolute inset-y-0 right-0 w-[72%] lg:w-[75%] xl:w-[76%] 2xl:w-[72%] overflow-hidden">
             <img
               src={image}
               alt={imageAlt}
-              className="w-full h-full object-cover object-center select-none filter brightness-[0.98]"
+              className={`w-full h-full select-none filter brightness-[0.98] ${imageClassName || 'object-cover object-center'}`}
               loading="eager"
             />
           </div>
@@ -97,24 +103,24 @@ export const PageHero: React.FC<PageHeroProps> = ({
             <polygon points="924,0 930,0 965,120 1000,160 1000,168 958,124" fill="#FC6412" />
 
             {/* Faceta inferior derecha con ribete naranja perimetral completo en ambos segmentos */}
-            <polygon points="870,650 1000,650 1000,520 935,560" fill="#005BB2" opacity="0.95" />
-            <polygon points="864,650 870,650 935,560 1000,520 1000,512 928,554" fill="#FC6412" />
+            <polygon points="900,650 1000,650 1000,585 950,615" fill="#005BB2" opacity="0.95" />
+            <polygon points="894,650 900,650 950,615 1000,585 1000,577 944,609" fill="#FC6412" />
 
             {/* Polígono oscuro principal izquierdo (#0A131F) */}
             <polygon
-              points="0,0 350,0 490,650 0,650"
+              points={`0,0 ${295 + diagonalOffset},0 ${435 + diagonalOffset},650 0,650`}
               fill="#0A131F"
             />
 
             {/* Franja continua azul a lo largo de toda la diagonal recta */}
             <polygon
-              points="356,0 376,0 516,650 496,650"
+              points={`${301 + diagonalOffset},0 ${321 + diagonalOffset},0 ${461 + diagonalOffset},650 ${441 + diagonalOffset},650`}
               fill="#005BB2"
             />
 
             {/* Franja continua naranja MH completa, nítida e ininterrumpida de extremo a extremo */}
             <polygon
-              points="350,0 356,0 496,650 490,650"
+              points={`${295 + diagonalOffset},0 ${301 + diagonalOffset},0 ${441 + diagonalOffset},650 ${435 + diagonalOffset},650`}
               fill="#FC6412"
             />
 
@@ -125,29 +131,33 @@ export const PageHero: React.FC<PageHeroProps> = ({
         </div>
 
         <div className="relative z-10 max-w-[1600px] w-full mx-auto px-4 sm:px-8 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center min-h-[480px] lg:min-h-[540px] xl:min-h-[580px]">
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center min-h-[560px] lg:min-h-[640px] xl:min-h-[700px]">
             
-            {/* Columna Izquierda: Información oficial sobre el fondo oscuro */}
-            <div className="lg:col-span-6 xl:col-span-5 pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-16 space-y-4 sm:space-y-5 text-left">
+            {/* Columna Izquierda: Información oficial centrada sobre el fondo oscuro con holgura respecto a la diagonal */}
+            <div className={`lg:col-span-6 xl:col-span-5 pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-16 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center md:-translate-x-6 lg:-translate-x-16 xl:-translate-x-24 ${contentClassName || ''}`}>
               {badge && (
-                <div className="inline-flex items-center gap-2 text-xs font-semibold text-[#38BDF8] uppercase tracking-wider">
+                <div className="inline-flex items-center justify-center gap-2 text-xs font-semibold text-[#38BDF8] uppercase tracking-wider mx-auto">
                   <span className="w-2.5 h-0.5 bg-[#FC6412]" />
                   <span>{badge}</span>
                 </div>
               )}
 
-              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.15]">
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.15] text-center">
                 <span className="block">{titleLine1}</span>
                 <span className="text-[#38BDF8] block mt-1 sm:mt-2">{titleHighlight}</span>
               </h1>
 
               {description && (
-                <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-lg">
+                <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-lg mx-auto text-center">
                   {description}
                 </p>
               )}
 
-              {children && <div className="pt-2">{children}</div>}
+              {children && (
+                <div className="pt-2 w-full flex justify-center [&>div]:justify-center">
+                  {children}
+                </div>
+              )}
             </div>
 
             {/* Columna Derecha: Área libre diáfana que deja ver la imagen integrada en el fondo */}

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { siteConfig } from '../data/siteConfig';
 import {
   Mail,
@@ -11,13 +12,14 @@ import {
   ExternalLink,
   Globe2,
   Phone,
+  ArrowRight,
 } from 'lucide-react';
 import { WhatsAppIcon } from '../components/WhatsAppIcon';
 import { ContactFormData, ContactFormResult } from '../types';
 import { validateEcuadorianDocument, submitContactForm } from '../services/contactService';
 import { motion } from 'motion/react';
 import { PageHero } from '../components/PageHero';
-import consultingTeamImg from '../assets/images/corporate_consulting_team_1792700513952.webp';
+import contactHeroImg from '../assets/images/contacto_atencion_asesoria_hero.webp?v=18';
 
 export const ContactPage: React.FC = () => {
   const [formData, setFormData] = useState<ContactFormData>({
@@ -108,14 +110,22 @@ export const ContactPage: React.FC = () => {
     <div className="space-y-0">
       {/* 1. Encabezado de Contacto estilo Inicio */}
       <PageHero
-        titleLine1="Contacto y Atención Directa"
+        titleLine1="Contacto y"
         titleHighlight="Asesoría Inmediata con Especialistas"
-        description={`Comuníquese directamente con ${siteConfig.representative} y el equipo de MH Contabilidad. Atendemos sus requerimientos contables, declaraciones SRI y consultas financieras en todo Ecuador.`}
-        image={consultingTeamImg}
+        description="Comuníquese directamente con el equipo de MH Contabilidad. Atendemos sus requerimientos contables, declaraciones SRI, IESS, Super de Companías y consultas financieras en todo Ecuador."
+        image={contactHeroImg}
         imageAlt="Atención y asesoría contable profesional MH Contabilidad"
+        imageClassName="w-full h-full object-cover object-center md:object-right"
       >
         {/* Accesos Rápidos */}
-        <div className="pt-4 flex flex-wrap items-center justify-center sm:justify-start gap-3">
+        <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
+          <Link
+            to="/servicios"
+            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200"
+          >
+            <span>Conocer Servicios</span>
+            <ArrowRight className="w-4 h-4 shrink-0" />
+          </Link>
           <a
             href={`https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola MH Contabilidad, requiero asesoría contable personalizada.')}`}
             target="_blank"
@@ -124,17 +134,6 @@ export const ContactPage: React.FC = () => {
           >
             <WhatsAppIcon className="w-4 h-4 shrink-0" />
             <span>Consultar Aquí</span>
-          </a>
-          <a
-            href="#formulario-contacto"
-            onClick={(e) => {
-              e.preventDefault();
-              document.getElementById('formulario-contacto')?.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200 cursor-pointer"
-          >
-            <Send className="w-4 h-4 shrink-0" />
-            <span>Enviar Mensaje</span>
           </a>
         </div>
       </PageHero>
@@ -230,7 +229,7 @@ export const ContactPage: React.FC = () => {
                 <h2 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[40px] font-black text-[#172B3A] tracking-tight leading-[1.15]">
                   Ponte en Contacto
                 </h2>
-                <p className="text-sm sm:text-base text-[#64748B] leading-relaxed max-w-xl">
+                <p className="text-sm sm:text-base text-[#64748B] leading-relaxed max-w-xl text-justify">
                   Comuníquese directamente con nuestro equipo para atender sus requerimientos contables, declaraciones SRI y consultas financieras en todo Ecuador.
                 </p>
               </div>

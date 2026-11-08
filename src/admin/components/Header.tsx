@@ -252,7 +252,7 @@ export const Header: React.FC<HeaderProps> = ({
           )}
         </div>
 
-        {/* User Profile Lockup: Jorge Hernández, MH Contabilidad */}
+        {/* User Profile Lockup: Ing. Mónica Herrera, MH Contabilidad */}
         <div className="relative">
           <button
             type="button"
@@ -266,7 +266,7 @@ export const Header: React.FC<HeaderProps> = ({
             <AdminAvatar />
             <div className="hidden sm:block leading-tight">
               <p className="text-sm font-black text-[#172B3A] whitespace-nowrap">
-                Jorge Hernández
+                Ing. Mónica Herrera
               </p>
               <p className="text-[11px] font-semibold text-[#005BB2] whitespace-nowrap">
                 Director & Asesor Principal
@@ -277,7 +277,7 @@ export const Header: React.FC<HeaderProps> = ({
           {showProfileDropdown && (
             <div className="absolute right-0 mt-3 w-64 bg-white rounded-2xl shadow-xl border border-slate-100 p-3 z-50 text-xs">
               <div className="px-3 py-2 border-b border-slate-100 mb-1">
-                <p className="font-black text-[#172B3A]">Jorge Hernández</p>
+                <p className="font-black text-[#172B3A]">Ing. Mónica Herrera</p>
                 <p className="text-slate-500 text-[11px]">asesoria@tu-contabilidad.com</p>
                 <span className="inline-block mt-1 px-2 py-0.5 bg-[#EBF3FC] text-[#005BB2] text-[10px] font-bold rounded-full">
                   Administrador General MH

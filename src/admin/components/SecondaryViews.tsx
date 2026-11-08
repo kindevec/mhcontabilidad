@@ -306,7 +306,7 @@ export const MessagesView: React.FC<{
                 type="text"
                 value={draft}
                 onChange={(e) => setDraft(e.target.value)}
-                placeholder={`Responder como Jorge Hernández a ${activeThread.sender}...`}
+                placeholder={`Responder como Ing. Mónica Herrera a ${activeThread.sender}...`}
                 className="flex-1 bg-[#F3F6FA] px-4 py-3 rounded-full text-xs text-[#172B3A] placeholder-slate-400 focus:outline-none focus:ring-2 focus:ring-[#005BB2]/30 border border-transparent focus:border-[#005BB2]/20"
               />
               <button

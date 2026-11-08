@@ -73,7 +73,7 @@ export const INITIAL_APPLICATIONS: ApplicationItem[] = [
     phone: '+593 96 839 2931',
     email: 'contacto@tu-contabilidad.com',
     status: 'Candidate',
-    applicantName: 'Jorge Hernández',
+    applicantName: 'Ing. Mónica Herrera',
     expectedSalary: '$3,200.00 Mensual',
     experience: 'RUC 1790483291001',
   },
@@ -294,14 +294,14 @@ export const INITIAL_MESSAGES: MessageItem[] = [
     company: 'Comercial Andina del Austro S.A.',
     avatarBg: '#005BB2',
     initials: 'CZ',
-    preview: 'Estimado Jorge, revisamos la liquidación de IVA de octubre y procedemos con la orden de débito en banco.',
+    preview: 'Estimada Ing. Mónica, revisamos la liquidación de IVA de octubre y procedemos con la orden de débito en banco.',
     time: '5m atrás',
     unread: true,
     messages: [
       {
         id: 'm1',
         fromMe: false,
-        text: 'Hola Jorge Hernández. ¿Pudieron cargar el Anexo Transaccional Simplificado (ATS) en el portal del SRI?',
+        text: 'Hola Ing. Mónica Herrera. ¿Pudieron cargar el Anexo Transaccional Simplificado (ATS) en el portal del SRI?',
         time: '08:40 AM',
       },
       {
@@ -313,7 +313,7 @@ export const INITIAL_MESSAGES: MessageItem[] = [
       {
         id: 'm3',
         fromMe: false,
-        text: 'Estimado Jorge, revisamos la liquidación de IVA de octubre y procedemos con la orden de débito en banco. Muchas gracias.',
+        text: 'Estimada Ing. Mónica, revisamos la liquidación de IVA de octubre y procedemos con la orden de débito en banco. Muchas gracias.',
         time: '09:05 AM',
       },
     ],
@@ -377,7 +377,7 @@ export const INITIAL_NEWS: NewsItem[] = [
     readTime: '5 min lectura',
     summary:
       'Conozca cómo nuestra alianza con Perseo Web permite a nuestros clientes emitir comprobantes autorizados por el SRI sin demoras ni reprocesos contables.',
-    author: 'Jorge Hernández - Director MH',
+    author: 'Ing. Mónica Herrera - Director MH',
   },
   {
     id: 'news-3',

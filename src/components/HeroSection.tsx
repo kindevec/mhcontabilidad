@@ -3,10 +3,10 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { siteConfig } from '../data/siteConfig';
-import mhHeroBannerImg from '../assets/images/mh_banner_hero_oficial.webp';
+import mhHeroBannerImg from '../assets/images/mh_banner_hero_oficial.webp?v=2';
 
 export const HeroSection: React.FC = () => {
-  const whatsappUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Jorge Hernandez / MH Contabilidad, deseo cotizar una asesoría contable y tributaria personalizada.')}`;
+  const whatsappUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Ing. Mónica Herrera / MH Contabilidad, deseo cotizar una asesoría contable y tributaria personalizada.')}`;
 
   return (
     <section
@@ -56,7 +56,7 @@ export const HeroSection: React.FC = () => {
           <img
             src={mhHeroBannerImg}
             alt="Servicios tributarios en Ecuador - MH Contabilidad"
-            className="w-full h-full object-cover object-center"
+            className="w-full h-full object-cover object-[25%_top]"
             loading="eager"
             fetchPriority="high"
             decoding="async"
@@ -72,11 +72,11 @@ export const HeroSection: React.FC = () => {
         {/* Fondo Geométrico en Diagonal con Aristas Facetadas estilo Active Business Growth */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden" aria-hidden="true">
           {/* Imagen adaptada que rellena el espacio derecho sin huecos en blanco */}
-          <div className="absolute inset-y-0 right-0 w-[66%] lg:w-[70%] xl:w-[73%] overflow-hidden">
+          <div className="absolute inset-y-0 right-0 w-[68%] lg:w-[72%] xl:w-[75%] overflow-hidden">
             <img
               src={mhHeroBannerImg}
               alt="Servicios tributarios en Ecuador - MH Contabilidad"
-              className="w-full h-full object-cover object-right select-none filter brightness-[0.98]"
+              className="w-full h-full object-cover object-[center_top] translate-x-12 lg:translate-x-20 xl:translate-x-24 select-none filter brightness-[0.98]"
               loading="eager"
               fetchPriority="high"
               decoding="async"
@@ -124,19 +124,19 @@ export const HeroSection: React.FC = () => {
         <div className="relative z-10 max-w-[1720px] w-full mx-auto px-4 sm:px-6 lg:pl-5 lg:pr-8 xl:pl-6 xl:pr-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[520px] sm:min-h-[580px] lg:min-h-[640px] xl:min-h-[680px]">
             
-            {/* Columna Izquierda: Información oficial desplazada a la izquierda sobre el fondo oscuro */}
-            <div className="lg:col-span-6 xl:col-span-5 pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-20 space-y-4 sm:space-y-5 text-left">
+            {/* Columna Izquierda: Información oficial centrada sobre el fondo oscuro con holgura respecto a la diagonal */}
+            <div className="lg:col-span-6 xl:col-span-5 pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-20 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center md:-translate-x-6 lg:-translate-x-16 xl:-translate-x-24">
               {/* Título Principal con salto de línea tras 'Contable' */}
-              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl xl:text-[52px] font-black text-white tracking-tight leading-[1.15]">
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl xl:text-[52px] font-black text-white tracking-tight leading-[1.15] text-center">
                 <span className="block">Tu Respaldo Contable</span>
                 <span className="text-[#38BDF8] block mt-1 sm:mt-2">Tu Impulso Estratégico</span>
               </h1>
 
-              <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-lg">
+              <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-lg mx-auto text-center">
                 Asesoría contable, tributaria y financiera especializada para autónomos, pymes y empresas en Ecuador. Blindaje fiscal y cumplimiento riguroso ante el SRI.
               </p>
 
-              <div className="pt-2 flex flex-wrap items-center gap-3">
+              <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
                 <a
                   href={whatsappUrl}
                   target="_blank"

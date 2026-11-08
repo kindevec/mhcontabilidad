@@ -25,35 +25,35 @@ export const SystemAccessSection: React.FC = () => {
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-8 items-center">
           
           {/* Columna Izquierda: Información directa sobre fondo azul con Botón Naranja */}
-          <div className="lg:col-span-5 space-y-5 text-center lg:text-left">
-            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-white tracking-tight leading-[1.14]">
+          <div className="lg:col-span-5 space-y-5 text-center">
+            <h2 className="text-3xl sm:text-4xl lg:text-[42px] font-extrabold text-white tracking-tight leading-[1.14] text-center">
               Tu Contabilidad con nuestro Sistema Contable
             </h2>
 
-            <p className="text-sm sm:text-base text-blue-100/90 leading-relaxed max-w-xl mx-auto lg:mx-0">
+            <p className="text-sm sm:text-base text-blue-100/90 leading-relaxed max-w-xl mx-auto text-center">
               En MH Contabilidad unificamos nuestra asesoría experta con la tecnología de nuestro sistema contable. Automatiza tu facturación electrónica con el SRI, sincroniza tus ventas y accede a reportes claros en tiempo real.
             </p>
 
             {/* 4 Íconos grandes directos sin contenedor con solo su texto */}
-            <div className="grid grid-cols-2 gap-y-4 gap-x-5 pt-3 max-w-md mx-auto lg:mx-0 text-left">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-8 pt-3 max-w-lg mx-auto text-left">
               <div className="flex items-center gap-3 text-white text-sm sm:text-base font-semibold">
                 <Zap className="w-6 h-6 text-[#FC6412] shrink-0" />
-                <span>Sincronización SRI</span>
+                <span className="whitespace-nowrap">Sincronización SRI</span>
               </div>
 
               <div className="flex items-center gap-3 text-white text-sm sm:text-base font-semibold">
                 <Receipt className="w-6 h-6 text-[#FC6412] shrink-0" />
-                <span>Facturación Electrónica</span>
+                <span className="whitespace-nowrap">Facturación Electrónica</span>
               </div>
 
               <div className="flex items-center gap-3 text-white text-sm sm:text-base font-semibold">
                 <BarChart3 className="w-6 h-6 text-[#FC6412] shrink-0" />
-                <span>Reportes y Balances</span>
+                <span className="whitespace-nowrap">Reportes y Balances</span>
               </div>
 
               <div className="flex items-center gap-3 text-white text-sm sm:text-base font-semibold">
                 <ShieldCheck className="w-6 h-6 text-[#FC6412] shrink-0" />
-                <span>Control de Cartera</span>
+                <span className="whitespace-nowrap">Control de Cartera</span>
               </div>
             </div>
           </div>

@@ -41,7 +41,7 @@ export const siteConfig: SiteConfig = {
   businessEntity: "STP Industrial",
   tradeName: "MH Contabilidad – Servicios Contables y Tributarios",
   tagline: "Tu respaldo contable. Tu impulso estratégico.",
-  representative: "Jorge Hernández",
+  representative: "Ing. Mónica Herrera",
   phone: {
     display: "+593 96 839 2931",
     international: "+593968392931",

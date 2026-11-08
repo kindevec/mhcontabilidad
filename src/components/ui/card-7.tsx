@@ -23,6 +23,7 @@ export const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
       className,
       imageUrl,
       imageAlt,
+      logo,
       title,
       tagline,
       highlights = [],
@@ -38,40 +39,47 @@ export const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
         ref={ref}
         onClick={onToggle}
         className={cn(
-          'group relative w-full h-[320px] xs:h-[350px] sm:h-[460px] overflow-hidden rounded-none sm:rounded-2xl border border-slate-200/90 bg-slate-950 shadow-md cursor-pointer sm:cursor-default',
-          'transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-1.5 select-none',
+          'service-card-item group relative w-full h-[320px] xs:h-[350px] sm:h-[460px] overflow-hidden rounded-none border border-slate-200/90 bg-slate-950 shadow-md cursor-pointer select-none',
+          'transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-1.5',
+          isActive && 'is-active',
           className
         )}
         {...props}
       >
-        {/* Foto de fondo real con efecto zoom al pasar el cursor */}
+        {/* Foto de fondo con zoom y ajuste de iluminación en hover */}
         <img
           src={imageUrl}
           alt={imageAlt}
           loading="lazy"
-          className="absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110 brightness-[0.70] group-hover:brightness-[0.45]"
+          className="service-card-bg absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110 brightness-95 group-hover:brightness-[0.70]"
         />
 
-        {/* Degradado oscuro para garantizar legibilidad del texto */}
-        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/65 to-transparent pointer-events-none" />
+        {/* Degradado para garantizar legibilidad del texto manteniendo imagen luminosa */}
+        <div className="absolute inset-0 bg-gradient-to-t from-slate-950 via-slate-950/40 to-transparent pointer-events-none" />
+
+        {/* Icono / Logo flotante del servicio que se ilumina en naranja al pasar el mouse */}
+        {logo && (
+          <div className="service-card-badge absolute top-3.5 right-3.5 sm:top-5 sm:right-5 z-20 w-8 h-8 sm:w-11 sm:h-11 rounded-full bg-slate-900/70 backdrop-blur-md border border-white/25 flex items-center justify-center text-white transition-all duration-300 shadow-md">
+            {logo}
+          </div>
+        )}
 
         {/* Contenedor de Contenido */}
         <div className="relative flex h-full flex-col justify-end p-2.5 xs:p-3 sm:p-7 text-white z-10 gap-2 sm:gap-3">
           
-          {/* Título (siempre visible y centrado en móvil) y Bloque desplegable */}
-          <div className="space-y-1 sm:space-y-2">
-            <h3 className="text-[11px] xs:text-xs sm:text-2xl font-extrabold text-white leading-snug sm:leading-tight drop-shadow-sm text-center sm:text-left line-clamp-2 sm:line-clamp-none">
+          {/* Título (centrado en móvil y desktop) y Bloque desplegable */}
+          <div className="space-y-1 sm:space-y-2 text-center">
+            <h3 className="text-[11px] xs:text-xs sm:text-2xl font-extrabold text-white leading-snug sm:leading-tight drop-shadow-sm text-center line-clamp-2 sm:line-clamp-none">
               {title}
             </h3>
 
-            {/* Contenido extra: En móvil se despliega al tocar la tarjeta; en desktop se despliega en hover */}
+            {/* Contenido extra: Se despliega siempre al pasar el mouse (hover) o al tocar (móvil) */}
             <div
               className={cn(
-                "overflow-hidden transition-all duration-300 ease-in-out space-y-1.5 sm:space-y-2",
+                "service-card-reveal overflow-hidden transition-all duration-300 ease-in-out space-y-1.5 sm:space-y-2",
                 isActive
-                  ? "max-h-64 opacity-100"
-                  : "max-h-0 opacity-0 pointer-events-none",
-                "sm:max-h-0 sm:opacity-0 sm:pointer-events-auto sm:group-hover:max-h-64 sm:group-hover:opacity-100"
+                  ? "max-h-96 opacity-100"
+                  : "max-h-0 opacity-0 group-hover:max-h-96 group-hover:opacity-100"
               )}
             >
               <p className="text-[10px] xs:text-xs sm:text-sm text-slate-200 font-medium leading-snug sm:leading-relaxed pt-1 border-t border-white/20 text-center sm:text-left line-clamp-3 sm:line-clamp-none">
@@ -98,7 +106,7 @@ export const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
               target="_blank"
               rel="noopener noreferrer"
               onClick={(e) => e.stopPropagation()}
-              className="w-full inline-flex items-center justify-center gap-1 sm:gap-2 px-1.5 sm:px-5 py-2 sm:py-3 rounded-none sm:rounded-xl text-[10px] xs:text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] active:bg-[#c94703] transition-all duration-300 shadow-md hover:shadow-lg group-hover:shadow-orange-500/20 text-center"
+              className="w-full inline-flex items-center justify-center gap-1 sm:gap-2 px-1.5 sm:px-5 py-2 sm:py-3 rounded-none text-[10px] xs:text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] active:bg-[#c94703] transition-all duration-300 shadow-md hover:shadow-lg group-hover:shadow-orange-500/20 text-center"
             >
               <WhatsAppIcon className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
               <span>Consultar aquí</span>

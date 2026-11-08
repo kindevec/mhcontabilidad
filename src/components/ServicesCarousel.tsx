@@ -2,12 +2,12 @@ import React, { useRef, useState, useEffect, useCallback } from 'react';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { siteConfig } from '../data/siteConfig';
 
-// Fotografías profesionales reales para los 5 servicios oficiales
-import contabilidadImg from '../assets/images/hero_contabilidad_asesoria_1792699795005.webp';
-import fiscalImg from '../assets/images/corporate_consulting_team_1792700513952.webp';
-import consultoriaImg from '../assets/images/hero_financial_advisor_skyline.webp';
-import nominaImg from '../assets/images/equipo_mh_contabilidad.webp';
-import tecnologiaImg from '../assets/images/digital_fintech_portal_1792700528199.webp';
+// Fotografías profesionales de alta definición específicas para cada servicio
+import contabilidadImg from '../assets/images/carrusel_contabilidad_orden.jpg?v=3';
+import fiscalImg from '../assets/images/carrusel_blindaje_fiscal.jpg?v=2';
+import consultoriaImg from '../assets/images/carrusel_consultoria_estrategica.jpg?v=3';
+import nominaImg from '../assets/images/carrusel_nomina_laboral.jpg?v=3';
+import tecnologiaImg from '../assets/images/carrusel_tecnologia_facturacion.jpg?v=2';
 
 export interface ServiceCardData {
   id: string;
@@ -18,7 +18,7 @@ export interface ServiceCardData {
   detailsUrl: string;
 }
 
-// 5 Tarjetas oficiales de MH Contabilidad
+// 5 Tarjetas oficiales de MH Contabilidad con imágenes locales garantizadas
 const officialServices: ServiceCardData[] = [
   {
     id: 'contabilidad-general',
@@ -174,16 +174,16 @@ export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ centerLabel 
   const renderCard = (item: ServiceCardData, key: React.Key) => (
     <div
       key={key}
-      className="relative w-[280px] xs:w-80 sm:w-96 h-[440px] sm:h-[520px] rounded-none overflow-hidden shadow-xl border border-slate-200/80 bg-slate-900 group select-none transition-transform duration-300 hover:scale-[1.01] shrink-0"
+      className="relative w-[280px] xs:w-80 sm:w-96 h-[440px] sm:h-[520px] rounded-none overflow-hidden shadow-xl border border-slate-200/80 bg-slate-900 group select-none transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl shrink-0 cursor-pointer"
     >
       <img
         src={item.img}
         alt={item.title}
         loading="lazy"
-        className="pointer-events-none absolute inset-0 h-full w-full object-cover brightness-[0.72] group-hover:scale-105 transition-transform duration-500 rounded-none"
+        className="pointer-events-none absolute inset-0 h-full w-full object-cover object-[center_top] brightness-100 group-hover:brightness-[0.88] group-hover:scale-108 transition-all duration-500 rounded-none"
       />
-      {/* Degradado oscuro para garantizar legibilidad del texto */}
-      <div className="absolute inset-0 bg-gradient-to-t from-[#172B3A] via-[#172B3A]/80 to-transparent pointer-events-none" />
+      {/* Degradado inferior focalizado para máxima luminosidad de imagen y legibilidad de texto */}
+      <div className="absolute inset-x-0 bottom-0 h-[65%] bg-gradient-to-t from-[#172B3A] via-[#172B3A]/70 to-transparent pointer-events-none" />
 
       {/* Contenido: Título, Frase y Botón centrados */}
       <div className="relative z-10 p-5 sm:p-8 h-full flex flex-col justify-end items-center text-white text-center space-y-3">

@@ -59,3 +59,53 @@
 .font-brand {
   font-family: var(--font-display);
 }
+
+
+/* Valores Comerciales: Iluminación naranja corporativa en hover garantizada */
+.valor-comercial-item {
+  background-color: rgba(28, 24, 21, 0.9) !important;
+  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.valor-comercial-item:hover {
+  background-color: #E58A1F !important;
+  box-shadow: 0 10px 30px -5px rgba(229, 138, 31, 0.5) !important;
+  cursor: pointer !important;
+}
+
+.valor-comercial-item:hover svg,
+.valor-comercial-item:hover h3,
+.valor-comercial-item:hover p {
+  color: #020617 !important;
+}
+
+
+/* Tarjetas de Servicios (card-7): Despliegue de información e imagen adicional en hover */
+.service-card-item {
+  cursor: pointer !important;
+}
+
+.service-card-reveal {
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
+}
+
+.service-card-item:hover .service-card-reveal,
+.service-card-item.is-active .service-card-reveal {
+  max-height: 380px !important;
+  opacity: 1 !important;
+  pointer-events: auto !important;
+}
+
+.service-card-item:hover .service-card-bg {
+  transform: scale(1.08) !important;
+  filter: brightness(0.60) !important;
+}
+
+.service-card-item:hover .service-card-badge {
+  background-color: #FC6412 !important;
+  border-color: #FC6412 !important;
+  transform: scale(1.12) !important;
+}
