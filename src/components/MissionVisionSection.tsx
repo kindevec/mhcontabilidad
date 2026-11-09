@@ -31,15 +31,15 @@ export const MissionVisionSection: React.FC = () => {
           </div>
 
           {/* Centro Mobile: Imagen visible entre Misión y Visión con cajita de slogan */}
-          <div className="lg:hidden flex flex-col items-center justify-center pt-4 pb-4 bg-gradient-to-b from-white via-[#FFF8EA]/70 to-[#FFF8EA] space-y-3">
+          <div className="lg:hidden flex flex-col items-center justify-center pt-4 pb-4 bg-gradient-to-b from-white via-[#FFF8EA]/70 to-[#FFF8EA]">
             <img
               src={contadoresImg}
               alt="Equipo de contadores MH Contabilidad"
               className="w-64 sm:w-72 h-auto object-contain object-bottom drop-shadow-xl"
               loading="lazy"
             />
-            {/* Cajita de slogan mobile */}
-            <div className="bg-[#002D5A] text-white px-5 py-2.5 rounded-none shadow-lg border border-white/20 text-center max-w-xs">
+            {/* Cajita de slogan mobile: elevada verticalmente con margen negativo para ceñirse a la imagen */}
+            <div className="-mt-3 sm:-mt-4 relative z-10 bg-[#002D5A] text-white px-5 py-2.5 rounded-none shadow-lg border border-white/20 text-center max-w-xs">
               <span className="text-[11px] font-bold tracking-wide text-white">
                 Tu respaldo contable <span className="text-[#FC6412]">Tu impulso estratégico</span>
               </span>

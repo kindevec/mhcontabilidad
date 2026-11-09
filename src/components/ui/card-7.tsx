@@ -40,7 +40,7 @@ export const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
         onClick={onToggle}
         className={cn(
           'service-card-item group relative w-full h-[355px] xs:h-[390px] sm:h-[510px] overflow-hidden rounded-none border border-slate-200/90 bg-slate-950 shadow-md cursor-pointer select-none',
-          'transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-1.5',
+          'transition-all duration-300 ease-in-out sm:hover:shadow-2xl sm:hover:-translate-y-1.5',
           isActive && 'is-active',
           className
         )}
@@ -51,7 +51,7 @@ export const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
           src={imageUrl}
           alt={imageAlt}
           loading="lazy"
-          className="service-card-bg absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-in-out group-hover:scale-110 brightness-95 group-hover:brightness-[0.70]"
+          className="service-card-bg absolute inset-0 h-full w-full object-cover transition-transform duration-500 ease-in-out sm:group-hover:scale-110 brightness-95 sm:group-hover:brightness-[0.70]"
         />
 
         {/* Degradado para garantizar legibilidad del texto manteniendo imagen luminosa */}
@@ -79,7 +79,7 @@ export const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
                 "service-card-reveal overflow-hidden transition-all duration-300 ease-in-out space-y-1.5 sm:space-y-2",
                 isActive
                   ? "max-h-96 opacity-100"
-                  : "max-h-0 opacity-0 group-hover:max-h-96 group-hover:opacity-100"
+                  : "max-h-0 opacity-0 sm:group-hover:max-h-96 sm:group-hover:opacity-100 pointer-events-none sm:pointer-events-auto"
               )}
             >
               <p className="text-[10px] xs:text-xs sm:text-sm text-slate-200 font-medium leading-snug sm:leading-relaxed pt-1 border-t border-white/20 text-center sm:text-left line-clamp-3 sm:line-clamp-none">

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { servicesData } from '../data/services';
 import { siteConfig } from '../data/siteConfig';
@@ -40,6 +40,19 @@ export const ServicesPage: React.FC = () => {
 
   const [openIndices, setOpenIndices] = useState<number[]>([]);
   const [activeServiceId, setActiveServiceId] = useState<string | null>(null);
+  const cardsContainerRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleOutsideClick = (e: MouseEvent | TouchEvent) => {
+      if (cardsContainerRef.current && !cardsContainerRef.current.contains(e.target as Node)) {
+        setActiveServiceId(null);
+      }
+    };
+    document.addEventListener('click', handleOutsideClick);
+    return () => {
+      document.removeEventListener('click', handleOutsideClick);
+    };
+  }, []);
 
   const toggleFaq = (idx: number) => {
     setOpenIndices((prev) =>
@@ -127,7 +140,7 @@ export const ServicesPage: React.FC = () => {
           </div>
 
           {/* Tarjetas: 2 por fila en móvil (< sm), 3 y 2 centradas en PC (sm+) */}
-          <div className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-2.5 sm:gap-7">
+          <div ref={cardsContainerRef} className="grid grid-cols-2 sm:flex sm:flex-wrap justify-center gap-2.5 sm:gap-7">
             {servicesData.map((service, idx) => {
               const waUrl = createWhatsAppUrl(service.whatsappMessage);
               const serviceImg = getServiceImage(service.id);

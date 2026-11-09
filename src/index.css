@@ -80,7 +80,7 @@
 }
 
 
-/* Tarjetas de Servicios (card-7): Despliegue de información e imagen adicional en hover */
+/* Tarjetas de Servicios (card-7): Despliegue de información e imagen adicional en hover en desktop y por clase activa */
 .service-card-item {
   cursor: pointer !important;
 }
@@ -92,19 +92,37 @@
   transition: all 0.35s cubic-bezier(0.4, 0, 0.2, 1) !important;
 }
 
-.service-card-item:hover .service-card-reveal,
+@media (hover: hover) and (pointer: fine) {
+  .service-card-item:hover .service-card-reveal {
+    max-height: 380px !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+  }
+
+  .service-card-item:hover .service-card-bg {
+    transform: scale(1.08) !important;
+    filter: brightness(0.60) !important;
+  }
+
+  .service-card-item:hover .service-card-badge {
+    background-color: #FC6412 !important;
+    border-color: #FC6412 !important;
+    transform: scale(1.12) !important;
+  }
+}
+
 .service-card-item.is-active .service-card-reveal {
   max-height: 380px !important;
   opacity: 1 !important;
   pointer-events: auto !important;
 }
 
-.service-card-item:hover .service-card-bg {
+.service-card-item.is-active .service-card-bg {
   transform: scale(1.08) !important;
   filter: brightness(0.60) !important;
 }
 
-.service-card-item:hover .service-card-badge {
+.service-card-item.is-active .service-card-badge {
   background-color: #FC6412 !important;
   border-color: #FC6412 !important;
   transform: scale(1.12) !important;
