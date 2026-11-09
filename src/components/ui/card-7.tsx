@@ -39,7 +39,7 @@ export const ServiceCard = React.forwardRef<HTMLDivElement, ServiceCardProps>(
         ref={ref}
         onClick={onToggle}
         className={cn(
-          'service-card-item group relative w-full h-[320px] xs:h-[350px] sm:h-[460px] overflow-hidden rounded-none border border-slate-200/90 bg-slate-950 shadow-md cursor-pointer select-none',
+          'service-card-item group relative w-full h-[355px] xs:h-[390px] sm:h-[510px] overflow-hidden rounded-none border border-slate-200/90 bg-slate-950 shadow-md cursor-pointer select-none',
           'transition-all duration-300 ease-in-out hover:shadow-2xl hover:-translate-y-1.5',
           isActive && 'is-active',
           className

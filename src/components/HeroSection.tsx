@@ -24,9 +24,7 @@ export const HeroSection: React.FC = () => {
             <span className="text-[#38BDF8] block mt-1">Tu Impulso Estratégico</span>
           </h1>
 
-          <p className="text-xs xs:text-sm text-slate-300 leading-relaxed max-w-lg mx-auto text-center">
-            Asesoría contable, tributaria y financiera especializada para autónomos, pymes y empresas en Ecuador. Blindaje fiscal y cumplimiento riguroso ante el SRI.
-          </p>
+
 
           <div className="pt-2 w-full flex justify-center items-center gap-2.5 xs:gap-3 flex-wrap">
             <a
@@ -51,17 +49,16 @@ export const HeroSection: React.FC = () => {
         {/* Línea divisoria naranja */}
         <div className="w-full h-1 bg-[#FC6412] relative z-10" />
 
-        {/* Imagen inferior en móvil */}
-        <div className="w-full h-44 xs:h-52 relative overflow-hidden">
+        {/* Imagen inferior en móvil: muestra el banner completo al 100% (logos inferiores y manos) */}
+        <div className="w-full relative overflow-hidden bg-white">
           <img
             src={mhHeroBannerImg}
             alt="Servicios tributarios en Ecuador - MH Contabilidad"
-            className="w-full h-full object-cover object-[25%_top]"
+            className="w-full h-auto block select-none"
             loading="eager"
             fetchPriority="high"
             decoding="async"
           />
-          <div className="absolute inset-0 bg-gradient-to-t from-[#0A131F]/40 via-transparent to-transparent pointer-events-none" />
         </div>
       </div>
 

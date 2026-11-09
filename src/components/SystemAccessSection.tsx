@@ -34,26 +34,26 @@ export const SystemAccessSection: React.FC = () => {
               En MH Contabilidad unificamos nuestra asesoría experta con la tecnología de nuestro sistema contable. Automatiza tu facturación electrónica con el SRI, sincroniza tus ventas y accede a reportes claros en tiempo real.
             </p>
 
-            {/* 4 Íconos grandes directos sin contenedor con solo su texto */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-y-4 gap-x-6 sm:gap-x-8 pt-3 max-w-lg mx-auto text-left">
-              <div className="flex items-center gap-3 text-white text-sm sm:text-base font-semibold">
-                <Zap className="w-6 h-6 text-[#FC6412] shrink-0" />
-                <span className="whitespace-nowrap">Sincronización SRI</span>
+            {/* 4 Íconos grandes directos sin contenedor con solo su texto - 2 por línea en móvil */}
+            <div className="grid grid-cols-2 gap-y-3.5 sm:gap-y-4 gap-x-3 xs:gap-x-4 sm:gap-x-8 pt-3 max-w-lg mx-auto text-left">
+              <div className="flex items-center gap-2 xs:gap-2.5 sm:gap-3 text-white text-xs xs:text-sm sm:text-base font-semibold">
+                <Zap className="w-5 h-5 sm:w-6 sm:h-6 text-[#FC6412] shrink-0" />
+                <span className="leading-tight">Sincronización SRI</span>
               </div>
 
-              <div className="flex items-center gap-3 text-white text-sm sm:text-base font-semibold">
-                <Receipt className="w-6 h-6 text-[#FC6412] shrink-0" />
-                <span className="whitespace-nowrap">Facturación Electrónica</span>
+              <div className="flex items-center gap-2 xs:gap-2.5 sm:gap-3 text-white text-xs xs:text-sm sm:text-base font-semibold">
+                <Receipt className="w-5 h-5 sm:w-6 sm:h-6 text-[#FC6412] shrink-0" />
+                <span className="leading-tight">Facturación Electrónica</span>
               </div>
 
-              <div className="flex items-center gap-3 text-white text-sm sm:text-base font-semibold">
-                <BarChart3 className="w-6 h-6 text-[#FC6412] shrink-0" />
-                <span className="whitespace-nowrap">Reportes y Balances</span>
+              <div className="flex items-center gap-2 xs:gap-2.5 sm:gap-3 text-white text-xs xs:text-sm sm:text-base font-semibold">
+                <BarChart3 className="w-5 h-5 sm:w-6 sm:h-6 text-[#FC6412] shrink-0" />
+                <span className="leading-tight">Reportes y Balances</span>
               </div>
 
-              <div className="flex items-center gap-3 text-white text-sm sm:text-base font-semibold">
-                <ShieldCheck className="w-6 h-6 text-[#FC6412] shrink-0" />
-                <span className="whitespace-nowrap">Control de Cartera</span>
+              <div className="flex items-center gap-2 xs:gap-2.5 sm:gap-3 text-white text-xs xs:text-sm sm:text-base font-semibold">
+                <ShieldCheck className="w-5 h-5 sm:w-6 sm:h-6 text-[#FC6412] shrink-0" />
+                <span className="leading-tight">Control de Cartera</span>
               </div>
             </div>
           </div>

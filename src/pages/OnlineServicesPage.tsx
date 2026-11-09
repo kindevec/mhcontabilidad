@@ -148,6 +148,8 @@ export const OnlineServicesPage: React.FC = () => {
         image={digitalPortalImg}
         imageAlt="Plataforma de contabilidad digital y reportes financieros de MH Contabilidad"
         imageClassName="object-cover object-top"
+        mobileContainerHeightClassName="h-[290px] xs:h-[315px] sm:h-[340px]"
+        mobileImageClassName="object-[90%_center]"
       >
         {/* Accesos Rápidos */}
         <div className="pt-4 flex flex-wrap items-center justify-center sm:justify-start gap-3">

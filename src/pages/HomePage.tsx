@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import {
   ArrowRight,
   ChevronDown,
+  ChevronUp,
 } from 'lucide-react';
 import { WhatsAppIcon } from '../components/WhatsAppIcon';
 import { siteConfig } from '../data/siteConfig';
@@ -13,20 +14,22 @@ import { SystemAccessSection } from '../components/SystemAccessSection';
 import { TestimonialsSection } from '../components/TestimonialsSection';
 import { LeaveNumbersSection } from '../components/LeaveNumbersSection';
 import teamGroupImg from '../assets/images/equipo_mh_completo_panoramico.webp?v=8';
-import teamGroupMobileImg from '../assets/images/equipo_mh_completo_movil.webp?v=5';
+import teamGroupMobileImg from '../assets/images/equipo_mh_completo_movil.webp?v=11';
 import { motion, AnimatePresence } from 'motion/react';
 
 export const HomePage: React.FC = () => {
   const [isTeamHovered, setIsTeamHovered] = useState(false);
   const teamContainerRef = useRef<HTMLDivElement>(null);
+  const mobileTeamContainerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleOutsideInteraction = (e: MouseEvent | TouchEvent) => {
-      if (
-        isTeamHovered &&
-        teamContainerRef.current &&
-        !teamContainerRef.current.contains(e.target as Node)
-      ) {
+      if (!isTeamHovered) return;
+      const target = e.target as Node;
+      const isInside =
+        (teamContainerRef.current && teamContainerRef.current.contains(target)) ||
+        (mobileTeamContainerRef.current && mobileTeamContainerRef.current.contains(target));
+      if (!isInside) {
         setIsTeamHovered(false);
       }
     };
@@ -46,8 +49,8 @@ export const HomePage: React.FC = () => {
       {/* 1. Hero Principal de Alto Impacto */}
       <HeroSection />
 
-      {/* Cinta Acordeón Plegada 3D justo donde termina el Hero (calibrada más abajo) */}
-      <div className="relative z-30 max-w-[1500px] w-full mx-auto px-2 xs:px-4 sm:px-6 lg:px-8 -mt-4 sm:-mt-6 lg:-mt-7 mb-2 sm:mb-4">
+      {/* Cinta Acordeón Plegada 3D: elevada en móvil mediante margen negativo suave (-mt-2 / -mt-2.5) sin alterar desktop */}
+      <div className="relative z-30 max-w-[1500px] w-full mx-auto px-2 xs:px-4 sm:px-6 lg:px-8 -mt-2 xs:-mt-2.5 sm:-mt-4 md:-mt-6 lg:-mt-7 mb-2 sm:mb-4">
         <HeroAccordionBanner />
       </div>
 
@@ -88,25 +91,125 @@ export const HomePage: React.FC = () => {
           </h2>
         </div>
 
-        {/* Banner con la imagen del equipo que inicia estrictamente después del título */}
-        <div className="relative w-full h-[520px] sm:h-[580px] lg:h-[620px] overflow-hidden bg-slate-900">
+        {/* ============================================================== */}
+        {/* VISTA MÓVIL (< sm): Fotografía completa sin cortes ni distorsiones + Tarjeta integrada sin vacíos */}
+        {/* ============================================================== */}
+        <div className="sm:hidden w-full flex flex-col bg-white">
+          {/* Imagen real calibrada en mayor altura vertical: se aprecian los 5 ejecutivos al 100% con mayor presencia */}
+          <div className="w-full h-[285px] xs:h-[310px] relative overflow-hidden bg-slate-900">
+            <img
+              src={teamGroupImg}
+              alt="Equipo de consultores y asesores de MH Contabilidad en Ecuador"
+              className="w-full h-full object-cover object-[52%_top] select-none"
+              loading="lazy"
+              referrerPolicy="no-referrer"
+            />
+            <div className="absolute inset-0 bg-gradient-to-t from-slate-950/40 via-transparent to-transparent pointer-events-none" />
+          </div>
+
+          {/* Tarjeta Azul interactiva: enlaza sobre el pie de la mesa sin vacíos oscuros y expande el texto completo */}
+          <div className="relative z-10 w-full px-3.5 xs:px-4 -mt-12 xs:-mt-14 pb-8 flex justify-center">
+            <motion.div
+              ref={mobileTeamContainerRef}
+              layout
+              transition={{ duration: 0.35, ease: 'easeOut' }}
+              className="w-full max-w-2xl bg-[#002D5A]/95 backdrop-blur-md text-white p-4.5 xs:p-5 rounded-none shadow-2xl border border-white/20 transition-all space-y-3 select-none"
+            >
+              {/* Cabecera / Cita principal: Al tocarla alterna entre expandir y recoger */}
+              <div
+                onClick={(e) => {
+                  e.stopPropagation();
+                  setIsTeamHovered((prev) => !prev);
+                }}
+                className="cursor-pointer active:opacity-90"
+              >
+                <p className="text-white font-bold text-sm leading-relaxed tracking-tight text-center drop-shadow-sm">
+                  “Nacimos con una convicción clara: la contabilidad no debería ser un dolor de cabeza, sino la herramienta más poderosa para tu crecimiento.”
+                </p>
+
+                {/* Indicador interactivo solo cuando está recogido */}
+                {!isTeamHovered && (
+                  <div className="flex items-center justify-center gap-2 pt-1.5 text-[11px] text-sky-200/90 font-medium tracking-wide">
+                    <span>Ver información completa</span>
+                    <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
+                  </div>
+                )}
+              </div>
+
+              <AnimatePresence>
+                {isTeamHovered && (
+                  <motion.div
+                    initial={{ opacity: 0, height: 0 }}
+                    animate={{ opacity: 1, height: 'auto' }}
+                    exit={{ opacity: 0, height: 0 }}
+                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                    className="space-y-3.5 overflow-hidden pt-1"
+                    onClick={(e) => e.stopPropagation()}
+                  >
+                    <p className="text-xs text-slate-100 leading-relaxed font-normal text-justify">
+                      En el mundo de los negocios, detrás de cada gran idea, de cada pyme que se consolida y de cada mediana empresa que se expande, hay una realidad inevitable: los números. Sin embargo, sabemos que tú no fundaste tu negocio para pasar horas ordenando facturas, descifrando leyes fiscales complejas o preocupándote por sorpresas de última hora con los impuestos.
+                    </p>
+
+                    <p className="text-xs text-slate-100 leading-relaxed font-normal text-justify">
+                      Somos una firma de servicios contables y fiscales diseñada específicamente para ser el respaldo de autónomos, pymes y medianas empresas. Nos alejamos del modelo del contador tradicional y distante que solo aparece a final de mes. Nos convertimos en tus aliados estratégicos cotidianos, combinando el máximo rigor técnico con un trato cercano, humano y sin tecnicismos difíciles de entender.
+                    </p>
+
+                    <div className="pt-2 flex flex-wrap items-center justify-center gap-2.5">
+                      <Link
+                        to="/nosotros"
+                        className="inline-flex items-center gap-2 px-4.5 py-2.5 rounded-none text-xs font-bold text-white bg-[#FC6412] hover:bg-[#e05308] active:bg-[#c94703] transition-all shadow-md whitespace-nowrap"
+                      >
+                        <span>Conocer más sobre nosotros</span>
+                        <ArrowRight className="w-3.5 h-3.5" />
+                      </Link>
+
+                      <a
+                        href={whatsappGeneralUrl}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="inline-flex items-center gap-2 px-4 py-2.5 rounded-none text-xs font-bold text-white bg-white/15 hover:bg-white/25 border border-white/30 transition-all shadow-xs whitespace-nowrap"
+                      >
+                        <WhatsAppIcon className="w-3.5 h-3.5 text-white" />
+                        <span>Hablar con un asesor</span>
+                      </a>
+                    </div>
+
+                    {/* Botón centrado para ocultar */}
+                    <div
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        setIsTeamHovered(false);
+                      }}
+                      className="pt-2 flex items-center justify-center gap-1.5 text-xs text-sky-200/90 active:text-white font-medium cursor-pointer transition-colors"
+                    >
+                      <ChevronUp className="w-4 h-4" />
+                      <span>Ocultar</span>
+                    </div>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+            </motion.div>
+          </div>
+        </div>
+
+        {/* ============================================================== */}
+        {/* VISTA DESKTOP (sm+): 100% idéntica e inalterada */}
+        {/* ============================================================== */}
+        <div className="hidden sm:block relative w-full sm:h-[580px] lg:h-[620px] overflow-hidden bg-slate-900">
           {/* Foto grupal completa como fondo anclada para ocupar todo el espacio vertical de la sección */}
           <div className="absolute inset-0 z-0">
-            <picture>
-              <source media="(max-width: 639px)" srcSet={teamGroupMobileImg} />
-              <img
-                src={teamGroupImg}
-                alt="Equipo de consultores y asesores de MH Contabilidad en Ecuador"
-                className="w-full h-full object-cover object-[25%_18%] filter brightness-105 sm:brightness-100 contrast-[1.02]"
-                loading="lazy"
-                referrerPolicy="no-referrer"
-              />
-            </picture>
+            <img
+              src={teamGroupImg}
+              alt="Equipo de consultores y asesores de MH Contabilidad en Ecuador"
+              className="w-full h-full object-cover sm:object-[25%_18%] filter brightness-105 sm:brightness-100 contrast-[1.02]"
+              loading="lazy"
+              referrerPolicy="no-referrer"
+            />
             {/* Overlay focalizado en la base para dar máxima luminosidad y claridad al equipo */}
             <div className="absolute inset-0 bg-gradient-to-t from-slate-950/30 via-transparent to-transparent pointer-events-none" />
           </div>
 
-          <div className="relative z-10 w-full h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 pb-6 sm:pb-8 lg:pb-10 flex justify-center items-end">
+          <div className="relative z-10 w-full h-full max-w-7xl mx-auto px-6 lg:px-8 pb-8 lg:pb-10 flex justify-center items-end">
             {/* Contenedor Azul Semitransparente Cuadrado: Se expande al tocar (móvil) o pasar el mouse (PC) y se recoge al tocar fuera */}
             <motion.div
               ref={teamContainerRef}
@@ -118,7 +221,7 @@ export const HomePage: React.FC = () => {
               }}
               onMouseEnter={() => setIsTeamHovered(true)}
               onMouseLeave={() => setIsTeamHovered(false)}
-              className="w-full max-w-2xl bg-[#002D5A]/85 hover:bg-[#002D5A]/95 backdrop-blur-md text-white p-6 sm:p-7 lg:p-8 rounded-none shadow-2xl border border-white/20 transition-all space-y-4 cursor-pointer select-none"
+              className="w-full max-w-2xl bg-[#002D5A]/85 hover:bg-[#002D5A]/95 backdrop-blur-md text-white p-7 lg:p-8 rounded-none shadow-2xl border border-white/20 transition-all space-y-4 cursor-pointer select-none"
             >
               {/* Frase / Convicción principal: Directa sin contenedor interior */}
               <p className="text-white font-bold text-sm sm:text-base lg:text-[16px] leading-relaxed tracking-tight text-center drop-shadow-sm">
@@ -127,9 +230,8 @@ export const HomePage: React.FC = () => {
 
               {/* Indicador interactivo en estado de reposo (cuando no se pasa el mouse o toca) */}
               {!isTeamHovered && (
-                <div className="flex items-center justify-center gap-2 pt-1 text-[11px] sm:text-xs text-sky-200/90 font-medium tracking-wide">
+                <div className="flex items-center justify-center gap-2 pt-1 text-xs text-sky-200/90 font-medium tracking-wide">
                   <span className="hidden sm:inline">Pasa el cursor aquí para ver la información completa</span>
-                  <span className="sm:hidden inline">Toca aquí para ver la información completa</span>
                   <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
                 </div>
               )}
@@ -144,11 +246,11 @@ export const HomePage: React.FC = () => {
                     transition={{ duration: 0.3, ease: 'easeOut' }}
                     className="space-y-4 overflow-hidden pt-1"
                   >
-                    <p className="text-xs sm:text-[13px] text-slate-100 leading-relaxed font-normal text-justify">
+                    <p className="text-[13px] text-slate-100 leading-relaxed font-normal text-justify">
                       En el mundo de los negocios, detrás de cada gran idea, de cada pyme que se consolida y de cada mediana empresa que se expande, hay una realidad inevitable: los números. Sin embargo, sabemos que tú no fundaste tu negocio para pasar horas ordenando facturas, descifrando leyes fiscales complejas o preocupándote por sorpresas de última hora con los impuestos.
                     </p>
 
-                    <p className="text-xs sm:text-[13px] text-slate-100 leading-relaxed font-normal text-justify">
+                    <p className="text-[13px] text-slate-100 leading-relaxed font-normal text-justify">
                       Somos una firma de servicios contables y fiscales diseñada específicamente para ser el respaldo de autónomos, pymes y medianas empresas. Nos alejamos del modelo del contador tradicional y distante que solo aparece a final de mes. Nos convertimos en tus aliados estratégicos cotidianos, combinando el máximo rigor técnico con un trato cercano, humano y sin tecnicismos difíciles de entender.
                     </p>
 

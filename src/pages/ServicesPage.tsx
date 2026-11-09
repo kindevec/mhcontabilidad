@@ -10,7 +10,7 @@ import { WhatsAppIcon } from '../components/WhatsAppIcon';
 import { PageHero } from '../components/PageHero';
 import { ServiceCard } from '../components/ui/card-7';
 import heroImg from '../assets/images/hero_servicios_consultoria_reunion.webp?v=11';
-import contabilidadImg from '../assets/images/carrusel_contabilidad_orden.jpg?v=3';
+import contabilidadImg from '../assets/images/carrusel_contabilidad_orden.jpg?v=4';
 import fiscalImg from '../assets/images/carrusel_blindaje_fiscal.jpg?v=2';
 import consultoriaImg from '../assets/images/carrusel_consultoria_estrategica.jpg?v=3';
 import nominaImg from '../assets/images/carrusel_nomina_laboral.jpg?v=3';

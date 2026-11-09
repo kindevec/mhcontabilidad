@@ -116,6 +116,8 @@ export const ContactPage: React.FC = () => {
         image={contactHeroImg}
         imageAlt="Atención y asesoría contable profesional MH Contabilidad"
         imageClassName="w-full h-full object-cover object-center md:object-right"
+        mobileContainerHeightClassName="h-[310px] xs:h-[335px] sm:h-[360px]"
+        mobileImageClassName="object-[95%_center]"
       >
         {/* Accesos Rápidos */}
         <div className="pt-4 flex flex-wrap items-center justify-center gap-3">

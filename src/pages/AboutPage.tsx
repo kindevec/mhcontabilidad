@@ -26,6 +26,7 @@ import { PageHero } from '../components/PageHero';
 import { MissionVisionSection } from '../components/MissionVisionSection';
 import { WhyChooseUsSection } from '../components/WhyChooseUsSection';
 import consultingTeamImg from '../assets/images/nosotros_equipo_institucional_hero.webp?v=21';
+import consultingTeamMobileImg from '../assets/images/nosotros_equipo_institucional_hero_movil.webp?v=1';
 import ordenPlanificacionImg from '../assets/images/nuestro_orden_planificacion.jpg';
 import ordenPuzzleImg from '../assets/images/nuestro_orden_puzzle.jpg';
 import ordenManosImg from '../assets/images/nuestro_orden_equipo_manos.jpg';
@@ -75,8 +76,11 @@ export const AboutPage: React.FC = () => {
         titleHighlight="Tus Aliados Estratégicos"
         description={`Firma de servicios contables y fiscales diseñada para ser el respaldo estratégico de autónomos, pymes y medianas empresas en Ecuador, bajo el liderazgo de la ${siteConfig.representative}.`}
         image={consultingTeamImg}
+        mobileImage={consultingTeamMobileImg}
         imageAlt="Equipo de consultoría contable MH Contabilidad"
         imageClassName="object-cover object-[center_35%]"
+        mobileImageClassName="object-cover object-[center_top]"
+        mobileContainerHeightClassName="h-72 xs:h-80 sm:h-96"
         diagonalOffset={20}
       >
         {/* Accesos Rápidos */}

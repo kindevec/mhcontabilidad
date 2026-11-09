@@ -3,7 +3,7 @@ import { WhatsAppIcon } from './WhatsAppIcon';
 import { siteConfig } from '../data/siteConfig';
 
 // Fotografías profesionales de alta definición específicas para cada servicio
-import contabilidadImg from '../assets/images/carrusel_contabilidad_orden.jpg?v=3';
+import contabilidadImg from '../assets/images/carrusel_contabilidad_orden.jpg?v=4';
 import fiscalImg from '../assets/images/carrusel_blindaje_fiscal.jpg?v=2';
 import consultoriaImg from '../assets/images/carrusel_consultoria_estrategica.jpg?v=3';
 import nominaImg from '../assets/images/carrusel_nomina_laboral.jpg?v=3';
@@ -174,7 +174,7 @@ export const ServicesCarousel: React.FC<ServicesCarouselProps> = ({ centerLabel 
   const renderCard = (item: ServiceCardData, key: React.Key) => (
     <div
       key={key}
-      className="relative w-[280px] xs:w-80 sm:w-96 h-[440px] sm:h-[520px] rounded-none overflow-hidden shadow-xl border border-slate-200/80 bg-slate-900 group select-none transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl shrink-0 cursor-pointer"
+      className="relative w-[280px] xs:w-80 sm:w-96 h-[480px] sm:h-[570px] rounded-none overflow-hidden shadow-xl border border-slate-200/80 bg-slate-900 group select-none transition-all duration-300 hover:scale-[1.02] hover:shadow-2xl shrink-0 cursor-pointer"
     >
       <img
         src={item.img}

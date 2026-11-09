@@ -7,8 +7,11 @@ interface PageHeroProps {
   titleClassName?: string;
   description?: string;
   image: string;
+  mobileImage?: string;
   imageAlt: string;
   imageClassName?: string;
+  mobileImageClassName?: string;
+  mobileContainerHeightClassName?: string;
   diagonalOffset?: number;
   contentClassName?: string;
   children?: React.ReactNode;
@@ -21,8 +24,11 @@ export const PageHero: React.FC<PageHeroProps> = ({
   titleClassName,
   description,
   image,
+  mobileImage,
   imageAlt,
   imageClassName,
+  mobileImageClassName,
+  mobileContainerHeightClassName,
   diagonalOffset = 0,
   contentClassName,
   children,
@@ -50,11 +56,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
             <span className="text-[#38BDF8] block mt-1">{titleHighlight}</span>
           </h1>
 
-          {description && (
-            <p className="text-xs xs:text-sm text-slate-300 leading-relaxed max-w-lg mx-auto text-center">
-              {description}
-            </p>
-          )}
+
 
           {children && (
             <div className="pt-2 w-full flex justify-center [&>div]:justify-center [&>div]:pt-1">
@@ -67,11 +69,11 @@ export const PageHero: React.FC<PageHeroProps> = ({
         <div className="w-full h-1 bg-[#FC6412] relative z-10" />
 
         {/* Imagen inferior en móvil */}
-        <div className="w-full h-56 xs:h-64 sm:h-72 relative overflow-hidden bg-[#0A131F]">
+        <div className={`w-full ${mobileContainerHeightClassName || 'h-56 xs:h-64 sm:h-72'} relative overflow-hidden bg-[#0A131F]`}>
           <img
-            src={image}
+            src={mobileImage || image}
             alt={imageAlt}
-            className={`w-full h-full object-cover ${imageClassName || 'object-center'}`}
+            className={`w-full h-full object-cover ${mobileImageClassName || imageClassName || 'object-center'}`}
             loading="eager"
           />
           <div className="absolute inset-0 bg-gradient-to-t from-[#0A131F]/30 via-transparent to-transparent pointer-events-none" />
