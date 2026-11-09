@@ -18,29 +18,20 @@ import teamGroupMobileImg from '../assets/images/equipo_mh_completo_movil.webp?v
 import { motion, AnimatePresence } from 'motion/react';
 
 export const HomePage: React.FC = () => {
-  const [isTeamHovered, setIsTeamHovered] = useState(false);
+  const [isTeamExpandedMobile, setIsTeamExpandedMobile] = useState(false);
+  const [isTeamHoveredDesktop, setIsTeamHoveredDesktop] = useState(false);
   const teamContainerRef = useRef<HTMLDivElement>(null);
-  const mobileTeamContainerRef = useRef<HTMLDivElement>(null);
 
+  // Cierre al hacer click fuera únicamente en Desktop para evitar colapsos al scrollear en móvil
   useEffect(() => {
-    const handleOutsideInteraction = (e: MouseEvent | TouchEvent) => {
-      if (!isTeamHovered) return;
-      const target = e.target as Node;
-      const isInside =
-        (teamContainerRef.current && teamContainerRef.current.contains(target)) ||
-        (mobileTeamContainerRef.current && mobileTeamContainerRef.current.contains(target));
-      if (!isInside) {
-        setIsTeamHovered(false);
+    const handleClickOutside = (e: MouseEvent) => {
+      if (teamContainerRef.current && !teamContainerRef.current.contains(e.target as Node)) {
+        setIsTeamHoveredDesktop(false);
       }
     };
-
-    document.addEventListener('click', handleOutsideInteraction);
-    document.addEventListener('touchstart', handleOutsideInteraction);
-    return () => {
-      document.removeEventListener('click', handleOutsideInteraction);
-      document.removeEventListener('touchstart', handleOutsideInteraction);
-    };
-  }, [isTeamHovered]);
+    document.addEventListener('click', handleClickOutside);
+    return () => document.removeEventListener('click', handleClickOutside);
+  }, []);
 
   const whatsappGeneralUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Ing. Mónica Herrera / MH Contabilidad, requiero asesoría contable y tributaria personalizada.')}`;
 
@@ -109,18 +100,10 @@ export const HomePage: React.FC = () => {
 
           {/* Tarjeta Azul interactiva: enlaza sobre el pie de la mesa sin vacíos oscuros y expande el texto completo */}
           <div className="relative z-10 w-full px-3.5 xs:px-4 -mt-12 xs:-mt-14 pb-8 flex justify-center">
-            <motion.div
-              ref={mobileTeamContainerRef}
-              layout
-              transition={{ duration: 0.35, ease: 'easeOut' }}
-              className="w-full max-w-2xl bg-[#002D5A]/95 backdrop-blur-md text-white p-4.5 xs:p-5 rounded-none shadow-2xl border border-white/20 transition-all space-y-3 select-none"
-            >
+            <div className="w-full max-w-2xl bg-[#002D5A]/95 backdrop-blur-md text-white p-4.5 xs:p-5 rounded-none shadow-2xl border border-white/20 transition-colors space-y-3 select-none">
               {/* Cabecera / Cita principal: Al tocarla alterna entre expandir y recoger */}
               <div
-                onClick={(e) => {
-                  e.stopPropagation();
-                  setIsTeamHovered((prev) => !prev);
-                }}
+                onClick={() => setIsTeamExpandedMobile((prev) => !prev)}
                 className="cursor-pointer active:opacity-90"
               >
                 <p className="text-white font-bold text-sm leading-relaxed tracking-tight text-center drop-shadow-sm">
@@ -128,7 +111,7 @@ export const HomePage: React.FC = () => {
                 </p>
 
                 {/* Indicador interactivo solo cuando está recogido */}
-                {!isTeamHovered && (
+                {!isTeamExpandedMobile && (
                   <div className="flex items-center justify-center gap-2 pt-1.5 text-[11px] text-sky-200/90 font-medium tracking-wide">
                     <span>Ver información completa</span>
                     <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
@@ -136,15 +119,14 @@ export const HomePage: React.FC = () => {
                 )}
               </div>
 
-              <AnimatePresence>
-                {isTeamHovered && (
+              <AnimatePresence initial={false}>
+                {isTeamExpandedMobile && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
                     exit={{ opacity: 0, height: 0 }}
-                    transition={{ duration: 0.3, ease: 'easeOut' }}
+                    transition={{ duration: 0.25, ease: 'easeInOut' }}
                     className="space-y-3.5 overflow-hidden pt-1"
-                    onClick={(e) => e.stopPropagation()}
                   >
                     <p className="text-xs text-slate-100 leading-relaxed font-normal text-justify">
                       En el mundo de los negocios, detrás de cada gran idea, de cada pyme que se consolida y de cada mediana empresa que se expande, hay una realidad inevitable: los números. Sin embargo, sabemos que tú no fundaste tu negocio para pasar horas ordenando facturas, descifrando leyes fiscales complejas o preocupándote por sorpresas de última hora con los impuestos.
@@ -176,10 +158,7 @@ export const HomePage: React.FC = () => {
 
                     {/* Botón centrado para ocultar */}
                     <div
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        setIsTeamHovered(false);
-                      }}
+                      onClick={() => setIsTeamExpandedMobile(false)}
                       className="pt-2 flex items-center justify-center gap-1.5 text-xs text-sky-200/90 active:text-white font-medium cursor-pointer transition-colors"
                     >
                       <ChevronUp className="w-4 h-4" />
@@ -188,7 +167,7 @@ export const HomePage: React.FC = () => {
                   </motion.div>
                 )}
               </AnimatePresence>
-            </motion.div>
+            </div>
           </div>
         </div>
 
@@ -217,10 +196,10 @@ export const HomePage: React.FC = () => {
               transition={{ duration: 0.35, ease: 'easeOut' }}
               onClick={(e) => {
                 e.stopPropagation();
-                setIsTeamHovered((prev) => !prev);
+                setIsTeamHoveredDesktop((prev) => !prev);
               }}
-              onMouseEnter={() => setIsTeamHovered(true)}
-              onMouseLeave={() => setIsTeamHovered(false)}
+              onMouseEnter={() => setIsTeamHoveredDesktop(true)}
+              onMouseLeave={() => setIsTeamHoveredDesktop(false)}
               className="w-full max-w-2xl bg-[#002D5A]/85 hover:bg-[#002D5A]/95 backdrop-blur-md text-white p-7 lg:p-8 rounded-none shadow-2xl border border-white/20 transition-all space-y-4 cursor-pointer select-none"
             >
               {/* Frase / Convicción principal: Directa sin contenedor interior */}
@@ -229,7 +208,7 @@ export const HomePage: React.FC = () => {
               </p>
 
               {/* Indicador interactivo en estado de reposo (cuando no se pasa el mouse o toca) */}
-              {!isTeamHovered && (
+              {!isTeamHoveredDesktop && (
                 <div className="flex items-center justify-center gap-2 pt-1 text-xs text-sky-200/90 font-medium tracking-wide">
                   <span className="hidden sm:inline">Pasa el cursor aquí para ver la información completa</span>
                   <ChevronDown className="w-3.5 h-3.5 animate-bounce" />
@@ -238,7 +217,7 @@ export const HomePage: React.FC = () => {
 
               {/* Contenido completo que se despliega al pasar el mouse por la imagen */}
               <AnimatePresence>
-                {isTeamHovered && (
+                {isTeamHoveredDesktop && (
                   <motion.div
                     initial={{ opacity: 0, height: 0 }}
                     animate={{ opacity: 1, height: 'auto' }}
