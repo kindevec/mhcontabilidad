@@ -69,11 +69,11 @@ export const HeroSection: React.FC = () => {
         {/* Fondo Geométrico en Diagonal con Aristas Facetadas estilo Active Business Growth */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden" aria-hidden="true">
           {/* Imagen adaptada que rellena el espacio derecho sin huecos en blanco */}
-          <div className="absolute inset-y-0 right-0 w-[72%] lg:w-[76%] xl:w-[80%] overflow-hidden">
+          <div className="absolute inset-y-0 right-0 w-[74%] lg:w-[78%] xl:w-[82%] overflow-hidden">
             <img
               src={mhHeroBannerImg}
               alt="Servicios tributarios en Ecuador - MH Contabilidad"
-              className="w-full h-full object-cover object-[center_top] translate-x-8 lg:translate-x-12 xl:translate-x-16 select-none filter brightness-[0.98]"
+              className="w-full h-full object-cover object-[right_center] scale-[0.88] lg:scale-[0.89] xl:scale-[0.90] origin-[80%_center] translate-y-6 lg:translate-y-8 xl:translate-y-9 select-none filter brightness-[0.98]"
               loading="eager"
               fetchPriority="high"
               decoding="async"
@@ -96,19 +96,19 @@ export const HeroSection: React.FC = () => {
 
             {/* Polígono oscuro principal izquierdo (#0A131F) */}
             <polygon
-              points="0,0 290,0 430,650 0,650"
+              points="0,0 270,0 410,650 0,650"
               fill="#0A131F"
             />
 
             {/* Franja continua azul a lo largo de toda la diagonal recta */}
             <polygon
-              points="296,0 316,0 456,650 436,650"
+              points="276,0 296,0 436,650 416,650"
               fill="#005BB2"
             />
 
             {/* Franja continua naranja MH completa, nítida e ininterrumpida de extremo a extremo */}
             <polygon
-              points="290,0 296,0 436,650 430,650"
+              points="270,0 276,0 416,650 410,650"
               fill="#FC6412"
             />
 
@@ -118,13 +118,13 @@ export const HeroSection: React.FC = () => {
           </svg>
         </div>
 
-        <div className="relative z-10 max-w-[1720px] w-full mx-auto px-4 sm:px-6 lg:pl-5 lg:pr-8 xl:pl-6 xl:pr-10">
+        <div className="relative z-10 max-w-[1720px] w-full mx-auto px-4 sm:px-6 lg:pl-10 lg:pr-8 xl:pl-16 2xl:pl-12 xl:pr-10">
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[520px] sm:min-h-[580px] lg:min-h-[640px] xl:min-h-[680px]">
             
             {/* Columna Izquierda: Información oficial centrada sobre el fondo oscuro con holgura respecto a la diagonal */}
-            <div className="md:col-span-7 lg:col-span-6 xl:col-span-5 pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-20 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center">
+            <div className="md:col-span-7 lg:col-span-6 xl:col-span-5 pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-20 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center md:-translate-x-10 lg:-translate-x-16 xl:-translate-x-24 2xl:-translate-x-28">
               {/* Título Principal con salto de línea tras 'Contable' */}
-              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[40px] xl:text-[46px] 2xl:text-[50px] font-black text-white tracking-tight leading-[1.15] text-center">
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[36px] xl:text-[42px] 2xl:text-[46px] font-black text-white tracking-tight leading-[1.15] text-center">
                 <span className="block">Tu Respaldo Contable</span>
                 <span className="text-[#38BDF8] block mt-1 sm:mt-2">Tu Impulso Estratégico</span>
               </h1>
