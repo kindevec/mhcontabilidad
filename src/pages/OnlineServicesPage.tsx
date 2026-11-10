@@ -143,7 +143,7 @@ export const OnlineServicesPage: React.FC = () => {
       <PageHero
         titleLine1="Portal Clientes"
         titleHighlight="Consultas y Conectividad Digital"
-        titleClassName="-translate-x-2 md:-translate-x-6 lg:-translate-x-10"
+
         description="En MH Contabilidad combinamos asesoría personalizada con herramientas tecnológicas modernas. Consulte la información de sus estados de cuenta, comprobantes y reportes contables con agilidad."
         image={digitalPortalImg}
         imageAlt="Plataforma de contabilidad digital y reportes financieros de MH Contabilidad"

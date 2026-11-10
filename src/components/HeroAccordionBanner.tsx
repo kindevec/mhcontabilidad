@@ -105,7 +105,7 @@ export const HeroAccordionBanner: React.FC = () => {
 
               {/* Título en alta jerarquía con cambio de color */}
               <h3
-                className={`text-[8px] xs:text-[9.5px] sm:text-[11px] md:text-xs lg:text-[13px] font-black tracking-tight xs:tracking-normal sm:tracking-wider uppercase leading-[1.15] sm:whitespace-nowrap ${
+                className={`text-[8px] xs:text-[9.5px] sm:text-[11px] md:text-xs lg:text-[13px] font-black tracking-tight xs:tracking-normal sm:tracking-wider uppercase leading-[1.15] md:whitespace-nowrap ${
                   isActive ? 'text-amber-200' : 'text-white group-hover:text-amber-200'
                 } transition-colors px-0.5`}
               >

@@ -112,19 +112,19 @@ export const PageHero: React.FC<PageHeroProps> = ({
 
             {/* Polígono oscuro principal izquierdo (#0A131F) */}
             <polygon
-              points={`0,0 ${295 + diagonalOffset},0 ${435 + diagonalOffset},650 0,650`}
+              points={`0,0 ${340 + diagonalOffset},0 ${480 + diagonalOffset},650 0,650`}
               fill="#0A131F"
             />
 
             {/* Franja continua azul a lo largo de toda la diagonal recta */}
             <polygon
-              points={`${301 + diagonalOffset},0 ${321 + diagonalOffset},0 ${461 + diagonalOffset},650 ${441 + diagonalOffset},650`}
+              points={`${346 + diagonalOffset},0 ${366 + diagonalOffset},0 ${506 + diagonalOffset},650 ${486 + diagonalOffset},650`}
               fill="#005BB2"
             />
 
             {/* Franja continua naranja MH completa, nítida e ininterrumpida de extremo a extremo */}
             <polygon
-              points={`${295 + diagonalOffset},0 ${301 + diagonalOffset},0 ${441 + diagonalOffset},650 ${435 + diagonalOffset},650`}
+              points={`${340 + diagonalOffset},0 ${346 + diagonalOffset},0 ${486 + diagonalOffset},650 ${480 + diagonalOffset},650`}
               fill="#FC6412"
             />
 
@@ -135,10 +135,10 @@ export const PageHero: React.FC<PageHeroProps> = ({
         </div>
 
         <div className="relative z-10 max-w-[1600px] w-full mx-auto px-4 sm:px-8 lg:px-12">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center min-h-[560px] lg:min-h-[640px] xl:min-h-[700px]">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 items-center min-h-[560px] lg:min-h-[640px] xl:min-h-[700px]">
             
             {/* Columna Izquierda: Información oficial centrada sobre el fondo oscuro con holgura respecto a la diagonal */}
-            <div className={`lg:col-span-6 xl:col-span-5 pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-16 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center md:-translate-x-6 lg:-translate-x-16 xl:-translate-x-24 ${contentClassName || ''}`}>
+            <div className={`md:col-span-7 lg:col-span-6 xl:col-span-5 pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-16 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center ${contentClassName || ''}`}>
               {badge && (
                 <div className="inline-flex items-center justify-center gap-2 text-xs font-semibold text-[#38BDF8] uppercase tracking-wider mx-auto">
                   <span className="w-2.5 h-0.5 bg-[#FC6412]" />
@@ -146,7 +146,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
                 </div>
               )}
 
-              <h1 className={`text-2xl xs:text-3xl sm:text-4xl lg:text-5xl font-black text-white tracking-tight leading-[1.15] text-center ${titleClassName || ''}`}>
+              <h1 className={`text-2xl xs:text-3xl sm:text-4xl lg:text-[42px] xl:text-5xl font-black text-white tracking-tight leading-[1.15] text-center ${titleClassName || ''}`}>
                 <span className="block">{titleLine1}</span>
                 <span className="text-[#38BDF8] block mt-1 sm:mt-2">{titleHighlight}</span>
               </h1>
@@ -165,7 +165,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
             </div>
 
             {/* Columna Derecha: Área libre diáfana que deja ver la imagen integrada en el fondo */}
-            <div className="hidden lg:block lg:col-span-6 xl:col-span-7 min-h-[400px] pointer-events-none" aria-hidden="true" />
+            <div className="hidden md:block md:col-span-5 lg:col-span-6 xl:col-span-7 min-h-[400px] pointer-events-none" aria-hidden="true" />
 
           </div>
         </div>

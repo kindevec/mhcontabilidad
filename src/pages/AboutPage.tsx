@@ -74,7 +74,7 @@ export const AboutPage: React.FC = () => {
       <PageHero
         titleLine1="Más que Asesores"
         titleHighlight="Tus Aliados Estratégicos"
-        description={`Firma de servicios contables y fiscales diseñada para ser el respaldo estratégico de autónomos, pymes y medianas empresas en Ecuador, bajo el liderazgo de la ${siteConfig.representative}.`}
+        description={`Firma de servicios contables y fiscales diseñada para ser el respaldo estratégico de pymes, medianas y grandes empresas en Ecuador bajo el liderazgo de la ${siteConfig.representative}.`}
         image={consultingTeamImg}
         mobileImage={consultingTeamMobileImg}
         imageAlt="Equipo de consultoría contable MH Contabilidad"

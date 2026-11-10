@@ -73,7 +73,7 @@ export const HeroSection: React.FC = () => {
             <img
               src={mhHeroBannerImg}
               alt="Servicios tributarios en Ecuador - MH Contabilidad"
-              className="w-full h-full object-cover object-[center_top] translate-x-12 lg:translate-x-20 xl:translate-x-24 select-none filter brightness-[0.98]"
+              className="w-full h-full object-cover object-[right_top] select-none filter brightness-[0.98]"
               loading="eager"
               fetchPriority="high"
               decoding="async"
@@ -96,19 +96,19 @@ export const HeroSection: React.FC = () => {
 
             {/* Polígono oscuro principal izquierdo (#0A131F) */}
             <polygon
-              points="0,0 285,0 425,650 0,650"
+              points="0,0 340,0 480,650 0,650"
               fill="#0A131F"
             />
 
             {/* Franja continua azul a lo largo de toda la diagonal recta */}
             <polygon
-              points="291,0 311,0 451,650 431,650"
+              points="346,0 366,0 506,650 486,650"
               fill="#005BB2"
             />
 
             {/* Franja continua naranja MH completa, nítida e ininterrumpida de extremo a extremo */}
             <polygon
-              points="285,0 291,0 431,650 425,650"
+              points="340,0 346,0 486,650 480,650"
               fill="#FC6412"
             />
 
@@ -119,12 +119,12 @@ export const HeroSection: React.FC = () => {
         </div>
 
         <div className="relative z-10 max-w-[1720px] w-full mx-auto px-4 sm:px-6 lg:pl-5 lg:pr-8 xl:pl-6 xl:pr-10">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[520px] sm:min-h-[580px] lg:min-h-[640px] xl:min-h-[680px]">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[520px] sm:min-h-[580px] lg:min-h-[640px] xl:min-h-[680px]">
             
             {/* Columna Izquierda: Información oficial centrada sobre el fondo oscuro con holgura respecto a la diagonal */}
-            <div className="lg:col-span-6 xl:col-span-5 pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-20 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center md:-translate-x-6 lg:-translate-x-16 xl:-translate-x-24">
+            <div className="md:col-span-7 lg:col-span-6 xl:col-span-5 pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-20 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center">
               {/* Título Principal con salto de línea tras 'Contable' */}
-              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-5xl xl:text-[52px] font-black text-white tracking-tight leading-[1.15] text-center">
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[42px] xl:text-[48px] 2xl:text-[52px] font-black text-white tracking-tight leading-[1.15] text-center">
                 <span className="block">Tu Respaldo Contable</span>
                 <span className="text-[#38BDF8] block mt-1 sm:mt-2">Tu Impulso Estratégico</span>
               </h1>
@@ -154,7 +154,7 @@ export const HeroSection: React.FC = () => {
             </div>
 
             {/* Columna Derecha: Área libre diáfana que deja lucir el banner integrado en toda la altura del fondo */}
-            <div className="hidden lg:block lg:col-span-6 xl:col-span-7 min-h-[460px] pointer-events-none" aria-hidden="true" />
+            <div className="hidden md:block md:col-span-5 lg:col-span-6 xl:col-span-7 min-h-[460px] pointer-events-none" aria-hidden="true" />
 
           </div>
         </div>
