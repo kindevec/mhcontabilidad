@@ -73,7 +73,7 @@ export const HeroSection: React.FC = () => {
             <img
               src={mhHeroBannerImg}
               alt="Servicios tributarios en Ecuador - MH Contabilidad"
-              className="w-full h-full object-cover object-[right_center] scale-[0.86] lg:scale-[0.87] xl:scale-[0.88] origin-[85%_center] translate-x-3 lg:translate-x-5 xl:translate-x-7 translate-y-6 lg:translate-y-8 xl:translate-y-9 select-none filter brightness-[0.98]"
+              className="w-full h-full object-cover object-[right_center] scale-[0.88] lg:scale-[0.89] xl:scale-[0.90] origin-[80%_center] translate-y-6 lg:translate-y-8 xl:translate-y-9 select-none filter brightness-[0.98]"
               loading="eager"
               fetchPriority="high"
               decoding="async"
@@ -96,19 +96,19 @@ export const HeroSection: React.FC = () => {
 
             {/* Polígono oscuro principal izquierdo (#0A131F) */}
             <polygon
-              points="0,0 315,0 455,650 0,650"
+              points="0,0 270,0 410,650 0,650"
               fill="#0A131F"
             />
 
             {/* Franja continua azul a lo largo de toda la diagonal recta */}
             <polygon
-              points="321,0 341,0 481,650 461,650"
+              points="276,0 296,0 436,650 416,650"
               fill="#005BB2"
             />
 
             {/* Franja continua naranja MH completa, nítida e ininterrumpida de extremo a extremo */}
             <polygon
-              points="315,0 321,0 461,650 455,650"
+              points="270,0 276,0 416,650 410,650"
               fill="#FC6412"
             />
 
@@ -122,9 +122,9 @@ export const HeroSection: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[520px] sm:min-h-[580px] lg:min-h-[640px] xl:min-h-[680px]">
             
             {/* Columna Izquierda: Información oficial centrada sobre el fondo oscuro con holgura respecto a la diagonal */}
-            <div className="md:col-span-7 lg:col-span-6 xl:col-span-5 pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-20 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center md:-translate-x-2 lg:-translate-x-3 xl:-translate-x-4 2xl:-translate-x-5">
+            <div className="md:col-span-7 lg:col-span-6 xl:col-span-5 pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-20 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center md:-translate-x-6 lg:-translate-x-8 xl:-translate-x-12 2xl:-translate-x-14">
               {/* Título Principal con salto de línea tras 'Contable' */}
-              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[36px] xl:text-[40px] 2xl:text-[44px] font-black text-white tracking-tight leading-[1.15] text-center">
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[34px] xl:text-[38px] 2xl:text-[42px] font-black text-white tracking-tight leading-[1.15] text-center">
                 <span className="block">Tu Respaldo Contable</span>
                 <span className="text-[#38BDF8] block mt-1 sm:mt-2">Tu Impulso Estratégico</span>
               </h1>
