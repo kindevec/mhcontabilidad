@@ -69,7 +69,7 @@ export const HeroSection: React.FC = () => {
         {/* Fondo Geométrico en Diagonal con Aristas Facetadas estilo Active Business Growth */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden" aria-hidden="true">
           {/* Imagen adaptada que rellena el espacio derecho sin huecos en blanco */}
-          <div className="absolute inset-y-0 right-0 w-[68%] lg:w-[72%] xl:w-[75%] overflow-hidden">
+          <div className="absolute inset-y-0 right-0 w-[75%] lg:w-[82%] xl:w-[86%] overflow-hidden">
             <img
               src={mhHeroBannerImg}
               alt="Servicios tributarios en Ecuador - MH Contabilidad"
@@ -96,19 +96,19 @@ export const HeroSection: React.FC = () => {
 
             {/* Polígono oscuro principal izquierdo (#0A131F) */}
             <polygon
-              points="0,0 340,0 480,650 0,650"
+              points="0,0 270,0 410,650 0,650"
               fill="#0A131F"
             />
 
             {/* Franja continua azul a lo largo de toda la diagonal recta */}
             <polygon
-              points="346,0 366,0 506,650 486,650"
+              points="276,0 296,0 436,650 416,650"
               fill="#005BB2"
             />
 
             {/* Franja continua naranja MH completa, nítida e ininterrumpida de extremo a extremo */}
             <polygon
-              points="340,0 346,0 486,650 480,650"
+              points="270,0 276,0 416,650 410,650"
               fill="#FC6412"
             />
 
@@ -122,18 +122,18 @@ export const HeroSection: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[520px] sm:min-h-[580px] lg:min-h-[640px] xl:min-h-[680px]">
             
             {/* Columna Izquierda: Información oficial centrada sobre el fondo oscuro con holgura respecto a la diagonal */}
-            <div className="md:col-span-7 lg:col-span-6 xl:col-span-5 pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-20 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center">
+            <div className="md:col-span-7 lg:col-span-6 xl:col-span-5 pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-20 space-y-4 sm:space-y-5 text-center lg:text-left flex flex-col items-center lg:items-start justify-center">
               {/* Título Principal con salto de línea tras 'Contable' */}
-              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[42px] xl:text-[48px] 2xl:text-[52px] font-black text-white tracking-tight leading-[1.15] text-center">
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[40px] xl:text-[46px] 2xl:text-[50px] font-black text-white tracking-tight leading-[1.15] text-center lg:text-left">
                 <span className="block">Tu Respaldo Contable</span>
                 <span className="text-[#38BDF8] block mt-1 sm:mt-2">Tu Impulso Estratégico</span>
               </h1>
 
-              <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-lg mx-auto text-center">
+              <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-lg text-center lg:text-left">
                 Asesoría contable, tributaria y financiera especializada para autónomos, pymes y empresas en Ecuador. Blindaje fiscal y cumplimiento riguroso ante el SRI.
               </p>
 
-              <div className="pt-2 flex flex-wrap items-center justify-center gap-3">
+              <div className="pt-2 flex flex-wrap items-center justify-center lg:justify-start gap-3">
                 <a
                   href={whatsappUrl}
                   target="_blank"
