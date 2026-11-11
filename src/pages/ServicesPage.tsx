@@ -107,6 +107,7 @@ export const ServicesPage: React.FC = () => {
         image={heroImg}
         imageAlt="Servicios contables y tributarios profesionales en Ecuador"
         imageClassName="w-full h-full object-cover object-center"
+        diagonalOffset={-25}
       >
         {/* Accesos Rápidos */}
         <div className="pt-4 flex flex-wrap items-center justify-center gap-3">

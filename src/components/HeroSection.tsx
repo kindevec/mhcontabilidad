@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { siteConfig } from '../data/siteConfig';
-import mhHeroBannerImg from '../assets/images/mh_banner_hero_oficial.webp?v=9';
+import mhHeroBannerImg from '../assets/images/mh_banner_hero_oficial.webp?v=10';
 
 export const HeroSection: React.FC = () => {
   const whatsappUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Ing. Mónica Herrera / MH Contabilidad, deseo cotizar una asesoría contable y tributaria personalizada.')}`;
@@ -68,18 +68,16 @@ export const HeroSection: React.FC = () => {
       <div className="hidden md:block">
         {/* Fondo Geométrico en Diagonal con Aristas Facetadas estilo Active Business Growth */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden" aria-hidden="true">
-          {/* Imagen adaptada que rellena el espacio derecho con fondo integrado sin filos negros */}
+          {/* Imagen adaptada que rellena el espacio derecho ocupando todo el área sin filos vacíos */}
           <div className="absolute inset-y-0 right-0 w-[80%] lg:w-[82%] xl:w-[84%] 2xl:w-[85%] overflow-hidden bg-[#EAF1FB]">
-            <div className="w-full h-full pt-16 md:pt-20">
-              <img
-                src={mhHeroBannerImg}
-                alt="Servicios tributarios en Ecuador - MH Contabilidad"
-                className="w-full h-full object-contain object-[right_bottom] select-none filter brightness-[0.98]"
-                loading="eager"
-                fetchPriority="high"
-                decoding="async"
-              />
-            </div>
+            <img
+              src={mhHeroBannerImg}
+              alt="Servicios tributarios en Ecuador - MH Contabilidad"
+              className="w-full h-full object-contain object-[right_bottom] select-none filter brightness-[0.98]"
+              loading="eager"
+              fetchPriority="high"
+              decoding="async"
+            />
           </div>
 
           {/* Versión SVG vectorizada responsiva con línea divisora recta y bordes geométricos continuos */}
@@ -98,19 +96,19 @@ export const HeroSection: React.FC = () => {
 
             {/* Polígono oscuro principal izquierdo (#0A131F) */}
             <polygon
-              points="0,0 240,0 340,650 0,650"
+              points="0,0 260,0 360,650 0,650"
               fill="#0A131F"
             />
 
             {/* Franja continua azul a lo largo de toda la diagonal recta */}
             <polygon
-              points="246,0 266,0 366,650 346,650"
+              points="266,0 286,0 386,650 366,650"
               fill="#005BB2"
             />
 
             {/* Franja continua naranja MH completa, nítida e ininterrumpida de extremo a extremo */}
             <polygon
-              points="240,0 246,0 346,650 340,650"
+              points="260,0 266,0 366,650 360,650"
               fill="#FC6412"
             />
 
@@ -124,7 +122,7 @@ export const HeroSection: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[520px] lg:min-h-[560px] xl:min-h-[600px] 2xl:min-h-[640px]">
             
             {/* Columna Izquierda: Información oficial centrada sobre el fondo oscuro con holgura respecto a la diagonal */}
-            <div className="md:col-span-5 lg:col-span-4 xl:col-span-4 pt-24 md:pt-26 lg:pt-28 pb-8 md:pb-10 space-y-4 text-center flex flex-col items-center justify-center max-w-[340px] sm:max-w-[360px] lg:max-w-[380px] mx-auto md:mx-0 md:-translate-x-4 lg:-translate-x-6 xl:-translate-x-8">
+            <div className="md:col-span-5 lg:col-span-4 xl:col-span-4 pt-24 md:pt-26 lg:pt-28 pb-8 md:pb-10 space-y-4 text-center flex flex-col items-center justify-center max-w-[340px] sm:max-w-[360px] lg:max-w-[380px] mx-auto md:mx-0 md:translate-x-1 lg:translate-x-2 xl:translate-x-3">
               {/* Título Principal con salto de línea tras 'Contable' */}
               <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[28px] xl:text-[32px] 2xl:text-[36px] font-black text-white tracking-tight leading-[1.18] text-center">
                 <span className="block">Tu Respaldo Contable</span>

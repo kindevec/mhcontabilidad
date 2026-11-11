@@ -81,7 +81,7 @@ export const AboutPage: React.FC = () => {
         imageClassName="object-cover object-[center_35%]"
         mobileImageClassName="object-cover object-[center_top]"
         mobileContainerHeightClassName="h-72 xs:h-80 sm:h-96"
-        diagonalOffset={20}
+        diagonalOffset={-10}
       >
         {/* Accesos Rápidos */}
         <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
