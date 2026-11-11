@@ -10,7 +10,7 @@ export const HeroSection: React.FC = () => {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-[#0A131F] md:bg-[#F8FAFC] md:min-h-[580px] lg:min-h-[640px] xl:min-h-[680px]"
+      className="relative w-full overflow-hidden bg-[#0A131F] md:min-h-[560px] lg:min-h-[620px] xl:min-h-[660px] 2xl:min-h-[700px]"
       aria-label="Presentación principal de MH Contabilidad"
     >
       {/* ============================================================== */}
@@ -69,11 +69,11 @@ export const HeroSection: React.FC = () => {
         {/* Fondo Geométrico en Diagonal con Aristas Facetadas estilo Active Business Growth */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden" aria-hidden="true">
           {/* Imagen adaptada que rellena el espacio derecho sin huecos en blanco */}
-          <div className="absolute inset-y-0 right-0 w-[74%] lg:w-[78%] xl:w-[82%] overflow-hidden">
+          <div className="absolute inset-y-0 right-0 w-[72%] lg:w-[75%] xl:w-[77%] 2xl:w-[80%] overflow-hidden">
             <img
               src={mhHeroBannerImg}
               alt="Servicios tributarios en Ecuador - MH Contabilidad"
-              className="w-full h-full object-cover object-[right_center] scale-[0.88] lg:scale-[0.89] xl:scale-[0.90] origin-[80%_center] translate-y-6 lg:translate-y-8 xl:translate-y-9 select-none filter brightness-[0.98]"
+              className="w-full h-full object-cover object-[right_center] select-none filter brightness-[0.98]"
               loading="eager"
               fetchPriority="high"
               decoding="async"
@@ -96,19 +96,19 @@ export const HeroSection: React.FC = () => {
 
             {/* Polígono oscuro principal izquierdo (#0A131F) */}
             <polygon
-              points="0,0 270,0 410,650 0,650"
+              points="0,0 320,0 460,650 0,650"
               fill="#0A131F"
             />
 
             {/* Franja continua azul a lo largo de toda la diagonal recta */}
             <polygon
-              points="276,0 296,0 436,650 416,650"
+              points="326,0 346,0 486,650 466,650"
               fill="#005BB2"
             />
 
             {/* Franja continua naranja MH completa, nítida e ininterrumpida de extremo a extremo */}
             <polygon
-              points="270,0 276,0 416,650 410,650"
+              points="320,0 326,0 466,650 460,650"
               fill="#FC6412"
             />
 
@@ -118,18 +118,18 @@ export const HeroSection: React.FC = () => {
           </svg>
         </div>
 
-        <div className="relative z-10 max-w-[1720px] w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[520px] sm:min-h-[580px] lg:min-h-[640px] xl:min-h-[680px]">
+        <div className="relative z-10 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[560px] lg:min-h-[620px] xl:min-h-[660px] 2xl:min-h-[700px]">
             
             {/* Columna Izquierda: Información oficial centrada sobre el fondo oscuro con holgura respecto a la diagonal */}
-            <div className="md:col-span-7 lg:col-span-6 xl:col-span-5 pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-20 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center md:-translate-x-6 lg:-translate-x-8 xl:-translate-x-12 2xl:-translate-x-14">
+            <div className="md:col-span-6 lg:col-span-5 xl:col-span-5 pt-28 md:pt-30 lg:pt-32 pb-8 md:pb-12 lg:pb-16 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center max-w-md lg:max-w-lg mx-auto md:mx-0">
               {/* Título Principal con salto de línea tras 'Contable' */}
-              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[34px] xl:text-[38px] 2xl:text-[42px] font-black text-white tracking-tight leading-[1.15] text-center">
+              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[32px] xl:text-[36px] 2xl:text-[40px] font-black text-white tracking-tight leading-[1.18] text-center">
                 <span className="block">Tu Respaldo Contable</span>
                 <span className="text-[#38BDF8] block mt-1 sm:mt-2">Tu Impulso Estratégico</span>
               </h1>
 
-              <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-lg mx-auto text-center">
+              <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-md lg:max-w-lg mx-auto text-center">
                 Asesoría contable, tributaria y financiera especializada para autónomos, pymes y empresas en Ecuador. Blindaje fiscal y cumplimiento riguroso ante el SRI.
               </p>
 
@@ -154,7 +154,7 @@ export const HeroSection: React.FC = () => {
             </div>
 
             {/* Columna Derecha: Área libre diáfana que deja lucir el banner integrado en toda la altura del fondo */}
-            <div className="hidden md:block md:col-span-5 lg:col-span-6 xl:col-span-7 min-h-[460px] pointer-events-none" aria-hidden="true" />
+            <div className="hidden md:block md:col-span-6 lg:col-span-7 xl:col-span-7 min-h-[460px] pointer-events-none" aria-hidden="true" />
 
           </div>
         </div>

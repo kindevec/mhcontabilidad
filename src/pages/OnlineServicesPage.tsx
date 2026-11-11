@@ -147,7 +147,7 @@ export const OnlineServicesPage: React.FC = () => {
         description="En MH Contabilidad combinamos asesoría personalizada con herramientas tecnológicas modernas. Consulte la información de sus estados de cuenta, comprobantes y reportes contables con agilidad."
         image={digitalPortalImg}
         imageAlt="Plataforma de contabilidad digital y reportes financieros de MH Contabilidad"
-        imageClassName="object-cover object-top"
+        imageClassName="object-cover object-center md:object-[center_60%]"
         mobileContainerHeightClassName="h-[290px] xs:h-[315px] sm:h-[340px]"
         mobileImageClassName="object-[90%_center]"
       >

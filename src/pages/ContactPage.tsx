@@ -115,7 +115,7 @@ export const ContactPage: React.FC = () => {
         description="Comuníquese directamente con el equipo de MH Contabilidad. Atendemos sus requerimientos contables, declaraciones SRI, IESS, Super de Companías y consultas financieras en todo Ecuador."
         image={contactHeroImg}
         imageAlt="Atención y asesoría contable profesional MH Contabilidad"
-        imageClassName="w-full h-full object-cover object-center md:object-right"
+        imageClassName="w-full h-full object-cover object-center md:object-[85%_center]"
         mobileContainerHeightClassName="h-[310px] xs:h-[335px] sm:h-[360px]"
         mobileImageClassName="object-[95%_center]"
       >

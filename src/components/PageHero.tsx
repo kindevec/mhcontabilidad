@@ -35,7 +35,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
 }) => {
   return (
     <section
-      className="relative w-full overflow-hidden bg-[#0A131F] md:bg-[#F8FAFC] md:min-h-[560px] lg:min-h-[640px] xl:min-h-[700px]"
+      className="relative w-full overflow-hidden bg-[#0A131F] md:min-h-[560px] lg:min-h-[620px] xl:min-h-[660px] 2xl:min-h-[700px]"
       aria-label={titleLine1}
     >
       {/* ============================================================== */}
@@ -134,11 +134,11 @@ export const PageHero: React.FC<PageHeroProps> = ({
           </svg>
         </div>
 
-        <div className="relative z-10 max-w-[1600px] w-full mx-auto px-4 sm:px-8 lg:px-12">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-10 items-center min-h-[560px] lg:min-h-[640px] xl:min-h-[700px]">
+        <div className="relative z-10 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-12">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 xl:gap-10 items-center min-h-[560px] lg:min-h-[620px] xl:min-h-[660px] 2xl:min-h-[700px]">
             
             {/* Columna Izquierda: Información oficial centrada sobre el fondo oscuro con holgura respecto a la diagonal */}
-            <div className={`md:col-span-7 lg:col-span-6 xl:col-span-5 pt-32 lg:pt-36 pb-10 sm:pb-14 lg:pb-16 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center md:-translate-x-8 lg:-translate-x-12 xl:-translate-x-16 2xl:-translate-x-20 ${contentClassName || ''}`}>
+            <div className={`md:col-span-6 lg:col-span-5 xl:col-span-5 pt-28 md:pt-30 lg:pt-32 pb-8 md:pb-12 lg:pb-16 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center max-w-lg mx-auto md:mx-0 ${contentClassName || ''}`}>
               {badge && (
                 <div className="inline-flex items-center justify-center gap-2 text-xs font-semibold text-[#38BDF8] uppercase tracking-wider mx-auto">
                   <span className="w-2.5 h-0.5 bg-[#FC6412]" />
@@ -146,7 +146,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
                 </div>
               )}
 
-              <h1 className={`text-2xl xs:text-3xl sm:text-4xl lg:text-[42px] xl:text-5xl font-black text-white tracking-tight leading-[1.15] text-center ${titleClassName || ''}`}>
+              <h1 className={`text-2xl xs:text-3xl sm:text-4xl lg:text-[32px] xl:text-[38px] 2xl:text-[44px] font-black text-white tracking-tight leading-[1.18] text-center ${titleClassName || ''}`}>
                 <span className="block">{titleLine1}</span>
                 <span className="text-[#38BDF8] block mt-1 sm:mt-2">{titleHighlight}</span>
               </h1>
@@ -165,7 +165,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
             </div>
 
             {/* Columna Derecha: Área libre diáfana que deja ver la imagen integrada en el fondo */}
-            <div className="hidden md:block md:col-span-5 lg:col-span-6 xl:col-span-7 min-h-[400px] pointer-events-none" aria-hidden="true" />
+            <div className="hidden md:block md:col-span-6 lg:col-span-7 xl:col-span-7 min-h-[400px] pointer-events-none" aria-hidden="true" />
 
           </div>
         </div>
