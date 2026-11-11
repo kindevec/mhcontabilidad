@@ -138,7 +138,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 xl:gap-10 items-center min-h-[560px] lg:min-h-[620px] xl:min-h-[660px] 2xl:min-h-[700px]">
             
             {/* Columna Izquierda: Información oficial centrada sobre el fondo oscuro con holgura respecto a la diagonal */}
-            <div className={`md:col-span-6 lg:col-span-5 xl:col-span-5 pt-28 md:pt-30 lg:pt-32 pb-8 md:pb-12 lg:pb-16 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center max-w-lg mx-auto md:mx-0 ${contentClassName || ''}`}>
+            <div className={`md:col-span-6 lg:col-span-5 xl:col-span-5 pt-28 md:pt-30 lg:pt-32 pb-8 md:pb-12 lg:pb-16 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center max-w-lg mx-auto md:mx-0 md:-translate-x-3 lg:-translate-x-5 xl:-translate-x-6 2xl:-translate-x-8 ${contentClassName || ''}`}>
               {badge && (
                 <div className="inline-flex items-center justify-center gap-2 text-xs font-semibold text-[#38BDF8] uppercase tracking-wider mx-auto">
                   <span className="w-2.5 h-0.5 bg-[#FC6412]" />
