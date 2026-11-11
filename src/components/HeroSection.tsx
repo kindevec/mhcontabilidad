@@ -122,7 +122,7 @@ export const HeroSection: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center md:min-h-[clamp(560px,41vw,1600px)]">
             
             {/* Columna Izquierda: Información oficial centrada sobre el fondo oscuro con holgura respecto a la diagonal */}
-            <div className="md:col-span-5 lg:col-span-4 xl:col-span-4 pt-24 md:pt-26 lg:pt-28 pb-8 md:pb-10 space-y-4 text-center flex flex-col items-center justify-center max-w-[340px] sm:max-w-[360px] lg:max-w-[380px] mx-auto md:mx-0 md:translate-x-1 lg:translate-x-2 xl:translate-x-3">
+            <div className="md:col-span-5 lg:col-span-4 xl:col-span-4 pt-24 md:pt-26 lg:pt-28 pb-8 md:pb-10 space-y-4 text-center flex flex-col items-center justify-center max-w-[340px] sm:max-w-[360px] lg:max-w-[380px] mx-auto md:mx-0 md:-translate-x-3 lg:-translate-x-5 xl:-translate-x-6 2xl:-translate-x-8">
               {/* Título Principal con salto de línea tras 'Contable' */}
               <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[28px] xl:text-[32px] 2xl:text-[36px] font-black text-white tracking-tight leading-[1.18] text-center">
                 <span className="block">Tu Respaldo Contable</span>
