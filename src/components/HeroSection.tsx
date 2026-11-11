@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { siteConfig } from '../data/siteConfig';
-import mhHeroBannerImg from '../assets/images/mh_banner_hero_oficial.webp?v=3';
+import mhHeroBannerImg from '../assets/images/mh_banner_hero_oficial.webp?v=4';
 
 export const HeroSection: React.FC = () => {
   const whatsappUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Ing. Mónica Herrera / MH Contabilidad, deseo cotizar una asesoría contable y tributaria personalizada.')}`;
