@@ -143,7 +143,7 @@ export const OnlineServicesPage: React.FC = () => {
       <PageHero
         titleLine1="Portal Clientes"
         titleHighlight="Consultas y Conectividad Digital"
-
+        titleClassName="md:text-[clamp(1.45rem,1.9vw,2.25rem)]"
         description="En MH Contabilidad combinamos asesoría personalizada con herramientas tecnológicas modernas. Consulte la información de sus estados de cuenta, comprobantes y reportes contables con agilidad."
         image={digitalPortalImg}
         imageAlt="Plataforma de contabilidad digital y reportes financieros de MH Contabilidad"
@@ -152,12 +152,12 @@ export const OnlineServicesPage: React.FC = () => {
         mobileImageClassName="object-[90%_center]"
       >
         {/* Accesos Rápidos */}
-        <div className="pt-4 flex flex-wrap items-center justify-center sm:justify-start gap-3">
+        <div className="pt-4 flex flex-wrap items-center justify-center gap-3 w-full">
           <a
             href={siteConfig.systemUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200"
+            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200 shrink-0"
           >
             <Laptop className="w-4 h-4 shrink-0" />
             <span>Acceder al Sistema Contable</span>
@@ -166,7 +166,7 @@ export const OnlineServicesPage: React.FC = () => {
             href={waClientUrl}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200"
+            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200 shrink-0"
           >
             <WhatsAppIcon className="w-4 h-4 shrink-0" />
             <span>Consultar</span>

@@ -51,7 +51,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
             </div>
           )}
 
-          <h1 className={`text-2xl xs:text-3xl font-black text-white tracking-tight leading-tight text-center ${titleClassName || ''}`}>
+          <h1 className={`text-2xl xs:text-3xl font-black text-white tracking-tight leading-tight text-center text-balance ${titleClassName || ''}`}>
             <span className="block">{titleLine1}</span>
             <span className="text-[#38BDF8] block mt-1">{titleHighlight}</span>
           </h1>
@@ -138,7 +138,7 @@ export const PageHero: React.FC<PageHeroProps> = ({
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 xl:gap-10 items-center min-h-[560px] lg:min-h-[620px] xl:min-h-[660px] 2xl:min-h-[700px]">
             
             {/* Columna Izquierda: Información oficial centrada sobre el fondo oscuro con holgura respecto a la diagonal */}
-            <div className={`md:col-span-6 lg:col-span-5 xl:col-span-5 pt-28 md:pt-30 lg:pt-32 pb-8 md:pb-12 lg:pb-16 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center max-w-lg mx-auto md:mx-0 md:-translate-x-3 lg:-translate-x-5 xl:-translate-x-6 2xl:-translate-x-8 ${contentClassName || ''}`}>
+            <div className={`md:col-span-6 lg:col-span-5 xl:col-span-5 pt-28 md:pt-30 lg:pt-32 pb-8 md:pb-12 lg:pb-16 space-y-4 sm:space-y-5 text-center flex flex-col items-center justify-center max-w-lg lg:max-w-xl xl:max-w-2xl mx-auto md:mx-0 md:-translate-x-3 lg:-translate-x-5 xl:-translate-x-6 2xl:-translate-x-8 ${contentClassName || ''}`}>
               {badge && (
                 <div className="inline-flex items-center justify-center gap-2 text-xs font-semibold text-[#38BDF8] uppercase tracking-wider mx-auto">
                   <span className="w-2.5 h-0.5 bg-[#FC6412]" />
@@ -146,19 +146,19 @@ export const PageHero: React.FC<PageHeroProps> = ({
                 </div>
               )}
 
-              <h1 className={`text-2xl xs:text-3xl sm:text-4xl lg:text-[32px] xl:text-[38px] 2xl:text-[44px] font-black text-white tracking-tight leading-[1.18] text-center ${titleClassName || ''}`}>
+              <h1 className={`text-2xl xs:text-[26px] sm:text-3xl md:text-[clamp(1.6rem,2.1vw,2.5rem)] font-black text-white tracking-tight leading-[1.16] text-center text-balance ${titleClassName || ''}`}>
                 <span className="block">{titleLine1}</span>
                 <span className="text-[#38BDF8] block mt-1 sm:mt-2">{titleHighlight}</span>
               </h1>
 
               {description && (
-                <p className="text-sm sm:text-base text-slate-300 leading-relaxed max-w-lg mx-auto text-center">
+                <p className="text-xs sm:text-sm md:text-base text-slate-300 leading-relaxed max-w-lg lg:max-w-xl mx-auto text-center text-pretty">
                   {description}
                 </p>
               )}
 
               {children && (
-                <div className="pt-2 w-full flex justify-center [&>div]:justify-center">
+                <div className="pt-2 w-full flex justify-center [&>div]:justify-center [&>div]:flex-wrap [&>div]:gap-3">
                   {children}
                 </div>
               )}

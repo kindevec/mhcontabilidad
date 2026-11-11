@@ -19,7 +19,7 @@ export const HeroSection: React.FC = () => {
       <div className="md:hidden flex flex-col w-full bg-[#0A131F]">
         {/* Contenedor azul superior: aloja holgadamente textos y botones centrados */}
         <div className="w-full px-5 pt-20 xs:pt-24 pb-7 space-y-3.5 text-center flex flex-col items-center justify-center z-10">
-          <h1 className="text-2xl xs:text-3xl font-black text-white tracking-tight leading-tight text-center">
+          <h1 className="text-2xl xs:text-3xl font-black text-white tracking-tight leading-tight text-center text-balance">
             <span className="block">Tu Respaldo Contable</span>
             <span className="text-[#38BDF8] block mt-1">Tu Impulso Estratégico</span>
           </h1>
@@ -122,30 +122,30 @@ export const HeroSection: React.FC = () => {
           <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center md:min-h-[clamp(590px,43vw,1600px)]">
             
             {/* Columna Izquierda: Información oficial centrada sobre el fondo oscuro con holgura respecto a la diagonal */}
-            <div className="md:col-span-5 lg:col-span-4 xl:col-span-4 pt-24 md:pt-26 lg:pt-28 pb-8 md:pb-10 space-y-4 text-center flex flex-col items-center justify-center max-w-[340px] sm:max-w-[360px] lg:max-w-[380px] mx-auto md:mx-0 md:-translate-x-3 lg:-translate-x-5 xl:-translate-x-6 2xl:-translate-x-8">
+            <div className="md:col-span-5 lg:col-span-5 xl:col-span-4 pt-24 md:pt-26 lg:pt-28 pb-8 md:pb-10 space-y-4 text-center flex flex-col items-center justify-center max-w-[360px] sm:max-w-[390px] lg:max-w-[410px] xl:max-w-[430px] mx-auto md:mx-0 md:-translate-x-3 lg:-translate-x-5 xl:-translate-x-6 2xl:-translate-x-8">
               {/* Título Principal con salto de línea tras 'Contable' */}
-              <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[28px] xl:text-[32px] 2xl:text-[36px] font-black text-white tracking-tight leading-[1.18] text-center">
+              <h1 className="text-2xl xs:text-[26px] sm:text-3xl md:text-[clamp(1.5rem,1.9vw,2.25rem)] font-black text-white tracking-tight leading-[1.18] text-center text-balance">
                 <span className="block">Tu Respaldo Contable</span>
                 <span className="text-[#38BDF8] block mt-1 sm:mt-2">Tu Impulso Estratégico</span>
               </h1>
 
-              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-[320px] sm:max-w-[350px] mx-auto text-center">
+              <p className="text-xs sm:text-sm text-slate-300 leading-relaxed max-w-[320px] sm:max-w-[360px] lg:max-w-[390px] mx-auto text-center text-pretty">
                 Asesoría contable, tributaria y financiera especializada para autónomos, pymes y empresas en Ecuador. Blindaje fiscal y cumplimiento riguroso ante el SRI.
               </p>
 
-              <div className="pt-2 flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+              <div className="pt-2 w-full flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
                 <a
                   href={whatsappUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="inline-flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200"
+                  className="inline-flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200 shrink-0"
                 >
                   <WhatsAppIcon className="w-4 h-4 shrink-0" />
                   <span>Cotizar Asesoría</span>
                 </a>
                 <Link
                   to="/servicios"
-                  className="inline-flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200"
+                  className="inline-flex items-center justify-center gap-2 px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200 shrink-0"
                 >
                   <span>Conocer Servicios</span>
                   <ArrowRight className="w-4 h-4 shrink-0" />

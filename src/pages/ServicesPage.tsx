@@ -110,19 +110,19 @@ export const ServicesPage: React.FC = () => {
         diagonalOffset={-25}
       >
         {/* Accesos Rápidos */}
-        <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
+        <div className="pt-4 flex flex-wrap items-center justify-center gap-3 w-full">
           <a
             href={createWhatsAppUrl('Hola MH Contabilidad, deseo cotizar un servicio contable y tributario para mi empresa.')}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200"
+            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200 shrink-0"
           >
             <WhatsAppIcon className="w-4 h-4 shrink-0" />
             <span>Cotizar Asesoría</span>
           </a>
           <a
             href="#servicios"
-            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200"
+            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200 shrink-0"
           >
             <span>Ver Servicios</span>
             <ArrowDown className="w-4 h-4 shrink-0" />

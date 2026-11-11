@@ -112,6 +112,7 @@ export const ContactPage: React.FC = () => {
       <PageHero
         titleLine1="Contacto y"
         titleHighlight="Asesoría Inmediata con Especialistas"
+        titleClassName="md:text-[clamp(1.45rem,1.85vw,2.25rem)]"
         description="Comuníquese directamente con el equipo de MH Contabilidad. Atendemos sus requerimientos contables, declaraciones SRI, IESS, Super de Companías y consultas financieras en todo Ecuador."
         image={contactHeroImg}
         imageAlt="Atención y asesoría contable profesional MH Contabilidad"
@@ -120,10 +121,10 @@ export const ContactPage: React.FC = () => {
         mobileImageClassName="object-[95%_center]"
       >
         {/* Accesos Rápidos */}
-        <div className="pt-4 flex flex-wrap items-center justify-center gap-3">
+        <div className="pt-4 flex flex-wrap items-center justify-center gap-3 w-full">
           <Link
             to="/servicios"
-            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200"
+            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200 shrink-0"
           >
             <span>Conocer Servicios</span>
             <ArrowRight className="w-4 h-4 shrink-0" />
@@ -132,7 +133,7 @@ export const ContactPage: React.FC = () => {
             href={`https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola MH Contabilidad, requiero asesoría contable personalizada.')}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200"
+            className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200 shrink-0"
           >
             <WhatsAppIcon className="w-4 h-4 shrink-0" />
             <span>Consultar Aquí</span>
