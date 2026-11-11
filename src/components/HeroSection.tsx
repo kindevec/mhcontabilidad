@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { siteConfig } from '../data/siteConfig';
-import mhHeroBannerImg from '../assets/images/mh_banner_hero_oficial.webp?v=5';
+import mhHeroBannerImg from '../assets/images/mh_banner_hero_oficial.webp?v=6';
 
 export const HeroSection: React.FC = () => {
   const whatsappUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Ing. Mónica Herrera / MH Contabilidad, deseo cotizar una asesoría contable y tributaria personalizada.')}`;
@@ -69,11 +69,11 @@ export const HeroSection: React.FC = () => {
         {/* Fondo Geométrico en Diagonal con Aristas Facetadas estilo Active Business Growth */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden" aria-hidden="true">
           {/* Imagen adaptada que rellena el espacio derecho con fondo integrado */}
-          <div className="absolute inset-y-0 right-0 w-[68%] lg:w-[71%] xl:w-[73%] 2xl:w-[75%] overflow-hidden bg-[#EEF2FA]">
+          <div className="absolute inset-y-0 right-0 w-[68%] lg:w-[71%] xl:w-[73%] 2xl:w-[75%] overflow-hidden bg-[#EAF1FB]">
             <img
               src={mhHeroBannerImg}
               alt="Servicios tributarios en Ecuador - MH Contabilidad"
-              className="w-full h-full object-contain object-right select-none filter brightness-[0.98]"
+              className="w-full h-full object-contain object-[right_bottom] select-none filter brightness-[0.98]"
               loading="eager"
               fetchPriority="high"
               decoding="async"
