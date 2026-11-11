@@ -3,14 +3,14 @@ import { Link } from 'react-router-dom';
 import { ArrowRight } from 'lucide-react';
 import { WhatsAppIcon } from './WhatsAppIcon';
 import { siteConfig } from '../data/siteConfig';
-import mhHeroBannerImg from '../assets/images/mh_banner_hero_oficial.webp?v=6';
+import mhHeroBannerImg from '../assets/images/mh_banner_hero_oficial.webp?v=7';
 
 export const HeroSection: React.FC = () => {
   const whatsappUrl = `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Ing. Mónica Herrera / MH Contabilidad, deseo cotizar una asesoría contable y tributaria personalizada.')}`;
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-[#0A131F] md:min-h-[560px] lg:min-h-[620px] xl:min-h-[660px] 2xl:min-h-[700px]"
+      className="relative w-full overflow-hidden bg-[#0A131F] md:min-h-[460px] lg:min-h-[500px] xl:min-h-[530px] 2xl:min-h-[560px]"
       aria-label="Presentación principal de MH Contabilidad"
     >
       {/* ============================================================== */}
@@ -119,10 +119,10 @@ export const HeroSection: React.FC = () => {
         </div>
 
         <div className="relative z-10 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[560px] lg:min-h-[620px] xl:min-h-[660px] 2xl:min-h-[700px]">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[460px] lg:min-h-[500px] xl:min-h-[530px] 2xl:min-h-[560px]">
             
             {/* Columna Izquierda: Información oficial centrada sobre el fondo oscuro con holgura respecto a la diagonal */}
-            <div className="md:col-span-5 lg:col-span-4 xl:col-span-4 pt-26 md:pt-28 lg:pt-32 pb-8 md:pb-12 space-y-4 text-center flex flex-col items-center justify-center max-w-[340px] sm:max-w-[360px] lg:max-w-[380px] mx-auto md:mx-0">
+            <div className="md:col-span-5 lg:col-span-4 xl:col-span-4 pt-20 md:pt-22 lg:pt-24 pb-6 md:pb-8 space-y-3.5 text-center flex flex-col items-center justify-center max-w-[340px] sm:max-w-[360px] lg:max-w-[380px] mx-auto md:mx-0">
               {/* Título Principal con salto de línea tras 'Contable' */}
               <h1 className="text-2xl xs:text-3xl sm:text-4xl lg:text-[28px] xl:text-[32px] 2xl:text-[36px] font-black text-white tracking-tight leading-[1.18] text-center">
                 <span className="block">Tu Respaldo Contable</span>
