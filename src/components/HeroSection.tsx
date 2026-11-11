@@ -10,7 +10,7 @@ export const HeroSection: React.FC = () => {
 
   return (
     <section
-      className="relative w-full overflow-hidden bg-[#0A131F] md:min-h-[520px] lg:min-h-[560px] xl:min-h-[600px] 2xl:min-h-[640px]"
+      className="relative w-full overflow-hidden bg-[#0A131F] md:min-h-[clamp(560px,41vw,1600px)]"
       aria-label="Presentación principal de MH Contabilidad"
     >
       {/* ============================================================== */}
@@ -69,11 +69,11 @@ export const HeroSection: React.FC = () => {
         {/* Fondo Geométrico en Diagonal con Aristas Facetadas estilo Active Business Growth */}
         <div className="absolute inset-0 w-full h-full pointer-events-none z-0 overflow-hidden" aria-hidden="true">
           {/* Imagen adaptada que rellena el espacio derecho ocupando todo el área sin filos vacíos */}
-          <div className="absolute inset-y-0 right-0 w-[80%] lg:w-[82%] xl:w-[84%] 2xl:w-[85%] overflow-hidden bg-[#EAF1FB]">
+          <div className="absolute inset-y-0 right-0 w-[74%] lg:w-[75%] xl:w-[76%] 2xl:w-[74%] overflow-hidden">
             <img
               src={mhHeroBannerImg}
               alt="Servicios tributarios en Ecuador - MH Contabilidad"
-              className="w-full h-full object-contain object-[right_bottom] select-none filter brightness-[0.98]"
+              className="w-full h-full object-cover object-[center_54%] select-none filter brightness-[0.98]"
               loading="eager"
               fetchPriority="high"
               decoding="async"
@@ -119,7 +119,7 @@ export const HeroSection: React.FC = () => {
         </div>
 
         <div className="relative z-10 max-w-[1600px] w-full mx-auto px-4 sm:px-6 lg:px-8 xl:px-10">
-          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center min-h-[520px] lg:min-h-[560px] xl:min-h-[600px] 2xl:min-h-[640px]">
+          <div className="grid grid-cols-1 md:grid-cols-12 gap-6 lg:gap-8 items-center md:min-h-[clamp(560px,41vw,1600px)]">
             
             {/* Columna Izquierda: Información oficial centrada sobre el fondo oscuro con holgura respecto a la diagonal */}
             <div className="md:col-span-5 lg:col-span-4 xl:col-span-4 pt-24 md:pt-26 lg:pt-28 pb-8 md:pb-10 space-y-4 text-center flex flex-col items-center justify-center max-w-[340px] sm:max-w-[360px] lg:max-w-[380px] mx-auto md:mx-0 md:translate-x-1 lg:translate-x-2 xl:translate-x-3">
