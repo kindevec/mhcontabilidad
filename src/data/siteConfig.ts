@@ -48,8 +48,8 @@ export const siteConfig: SiteConfig = {
     whatsappNumber: "593968392931",
   },
   email: {
-    general: "contacto@tu-contabilidad.com",
-    support: "asesoria@tu-contabilidad.com",
+    general: "info@mhcontabilidad.com",
+    support: "info@mhcontabilidad.com",
   },
   systemUrl: "https://tu-contabilidad.com/sistema",
   location: {

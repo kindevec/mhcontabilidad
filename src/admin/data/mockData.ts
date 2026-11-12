@@ -71,7 +71,7 @@ export const INITIAL_APPLICATIONS: ApplicationItem[] = [
     hasPhone: true,
     hasEmail: true,
     phone: '+593 96 839 2931',
-    email: 'contacto@tu-contabilidad.com',
+    email: 'info@mhcontabilidad.com',
     status: 'Candidate',
     applicantName: 'Ing. Mónica Herrera',
     expectedSalary: '$3,200.00 Mensual',
