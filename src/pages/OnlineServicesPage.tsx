@@ -2,34 +2,52 @@ import React, { useState } from 'react';
 import {
   Search,
   Clock,
-
   Laptop,
   Plus,
+  CheckCircle,
+  AlertCircle,
+  Copy,
+  Check,
+  ChevronDown,
+  ChevronUp,
+  FileText,
+  Receipt,
+  Truck,
+  DollarSign,
+  Calendar,
+  Building,
+  RotateCcw,
 } from 'lucide-react';
 import { WhatsAppIcon } from '../components/WhatsAppIcon';
 import { MHLogo } from '../components/MHLogo';
 import { siteConfig } from '../data/siteConfig';
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { PageHero } from '../components/PageHero';
 import { validateEcuadorianDocument } from '../services/contactService';
+import { queryPerseo } from '../services/perseoService';
+import {
+  PerseoQueryType,
+  PerseoQueryResponse,
+  PerseoFactura,
+  PerseoRetencion,
+  PerseoEstadoCuentaItem,
+  PerseoGuiaRemision,
+  PerseoCobro,
+} from '../types';
 import digitalPortalImg from '../assets/images/portal_hero_laptop.jpg';
 
 export const OnlineServicesPage: React.FC = () => {
   const [docType, setDocType] = useState<'RUC' | 'CEDULA' | 'PASAPORTE'>('RUC');
   const [docNumber, setDocNumber] = useState('');
-  const [queryType, setQueryType] = useState('facturacion');
+  const [queryType, setQueryType] = useState<PerseoQueryType>('facturacion');
   const [period, setPeriod] = useState('2026');
   const [clientPhone, setClientPhone] = useState('');
 
   const [isSearching, setIsSearching] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
-  const [searchFeedback, setSearchFeedback] = useState<{
-    show: boolean;
-    docNumber: string;
-    queryLabel: string;
-    periodLabel: string;
-    clientPhone: string;
-  } | null>(null);
+  const [queryResponse, setQueryResponse] = useState<PerseoQueryResponse | null>(null);
+  const [expandedFacturaId, setExpandedFacturaId] = useState<number | null>(null);
+  const [copiedKey, setCopiedKey] = useState<string | null>(null);
 
   const [openFaqIndices, setOpenFaqIndices] = useState<number[]>([]);
 
@@ -62,16 +80,24 @@ export const OnlineServicesPage: React.FC = () => {
     },
   ];
 
-  const getQueryLabel = (type: string) => {
+  const getQueryLabel = (type: PerseoQueryType) => {
     switch (type) {
       case 'facturacion':
-        return 'Facturas Electrónicas y RIDE / XML';
+        return 'Facturas Electrónicas de Venta';
       case 'retenciones':
-        return 'Comprobantes de Retención SRI';
+        return 'Comprobantes de Retención SRI (Ventas y Compras)';
       case 'estado_cuenta':
-        return 'Estado de Cuenta y Cartera (Saldos)';
+        return 'Estado de Cuenta y Cartera (Saldos Pendientes)';
       case 'guias_remision':
-        return 'Liquidaciones y Guías de Remisión';
+        return 'Guías de Remisión de Transporte';
+      case 'liquidaciones':
+        return 'Liquidaciones de Compra Electrónicas';
+      case 'cobros':
+        return 'Historial de Cobros y Abonos Realizados';
+      case 'proformas':
+        return 'Proformas y Cotizaciones Comerciales';
+      case 'pedidos':
+        return 'Pedidos Registrados en el Sistema';
       default:
         return 'Consulta Contable';
     }
@@ -92,50 +118,70 @@ export const OnlineServicesPage: React.FC = () => {
     }
   };
 
-  const handleSearchSubmit = (e: React.FormEvent) => {
+  const formatDate = (dateStr?: string) => {
+    if (!dateStr) return 'N/D';
+    const clean = dateStr.replace(/[^0-9]/g, '');
+    if (clean.length >= 8) {
+      const year = clean.substring(0, 4);
+      const month = clean.substring(4, 6);
+      const day = clean.substring(6, 8);
+      return `${day}/${month}/${year}`;
+    }
+    return dateStr;
+  };
+
+  const formatCurrency = (val?: number | string) => {
+    const num = Number(val || 0);
+    return new Intl.NumberFormat('es-EC', {
+      style: 'currency',
+      currency: 'USD',
+      minimumFractionDigits: 2,
+    }).format(num);
+  };
+
+  const handleCopyClave = (clave: string) => {
+    navigator.clipboard.writeText(clave);
+    setCopiedKey(clave);
+    setTimeout(() => setCopiedKey(null), 2500);
+  };
+
+  const handleSearchSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setValidationError(null);
-    setSearchFeedback(null);
 
-    if (!docNumber.trim()) {
+    const cleanDoc = docNumber.trim();
+    if (!cleanDoc) {
       setValidationError('Por favor ingrese su número de documento de identificación (RUC o Cédula).');
       return;
     }
 
     if (docType === 'CEDULA' || docType === 'RUC') {
-      const val = validateEcuadorianDocument(docNumber);
+      const val = validateEcuadorianDocument(cleanDoc);
       if (!val.isValid) {
         setValidationError(`Formato no válido: ${val.message}`);
         return;
       }
     }
 
-    if (!clientPhone.trim()) {
-      setValidationError('Por favor ingrese su número de celular o WhatsApp para la validación segura de Perseo.');
-      return;
-    }
-
-    if (clientPhone.trim().length < 4) {
-      setValidationError('El número de celular o verificación debe tener al menos 4 dígitos.');
-      return;
-    }
-
     setIsSearching(true);
-    setTimeout(() => {
-      setIsSearching(false);
-      setSearchFeedback({
-        show: true,
-        docNumber: docNumber.trim(),
-        queryLabel: getQueryLabel(queryType),
-        periodLabel: getPeriodLabel(period),
-        clientPhone: clientPhone.trim(),
-      });
-    }, 700);
-  };
+    setQueryResponse(null);
+    setExpandedFacturaId(null);
 
-  const waClientUrl = searchFeedback
-    ? `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent(`Hola Jorge Hernandez / MH Contabilidad, requiero consultar en el sistema Perseo el reporte de ${searchFeedback.queryLabel} (${searchFeedback.periodLabel}) para el RUC/CI ${searchFeedback.docNumber} con contacto de verificación ${searchFeedback.clientPhone}.`)}`
-    : `https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Jorge Hernandez / MH Contabilidad, quisiera consultar información sobre mis comprobantes en línea de Perseo.')}`;
+    try {
+      const res = await queryPerseo({
+        identificacion: cleanDoc,
+        tipoDocumento: docType,
+        tipoConsulta: queryType,
+        periodo: period,
+      });
+
+      setQueryResponse(res);
+    } catch (err) {
+      setValidationError(err instanceof Error ? err.message : 'Error inesperado al consultar Perseo.');
+    } finally {
+      setIsSearching(false);
+    }
+  };
 
   return (
     <div className="space-y-0">
@@ -163,13 +209,13 @@ export const OnlineServicesPage: React.FC = () => {
             <span>Acceder al Sistema Contable</span>
           </a>
           <a
-            href={waClientUrl}
+            href={`https://wa.me/${siteConfig.phone.whatsappNumber}?text=${encodeURIComponent('Hola Jorge Hernandez / MH Contabilidad, requiero asesoría con mis comprobantes en línea.')}`}
             target="_blank"
             rel="noopener noreferrer"
             className="inline-flex items-center justify-center gap-2 px-4 sm:px-5 py-2.5 sm:py-3 rounded-xl text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] hover:-translate-y-0.5 active:translate-y-0 shadow-md hover:shadow-lg transition-all duration-200 shrink-0"
           >
             <WhatsAppIcon className="w-4 h-4 shrink-0" />
-            <span>Consultar</span>
+            <span>Contactar Asesor</span>
           </a>
         </div>
       </PageHero>
@@ -183,23 +229,28 @@ export const OnlineServicesPage: React.FC = () => {
               Consulte sus Comprobantes y Estado Contable
             </h2>
             <p className="text-sm text-[#64748B] leading-relaxed">
-              En este portal puede consultar y solicitar de manera rápida el estado de sus facturas electrónicas, retenciones tributarias y reportes contables al instante.
+              Consulte en tiempo real el estado de sus facturas electrónicas, retenciones tributarias, cartera y comprobantes registrados en el sistema contable Perseo.
             </p>
           </div>
+
           {/* Módulo Principal de Consulta al Cliente */}
-          <div className="max-w-3xl mx-auto">
+          <div className="max-w-4xl mx-auto space-y-8">
             <div className="bg-white rounded-none border border-slate-200 shadow-[6px_6px_0px_0px_#E2E8F0,0_25px_50px_-12px_rgba(0,0,0,0.12)] sm:shadow-[10px_10px_0px_0px_#E2E8F0,0_30px_60px_-12px_rgba(0,0,0,0.15)] p-6 sm:p-10 space-y-6 text-[#172B3A] relative">
               <div className="space-y-2 border-b border-slate-200 pb-5">
                 <div className="flex items-center justify-between flex-wrap gap-3">
                   <h3 className="text-xl sm:text-2xl font-black text-[#172B3A] tracking-tight flex items-center gap-2">
                     <span>Búsqueda y Consulta Contable</span>
                   </h3>
-                  <div className="shrink-0">
+                  <div className="shrink-0 flex items-center gap-2">
+                    <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                      Conectado a Perseo Cloud
+                    </span>
                     <MHLogo className="h-9 sm:h-10 w-auto" />
                   </div>
                 </div>
                 <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed">
-                  Ingrese sus datos fiscales y de contacto para consultar comprobantes electrónicos, retenciones y cartera en el sistema.
+                  Seleccione el documento a consultar e ingrese su número de identificación fiscal para visualizar sus registros en línea.
                 </p>
               </div>
 
@@ -246,7 +297,7 @@ export const OnlineServicesPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Fila 2: Tipo de Información y Periodo */}
+                {/* Fila 2: Documento a Consultar y Periodo */}
                 <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                   <div>
                     <label
@@ -258,13 +309,17 @@ export const OnlineServicesPage: React.FC = () => {
                     <select
                       id="user-query-type"
                       value={queryType}
-                      onChange={(e) => setQueryType(e.target.value)}
+                      onChange={(e) => setQueryType(e.target.value as PerseoQueryType)}
                       className="w-full px-4 py-3 rounded-none border border-[#005BB2] bg-white text-slate-900 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#005BB2] transition-all shadow-xs cursor-pointer"
                     >
-                      <option value="facturacion">Facturas Electrónicas y RIDE / XML</option>
+                      <option value="facturacion">Facturas Electrónicas de Venta</option>
                       <option value="retenciones">Comprobantes de Retención SRI</option>
-                      <option value="estado_cuenta">Estado de Cuenta y Cartera</option>
-                      <option value="guias_remision">Liquidaciones y Guías de Remisión</option>
+                      <option value="estado_cuenta">Estado de Cuenta y Cartera (Saldos)</option>
+                      <option value="guias_remision">Guías de Remisión de Transporte</option>
+                      <option value="liquidaciones">Liquidaciones de Compra</option>
+                      <option value="cobros">Historial de Cobros y Abonos</option>
+                      <option value="proformas">Proformas y Cotizaciones</option>
+                      <option value="pedidos">Pedidos Registrados</option>
                     </select>
                   </div>
 
@@ -282,25 +337,28 @@ export const OnlineServicesPage: React.FC = () => {
                       className="w-full px-4 py-3 rounded-none border border-[#005BB2] bg-white text-slate-900 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#005BB2] transition-all shadow-xs cursor-pointer"
                     >
                       <option value="2026">Año Fiscal 2026</option>
-                      <option value="ultimo_mes">Último Mes Contable</option>
+                      <option value="ultimo_mes">Último Mes Contable (30 días)</option>
                       <option value="2025">Histórico Año 2025</option>
                       <option value="todos">Todos los periodos registrados</option>
                     </select>
                   </div>
                 </div>
 
-                {/* Fila 3: Celular / WhatsApp */}
+                {/* Fila 3: Celular / WhatsApp (Opcional de contacto) */}
                 <div>
-                  <label
-                    htmlFor="user-client-phone"
-                    className="block text-xs font-bold text-[#172B3A] uppercase tracking-wider mb-2"
-                  >
-                    Celular o WhatsApp Registrado
-                  </label>
+                  <div className="flex items-center justify-between mb-2">
+                    <label
+                      htmlFor="user-client-phone"
+                      className="block text-xs font-bold text-[#172B3A] uppercase tracking-wider"
+                    >
+                      Celular o WhatsApp de Contacto
+                    </label>
+                    <span className="text-[11px] text-slate-400 font-medium">Opcional</span>
+                  </div>
                   <input
                     id="user-client-phone"
                     type="tel"
-                    placeholder="Ej: 0991234567 o últimos 4 dígitos"
+                    placeholder="Ej: 0991234567"
                     value={clientPhone}
                     onChange={(e) => setClientPhone(e.target.value)}
                     className="w-full px-4 py-3 rounded-none border border-[#005BB2] bg-white text-slate-900 font-mono text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#005BB2] transition-all shadow-xs placeholder-slate-400"
@@ -309,12 +367,12 @@ export const OnlineServicesPage: React.FC = () => {
 
                 {validationError && (
                   <div className="p-3.5 rounded-none bg-red-50 border border-red-200 text-xs font-medium text-red-700 flex items-center gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-red-500 shrink-0" />
+                    <AlertCircle className="w-4 h-4 text-red-500 shrink-0" />
                     <span>{validationError}</span>
                   </div>
                 )}
 
-                <div className="pt-5 border-t border-slate-200 flex justify-center">
+                <div className="pt-4 border-t border-slate-200 flex flex-wrap items-center justify-center gap-4">
                   <button
                     type="submit"
                     disabled={isSearching}
@@ -323,59 +381,509 @@ export const OnlineServicesPage: React.FC = () => {
                     {isSearching ? (
                       <>
                         <Clock className="w-4 h-4 animate-spin" />
-                        <span>Consultando...</span>
+                        <span>Consultando en Perseo...</span>
                       </>
                     ) : (
                       <>
                         <Search className="w-4 h-4" />
-                        <span>Consultar</span>
+                        <span>Consultar Documentos</span>
                       </>
                     )}
                   </button>
+
+                  {queryResponse && (
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setQueryResponse(null);
+                        setDocNumber('');
+                      }}
+                      className="text-xs font-bold text-slate-500 hover:text-slate-800 flex items-center gap-1.5 py-2 px-3 border border-slate-200 bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer"
+                    >
+                      <RotateCcw className="w-3.5 h-3.5" />
+                      <span>Limpiar Consulta</span>
+                    </button>
+                  )}
                 </div>
               </form>
+            </div>
 
-              {/* Respuesta Limpia para el Usuario Comercial */}
-              {searchFeedback && (
+            {/* 3. VISUALIZADOR DE RESULTADOS EN VIVO DIRECTO EN LA WEB (SIN WHATSAPP) */}
+            <AnimatePresence>
+              {queryResponse && (
                 <motion.div
-                  initial={{ opacity: 0, y: 10 }}
+                  initial={{ opacity: 0, y: 15 }}
                   animate={{ opacity: 1, y: 0 }}
-                  className="p-5 sm:p-6 rounded-none bg-blue-50/80 border border-blue-200 text-[#172B3A] space-y-4 shadow-sm"
+                  exit={{ opacity: 0, y: 10 }}
+                  className="bg-white rounded-none border border-slate-200 shadow-[6px_6px_0px_0px_#E2E8F0] p-6 sm:p-8 space-y-6 text-[#172B3A]"
                 >
-                  <div className="flex items-start gap-3">
-                    <div className="p-2.5 rounded-none bg-[#005BB2] text-white shrink-0 shadow-xs">
-                      <WhatsAppIcon className="w-5 h-5" />
+                  {/* Encabezado del Resultado */}
+                  <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-200 pb-4">
+                    <div className="space-y-1">
+                      <div className="flex items-center gap-2 flex-wrap">
+                        <span className="px-2.5 py-0.5 text-xs font-bold uppercase tracking-wider bg-[#005BB2] text-white">
+                          {getQueryLabel(queryType)}
+                        </span>
+                        <span className="px-2 py-0.5 text-xs font-semibold bg-slate-100 text-slate-700">
+                          {getPeriodLabel(period)}
+                        </span>
+                      </div>
+                      {queryResponse.matchedCliente && (
+                        <p className="text-sm font-bold text-[#172B3A] flex items-center gap-1.5 pt-1">
+                          <Building className="w-4 h-4 text-[#005BB2] shrink-0" />
+                          <span>{queryResponse.matchedCliente.razonSocial}</span>
+                          <span className="font-mono text-xs text-slate-500 font-normal">
+                            ({queryResponse.matchedCliente.identificacion})
+                          </span>
+                        </p>
+                      )}
                     </div>
-                    <div className="space-y-1.5 text-xs sm:text-sm">
-                      <strong className="block text-base font-bold text-[#172B3A]">
-                        Solicitud validada para {searchFeedback.docNumber}
-                      </strong>
-                      <p className="text-[#64748B] leading-relaxed">
-                        Se ha localizado su registro en el sistema contable para <strong>{searchFeedback.queryLabel}</strong> ({searchFeedback.periodLabel}).
-                        Por protocolo de reserva fiscal del SRI, su asesor autorizado le despachará el RIDE en PDF y XML directamente al contacto registrado.
+                    <div className="text-right sm:text-right text-xs text-slate-500">
+                      <span className="font-bold text-[#172B3A] text-sm block">
+                        {queryResponse.total || 0} {queryResponse.total === 1 ? 'registro encontrado' : 'registros encontrados'}
+                      </span>
+                      <span className="text-[11px] text-slate-400">
+                        Actualizado: {new Date(queryResponse.timestamp).toLocaleTimeString('es-EC')}
+                      </span>
+                    </div>
+                  </div>
+
+                  {/* CASO A: FACTURAS ELECTRÓNICAS */}
+                  {queryType === 'facturacion' && (
+                    <div className="space-y-4">
+                      {(!queryResponse.result?.facturas || queryResponse.result.facturas.length === 0) ? (
+                        <div className="p-8 text-center bg-slate-50 border border-slate-200 space-y-2">
+                          <FileText className="w-8 h-8 text-slate-400 mx-auto" />
+                          <h4 className="font-bold text-sm text-[#172B3A]">No se encontraron facturas</h4>
+                          <p className="text-xs text-slate-500 max-w-md mx-auto">
+                            No existen facturas de venta asociadas a la identificación <span className="font-mono font-bold">{docNumber}</span> en el periodo <span className="font-semibold">{getPeriodLabel(period)}</span>.
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="space-y-4">
+                          {queryResponse.result.facturas.map((fac: PerseoFactura) => {
+                            const isExpanded = expandedFacturaId === fac.facturasid;
+                            const hasDetails = fac.facturasd?.detalles && fac.facturasd.detalles.length > 0;
+                            return (
+                              <div
+                                key={fac.facturasid}
+                                className="border border-slate-200 hover:border-[#005BB2]/60 transition-all bg-white"
+                              >
+                                <div className="p-4 sm:p-5 flex flex-col lg:flex-row lg:items-center justify-between gap-4">
+                                  {/* Columna Izquierda: Datos del Comprobante */}
+                                  <div className="space-y-1.5 min-w-0">
+                                    <div className="flex items-center gap-2 flex-wrap">
+                                      <span className="font-mono text-sm sm:text-base font-black text-[#172B3A] tracking-tight">
+                                        Nº {fac.establecimiento}-{fac.puntoemision}-{fac.secuencial}
+                                      </span>
+                                      <span className="px-2 py-0.5 text-[10px] font-bold uppercase tracking-wider bg-blue-50 text-[#005BB2] border border-blue-200">
+                                        Factura Electrónica
+                                      </span>
+                                    </div>
+                                    <p className="text-xs text-slate-600 font-medium">
+                                      Cliente: <span className="font-bold text-[#172B3A]">{fac.razonsocial}</span>
+                                    </p>
+                                    <div className="flex items-center gap-4 text-xs text-slate-500 flex-wrap">
+                                      <span className="flex items-center gap-1">
+                                        <Calendar className="w-3.5 h-3.5 text-slate-400" />
+                                        Emisión: {formatDate(fac.emision)}
+                                      </span>
+                                      <span className="flex items-center gap-1">
+                                        <Clock className="w-3.5 h-3.5 text-slate-400" />
+                                        Vence: {formatDate(fac.vence)}
+                                      </span>
+                                    </div>
+                                  </div>
+
+                                  {/* Columna Derecha: Montos y Acciones */}
+                                  <div className="flex flex-col sm:flex-row lg:flex-col items-start sm:items-end justify-between lg:justify-center gap-2 shrink-0 border-t sm:border-t-0 lg:border-t-0 pt-3 sm:pt-0">
+                                    <div className="text-left sm:text-right">
+                                      <span className="text-[11px] uppercase font-bold text-slate-400 block tracking-wider">
+                                        Importe Total
+                                      </span>
+                                      <span className="text-lg sm:text-xl font-black text-[#FC6412]">
+                                        {formatCurrency(fac.total)}
+                                      </span>
+                                      <span className="text-[11px] text-slate-500 block">
+                                        Subtotal: {formatCurrency(fac.subtotal)} | IVA: {formatCurrency(fac.total_iva)}
+                                      </span>
+                                    </div>
+
+                                    {hasDetails && (
+                                      <button
+                                        type="button"
+                                        onClick={() => setExpandedFacturaId(isExpanded ? null : fac.facturasid)}
+                                        className="text-xs font-bold text-[#005BB2] hover:text-[#004e9a] inline-flex items-center gap-1 cursor-pointer pt-1"
+                                      >
+                                        <span>{isExpanded ? 'Ocultar Detalle' : 'Ver Detalle de Productos'}</span>
+                                        {isExpanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
+                                      </button>
+                                    )}
+                                  </div>
+                                </div>
+
+                                {/* Clave de Acceso SRI */}
+                                {fac.claveacceso && (
+                                  <div className="px-4 py-2.5 bg-slate-50 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2 text-xs">
+                                    <div className="flex items-center gap-2 min-w-0">
+                                      <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider shrink-0">
+                                        Clave SRI:
+                                      </span>
+                                      <span className="font-mono text-[11px] text-slate-700 truncate select-all">
+                                        {fac.claveacceso}
+                                      </span>
+                                    </div>
+                                    <button
+                                      type="button"
+                                      onClick={() => handleCopyClave(fac.claveacceso)}
+                                      className="inline-flex items-center gap-1 text-[11px] font-bold text-[#005BB2] hover:text-[#004e9a] shrink-0 cursor-pointer"
+                                    >
+                                      {copiedKey === fac.claveacceso ? (
+                                        <>
+                                          <Check className="w-3.5 h-3.5 text-emerald-600" />
+                                          <span className="text-emerald-600">¡Copiado!</span>
+                                        </>
+                                      ) : (
+                                        <>
+                                          <Copy className="w-3.5 h-3.5" />
+                                          <span>Copiar Clave</span>
+                                        </>
+                                      )}
+                                    </button>
+                                  </div>
+                                )}
+
+                                {/* Detalle desplegable de productos */}
+                                {isExpanded && hasDetails && (
+                                  <div className="p-4 bg-blue-50/40 border-t border-blue-100 space-y-3">
+                                    <h5 className="text-xs font-bold uppercase tracking-wider text-[#005BB2]">
+                                      Ítems Facturados
+                                    </h5>
+                                    <div className="overflow-x-auto">
+                                      <table className="w-full text-left text-xs">
+                                        <thead>
+                                          <tr className="border-b border-blue-200 text-slate-500 text-[11px]">
+                                            <th className="pb-1.5 font-bold">Código</th>
+                                            <th className="pb-1.5 font-bold">Descripción</th>
+                                            <th className="pb-1.5 font-bold text-center">Cant.</th>
+                                            <th className="pb-1.5 font-bold text-right">P. Unitario</th>
+                                            <th className="pb-1.5 font-bold text-right">IVA</th>
+                                            <th className="pb-1.5 font-bold text-right">Total</th>
+                                          </tr>
+                                        </thead>
+                                        <tbody className="divide-y divide-blue-100">
+                                          {fac.facturasd?.detalles?.map((item, idx) => (
+                                            <tr key={idx} className="hover:bg-blue-100/30">
+                                              <td className="py-2 font-mono text-slate-600">{item.productocodigo}</td>
+                                              <td className="py-2 font-semibold text-[#172B3A]">{item.nombreproducto}</td>
+                                              <td className="py-2 text-center">{item.cantidad}</td>
+                                              <td className="py-2 text-right">{formatCurrency(item.precio)}</td>
+                                              <td className="py-2 text-right">{item.iva}%</td>
+                                              <td className="py-2 text-right font-bold text-[#172B3A]">
+                                                {formatCurrency(item.precioiva * item.cantidad)}
+                                              </td>
+                                            </tr>
+                                          ))}
+                                        </tbody>
+                                      </table>
+                                    </div>
+                                  </div>
+                                )}
+                              </div>
+                            );
+                          })}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* CASO B: RETENCIONES SRI */}
+                  {queryType === 'retenciones' && (
+                    <div className="space-y-4">
+                      {(!queryResponse.result?.retenciones || queryResponse.result.retenciones.length === 0) ? (
+                        <div className="p-8 text-center bg-slate-50 border border-slate-200 space-y-2">
+                          <Receipt className="w-8 h-8 text-slate-400 mx-auto" />
+                          <h4 className="font-bold text-sm text-[#172B3A]">No se encontraron retenciones</h4>
+                          <p className="text-xs text-slate-500 max-w-md mx-auto">
+                            No existen comprobantes de retención asociados a <span className="font-mono font-bold">{docNumber}</span> en este periodo.
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-left text-xs border border-slate-200">
+                            <thead className="bg-[#172B3A] text-white">
+                              <tr>
+                                <th className="p-3 font-bold">Secuencia Retención</th>
+                                <th className="p-3 font-bold">Fecha</th>
+                                <th className="p-3 font-bold">Tipo</th>
+                                <th className="p-3 font-bold">Factura Afectada</th>
+                                <th className="p-3 font-bold text-right">Ret. Renta</th>
+                                <th className="p-3 font-bold text-right">Ret. IVA</th>
+                                <th className="p-3 font-bold text-right">Total Retenido</th>
+                                <th className="p-3 font-bold">Autorización SRI</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-200">
+                              {queryResponse.result.retenciones.map((ret: PerseoRetencion, idx: number) => (
+                                <tr key={idx} className="hover:bg-slate-50">
+                                  <td className="p-3 font-mono font-bold text-[#005BB2]">{ret.secuencia}</td>
+                                  <td className="p-3">{formatDate(ret.fechaEmision)}</td>
+                                  <td className="p-3">
+                                    <span className={`px-2 py-0.5 text-[10px] font-bold ${ret.tipo === 'VENTA' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200' : 'bg-blue-50 text-[#005BB2] border border-blue-200'}`}>
+                                      {ret.tipo === 'VENTA' ? 'Retención Recibida' : 'Retención Emitida'}
+                                    </span>
+                                  </td>
+                                  <td className="p-3 font-mono text-slate-600">{ret.facturaAfectada}</td>
+                                  <td className="p-3 text-right">{formatCurrency(ret.totalRenta)}</td>
+                                  <td className="p-3 text-right">{formatCurrency(ret.totalIva)}</td>
+                                  <td className="p-3 text-right font-bold text-[#FC6412]">{formatCurrency(ret.total)}</td>
+                                  <td className="p-3 font-mono text-[11px] text-slate-500">{ret.autorizacion || 'En proceso'}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* CASO C: ESTADO DE CUENTA Y CARTERA */}
+                  {queryType === 'estado_cuenta' && (
+                    <div className="space-y-5">
+                      {/* Tarjetas de Resumen Financiero */}
+                      {queryResponse.result?.resumen && (
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                          <div className="p-4 bg-slate-50 border border-slate-200">
+                            <span className="text-[11px] font-bold uppercase tracking-wider text-slate-500 block">
+                              Total Facturado
+                            </span>
+                            <span className="text-xl font-black text-[#172B3A]">
+                              {formatCurrency(queryResponse.result.resumen.totalFacturado)}
+                            </span>
+                          </div>
+                          <div className="p-4 bg-emerald-50/70 border border-emerald-200">
+                            <span className="text-[11px] font-bold uppercase tracking-wider text-emerald-700 block">
+                              Total Abonado
+                            </span>
+                            <span className="text-xl font-black text-emerald-700">
+                              {formatCurrency(queryResponse.result.resumen.totalAbonado)}
+                            </span>
+                          </div>
+                          <div className="p-4 bg-orange-50/80 border border-orange-200">
+                            <span className="text-[11px] font-bold uppercase tracking-wider text-[#FC6412] block">
+                              Saldo Pendiente
+                            </span>
+                            <span className="text-xl font-black text-[#FC6412]">
+                              {formatCurrency(queryResponse.result.resumen.totalSaldoPendiente)}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+
+                      {(!queryResponse.result?.cxc || queryResponse.result.cxc.length === 0) ? (
+                        <div className="p-8 text-center bg-slate-50 border border-slate-200 space-y-2">
+                          <CheckCircle className="w-8 h-8 text-emerald-500 mx-auto" />
+                          <h4 className="font-bold text-sm text-[#172B3A]">Sin cartera pendiente</h4>
+                          <p className="text-xs text-slate-500 max-w-md mx-auto">
+                            El cliente se encuentra al día con sus obligaciones o no registra saldos pendientes en el sistema.
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-left text-xs border border-slate-200">
+                            <thead className="bg-[#172B3A] text-white">
+                              <tr>
+                                <th className="p-3 font-bold">Tipo</th>
+                                <th className="p-3 font-bold">Secuencia</th>
+                                <th className="p-3 font-bold">Emisión</th>
+                                <th className="p-3 font-bold">Vencimiento</th>
+                                <th className="p-3 font-bold text-right">Valor Total</th>
+                                <th className="p-3 font-bold text-right">Saldo Pendiente</th>
+                                <th className="p-3 font-bold text-center">Estado</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-200">
+                              {queryResponse.result.cxc.map((item: PerseoEstadoCuentaItem, idx: number) => {
+                                const isPending = Number(item.saldo) > 0;
+                                return (
+                                  <tr key={idx} className="hover:bg-slate-50">
+                                    <td className="p-3 font-bold text-slate-700">{item.tipo}</td>
+                                    <td className="p-3 font-mono font-bold text-[#005BB2]">{item.secuencia}</td>
+                                    <td className="p-3">{formatDate(item.emision)}</td>
+                                    <td className="p-3">{formatDate(item.vence)}</td>
+                                    <td className="p-3 text-right">{formatCurrency(item.valor)}</td>
+                                    <td className="p-3 text-right font-bold text-[#FC6412]">{formatCurrency(item.saldo)}</td>
+                                    <td className="p-3 text-center">
+                                      <span className={`px-2 py-0.5 text-[10px] font-bold ${isPending ? 'bg-amber-50 text-amber-800 border border-amber-200' : 'bg-emerald-50 text-emerald-700 border border-emerald-200'}`}>
+                                        {isPending ? 'Pendiente' : 'Pagado'}
+                                      </span>
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* CASO D: GUÍAS DE REMISIÓN */}
+                  {queryType === 'guias_remision' && (
+                    <div className="space-y-4">
+                      {(!queryResponse.result?.guias || queryResponse.result.guias.length === 0) ? (
+                        <div className="p-8 text-center bg-slate-50 border border-slate-200 space-y-2">
+                          <Truck className="w-8 h-8 text-slate-400 mx-auto" />
+                          <h4 className="font-bold text-sm text-[#172B3A]">No se encontraron guías de remisión</h4>
+                          <p className="text-xs text-slate-500 max-w-md mx-auto">
+                            No se registran despachos o traslados asociados a <span className="font-mono font-bold">{docNumber}</span>.
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="space-y-3">
+                          {queryResponse.result.guias.map((g: PerseoGuiaRemision, idx: number) => (
+                            <div key={idx} className="p-4 sm:p-5 border border-slate-200 bg-white space-y-3">
+                              <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2 border-b border-slate-100 pb-3">
+                                <div>
+                                  <span className="font-mono font-bold text-sm text-[#005BB2]">
+                                    Guía Nº {g.establecimientoguia}-{g.puntoemisionguia}-{g.secuencialguia}
+                                  </span>
+                                  <p className="text-xs text-slate-600 font-medium">
+                                    Destinatario: <span className="font-bold text-[#172B3A]">{g.nombrecliente}</span>
+                                  </p>
+                                </div>
+                                <div className="text-left sm:text-right text-xs">
+                                  <span className="px-2 py-0.5 bg-emerald-50 text-emerald-700 font-bold border border-emerald-200 text-[10px] uppercase">
+                                    Transporte Autorizado
+                                  </span>
+                                </div>
+                              </div>
+
+                              <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs text-slate-600">
+                                <div>
+                                  <span className="text-[11px] font-bold uppercase text-slate-400 block">Transportista:</span>
+                                  <span className="font-medium text-[#172B3A]">{g.nombretransportista || 'N/D'}</span>
+                                  <span className="font-mono text-slate-500 block text-[11px]">Placa: {g.placa || 'N/D'}</span>
+                                </div>
+                                <div>
+                                  <span className="text-[11px] font-bold uppercase text-slate-400 block">Motivo de Traslado:</span>
+                                  <span className="font-medium text-[#172B3A]">{g.motivo || 'Venta de mercadería'}</span>
+                                </div>
+                                <div className="sm:col-span-2">
+                                  <span className="text-[11px] font-bold uppercase text-slate-400 block">Ruta:</span>
+                                  <span className="text-slate-700">
+                                    <strong className="text-[#172B3A]">Origen:</strong> {g.direccionpartida} <br />
+                                    <strong className="text-[#172B3A]">Destino:</strong> {g.direccionllegada}
+                                  </span>
+                                </div>
+                              </div>
+                            </div>
+                          ))}
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* CASO E: LIQUIDACIONES DE COMPRA */}
+                  {queryType === 'liquidaciones' && (
+                    <div className="space-y-4">
+                      {(!queryResponse.result?.liquidaciones || queryResponse.result.liquidaciones.length === 0) ? (
+                        <div className="p-8 text-center bg-slate-50 border border-slate-200 space-y-2">
+                          <Receipt className="w-8 h-8 text-slate-400 mx-auto" />
+                          <h4 className="font-bold text-sm text-[#172B3A]">No se encontraron liquidaciones de compra</h4>
+                          <p className="text-xs text-slate-500 max-w-md mx-auto">
+                            No existen liquidaciones de compra registradas para este periodo.
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-left text-xs border border-slate-200">
+                            <thead className="bg-[#172B3A] text-white">
+                              <tr>
+                                <th className="p-3 font-bold">Secuencia</th>
+                                <th className="p-3 font-bold">Proveedor</th>
+                                <th className="p-3 font-bold">Emisión</th>
+                                <th className="p-3 font-bold text-right">Total</th>
+                                <th className="p-3 font-bold">Clave SRI</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-200">
+                              {queryResponse.result.liquidaciones.map((liq: any, idx: number) => (
+                                <tr key={idx} className="hover:bg-slate-50">
+                                  <td className="p-3 font-mono font-bold text-[#005BB2]">
+                                    {liq.establecimiento}-{liq.puntoemision}-{liq.secuencia}
+                                  </td>
+                                  <td className="p-3 font-semibold text-[#172B3A]">{liq.razonsocial}</td>
+                                  <td className="p-3">{formatDate(liq.emision)}</td>
+                                  <td className="p-3 text-right font-bold text-[#FC6412]">{formatCurrency(liq.total)}</td>
+                                  <td className="p-3 font-mono text-[11px] text-slate-500">{liq.liq_claveacceso || liq.autorizacion || 'S/N'}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* CASO F: HISTORIAL DE COBROS */}
+                  {queryType === 'cobros' && (
+                    <div className="space-y-4">
+                      {(!queryResponse.result?.cobros || queryResponse.result.cobros.length === 0) ? (
+                        <div className="p-8 text-center bg-slate-50 border border-slate-200 space-y-2">
+                          <DollarSign className="w-8 h-8 text-slate-400 mx-auto" />
+                          <h4 className="font-bold text-sm text-[#172B3A]">No se encontraron cobros registrados</h4>
+                          <p className="text-xs text-slate-500 max-w-md mx-auto">
+                            No existen registros de cobros o abonos en el periodo seleccionado.
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-left text-xs border border-slate-200">
+                            <thead className="bg-[#172B3A] text-white">
+                              <tr>
+                                <th className="p-3 font-bold">Código de Cobro</th>
+                                <th className="p-3 font-bold">Fecha</th>
+                                <th className="p-3 font-bold">Concepto</th>
+                                <th className="p-3 font-bold text-right">Importe Total</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-200">
+                              {queryResponse.result.cobros.map((cb: PerseoCobro, idx: number) => (
+                                <tr key={idx} className="hover:bg-slate-50">
+                                  <td className="p-3 font-mono font-bold text-[#005BB2]">{cb.cobroscodigo}</td>
+                                  <td className="p-3">{formatDate(cb.fechaemision)}</td>
+                                  <td className="p-3 text-slate-700">{cb.concepto}</td>
+                                  <td className="p-3 text-right font-black text-emerald-700">{formatCurrency(cb.importeTotal)}</td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* CASO G: PROFORMAS O PEDIDOS */}
+                  {(queryType === 'proformas' || queryType === 'pedidos') && (
+                    <div className="p-8 text-center bg-slate-50 border border-slate-200 space-y-2">
+                      <FileText className="w-8 h-8 text-slate-400 mx-auto" />
+                      <h4 className="font-bold text-sm text-[#172B3A]">
+                        {queryType === 'proformas' ? 'Sin proformas en el periodo' : 'Sin pedidos en el periodo'}
+                      </h4>
+                      <p className="text-xs text-slate-500 max-w-md mx-auto">
+                        No se encontraron registros de {queryType} activos en el rango de fechas seleccionado.
                       </p>
                     </div>
-                  </div>
-
-                  <div className="pt-2">
-                    <a
-                      href={waClientUrl}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="w-full sm:w-auto inline-flex items-center justify-center gap-2.5 px-6 py-3 rounded-none text-xs sm:text-sm font-bold text-white bg-[#FC6412] hover:bg-[#e05308] transition-all shadow-xs text-center cursor-pointer"
-                    >
-                      <WhatsAppIcon className="w-4 h-4" />
-                      <span>Recibir Comprobantes y Reporte por WhatsApp</span>
-                    </a>
-                  </div>
+                  )}
                 </motion.div>
               )}
-            </div>
+            </AnimatePresence>
           </div>
         </div>
       </section>
 
-      {/* 3. Preguntas de Servicios en Línea para Clientes (Mismo diseño acordeón oficial que Servicios) */}
+      {/* 4. Preguntas de Servicios en Línea para Clientes */}
       <section className="pt-8 sm:pt-10 pb-16 sm:pb-20 bg-white border-t border-slate-100">
         <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
           <div className="text-center space-y-2">
@@ -387,7 +895,6 @@ export const OnlineServicesPage: React.FC = () => {
             </p>
           </div>
 
-          {/* Rejilla de 2 columnas con la paleta oficial MH (#005BB2 y #FC6412) */}
           <div className="grid grid-cols-2 gap-2.5 sm:gap-5">
             {faqItems.map((faq, idx) => {
               const isOpen = openFaqIndices.includes(idx);

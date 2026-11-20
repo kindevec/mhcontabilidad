@@ -83,20 +83,9 @@ export async function getPerseoStatus(): Promise<PerseoConfigStatus> {
  * Si las credenciales aún no están provistas, retorna un estado informativo claro sin falsear datos.
  */
 export async function queryPerseo(request: PerseoQueryRequest): Promise<PerseoQueryResponse> {
-  const status = await getPerseoStatus();
-
-  if (!status.isConfigured) {
-    return {
-      success: false,
-      message: 'La conexión directa con Perseo se encuentra en estado PENDIENTE DE CREDENCIALES. Los datos ingresados han sido validados sintácticamente, pero la consulta remota requiere la configuración previa de las claves API en el servidor.',
-      errorCode: 'API_CREDENTIALS_PENDING',
-      timestamp: new Date().toISOString(),
-    };
-  }
-
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 10000);
+    const timeoutId = setTimeout(() => controller.abort(), 15000);
 
     const res = await fetch('/api/perseo/query', {
       method: 'POST',
@@ -114,18 +103,13 @@ export async function queryPerseo(request: PerseoQueryRequest): Promise<PerseoQu
       return {
         success: false,
         message: errData.message || `Error del servidor al consultar Perseo (${res.status})`,
-        errorCode: `HTTP_${res.status}`,
+        errorCode: errData.errorCode || `HTTP_${res.status}`,
         timestamp: new Date().toISOString(),
       };
     }
 
-    const data = await res.json();
-    return {
-      success: true,
-      message: 'Consulta realizada con éxito en el sistema contable Perseo.',
-      data: data.result,
-      timestamp: new Date().toISOString(),
-    };
+    const data: PerseoQueryResponse = await res.json();
+    return data;
   } catch (error) {
     return {
       success: false,

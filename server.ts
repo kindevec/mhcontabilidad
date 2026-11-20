@@ -32,28 +32,25 @@ const contactSubmissions: ContactSubmission[] = [];
  * Protege las claves en el servidor sin exponerlas jamás al cliente
  */
 app.get('/api/perseo/status', (_req, res) => {
-  const isConfigured = Boolean(
-    process.env.PERSEO_API_KEY &&
-    process.env.PERSEO_API_BASE_URL &&
-    process.env.PERSEO_EMPRESA_ID
-  );
+  const baseUrl = process.env.PERSEO_API_BASE_URL || 'https://tu-contabilidad.com';
+  const apiKey = process.env.PERSEO_API_KEY || '';
+  const isConfigured = Boolean(baseUrl && apiKey);
 
   res.json({
     isConfigured,
-    endpointUrl: isConfigured ? process.env.PERSEO_API_BASE_URL : undefined,
+    endpointUrl: isConfigured ? baseUrl : undefined,
     statusMessage: isConfigured
       ? 'Conexión activa y autenticada con el servidor Cloud de Perseo.'
-      : 'Integración en fase de preparación. Credenciales API pendientes de provisión en el entorno seguro del servidor.',
+      : 'Credenciales API pendientes de provisión en el entorno seguro del servidor.',
     supportedOperations: [
+      'Consulta de facturas electrónicas y RIDE / XML',
+      'Consulta de retenciones tributarias (ventas y compras)',
       'Consulta de estado de cuenta comercial y cartera',
-      'Verificación de retenciones tributarias emitidas ante el SRI',
-      'Localización de facturas electrónicas autorizadas',
-    ],
-    pendingRequirements: [
-      'URL base del servidor Perseo Cloud o Perseo Web del cliente (PERSEO_API_BASE_URL)',
-      'API Key o Token Bearer emitido por Perseo (PERSEO_API_KEY)',
-      'Identificador de Empresa (PERSEO_EMPRESA_ID)',
-      'Permisos de lectura asignados al usuario API en el módulo de seguridad de Perseo (PERSEO_API_USER)',
+      'Consulta de guías de remisión electrónicas',
+      'Consulta de liquidaciones de compra',
+      'Consulta de cobros y abonos realizados',
+      'Consulta de proformas y cotizaciones',
+      'Consulta de pedidos',
     ],
     versionRequirement: 'Perseo Web v3 / API REST Cloud',
   });
@@ -61,49 +58,349 @@ app.get('/api/perseo/status', (_req, res) => {
 
 /**
  * 2. Endpoint Proxy para Consultas a Perseo
- * Se ejecuta exclusivamente en backend cuando las claves están provistas
+ * Se ejecuta exclusivamente en backend protegiendo la API Key en el servidor
  */
 app.post('/api/perseo/query', async (req, res) => {
-  const { identificacion, tipoDocumento, tipoConsulta } = req.body;
+  const { identificacion, tipoConsulta, periodo, fechaDesde, fechaHasta } = req.body;
 
-  const isConfigured = Boolean(
-    process.env.PERSEO_API_KEY &&
-    process.env.PERSEO_API_BASE_URL &&
-    process.env.PERSEO_EMPRESA_ID
-  );
+  const baseUrl = (process.env.PERSEO_API_BASE_URL || 'https://tu-contabilidad.com').replace(/\/+$/, '');
+  const apiKey = process.env.PERSEO_API_KEY || '';
 
-  if (!isConfigured) {
+  if (!baseUrl || !apiKey) {
     return res.status(412).json({
       success: false,
       errorCode: 'PERSEO_CREDENTIALS_PENDING',
-      message:
-        'El servidor aún no cuenta con las credenciales de la API de Perseo configuradas en las variables de entorno. Configure PERSEO_API_BASE_URL y PERSEO_API_KEY.',
+      message: 'El servidor aún no cuenta con las credenciales de la API de Perseo configuradas.',
     });
   }
 
-  try {
-    const perseoEndpoint = `${process.env.PERSEO_API_BASE_URL}/api/v1/consultas`;
-    const perseoResponse = await fetch(perseoEndpoint, {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        Authorization: `Bearer ${process.env.PERSEO_API_KEY}`,
-        'X-Empresa-Id': process.env.PERSEO_EMPRESA_ID || '',
-      },
-      body: JSON.stringify({ identificacion, tipoDocumento, tipoConsulta }),
-    });
+  // Rango de fechas según periodo
+  let fDesde = fechaDesde || '20200101';
+  let fHasta = fechaHasta || '20291231';
+  const currentYear = new Date().getFullYear().toString();
 
-    if (!perseoResponse.ok) {
-      return res.status(perseoResponse.status).json({
-        success: false,
-        errorCode: `PERSEO_HTTP_${perseoResponse.status}`,
-        message: 'Respuesta de error emitida por el servidor Perseo.',
+  if (periodo === '2026') {
+    fDesde = '20260101';
+    fHasta = '20261231';
+  } else if (periodo === '2025') {
+    fDesde = '20250101';
+    fHasta = '20251231';
+  } else if (periodo === 'ultimo_mes') {
+    const d = new Date();
+    d.setDate(d.getDate() - 30);
+    const m = String(d.getMonth() + 1).padStart(2, '0');
+    const day = String(d.getDate()).padStart(2, '0');
+    fDesde = `${d.getFullYear()}${m}${day}`;
+    fHasta = '20291231';
+  } else if (!fechaDesde && !periodo) {
+    // Por defecto año actual o histórico amplio
+    fDesde = `${currentYear}0101`;
+    fHasta = `${currentYear}1231`;
+  }
+
+  const cleanId = (identificacion || '').trim().replace(/[-\s]/g, '');
+
+  try {
+    // Buscar cliente asociado si se envió identificación
+    let matchedCliente: any = null;
+    let allClientes: any[] = [];
+    try {
+      const cr = await fetch(`${baseUrl}/api/clientes_consulta`, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ api_key: apiKey, clienteid: '', clientescodigo: '', identificacion: '', contenido: '' }),
       });
+      const cj = await cr.json();
+      allClientes = cj.clientes || [];
+      if (cleanId && allClientes.length > 0) {
+        matchedCliente = allClientes.find(c => c.identificacion === cleanId || c.identificacion?.includes(cleanId)) || null;
+      }
+    } catch (err) {
+      console.warn('[Perseo Proxy] No se pudo precargar clientes:', err);
     }
 
-    const data = await perseoResponse.json();
-    return res.json({ success: true, result: data });
+    let resultData: any = null;
+    let totalItems = 0;
+
+    switch (tipoConsulta) {
+      case 'facturacion': {
+        const resp = await fetch(`${baseUrl}/api/facturas_consulta`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ api_key: apiKey, fechadesde: fDesde, fechahasta: fHasta }),
+        });
+        const json = await resp.json();
+        let facturas: any[] = json.facturas || [];
+        if (cleanId) {
+          facturas = facturas.filter(f =>
+            f.identificacion === cleanId ||
+            f.identificacion?.includes(cleanId) ||
+            (matchedCliente && f.clientesid === matchedCliente.clientesid) ||
+            f.razonsocial?.toLowerCase().includes(cleanId.toLowerCase())
+          );
+        }
+        totalItems = facturas.length;
+        resultData = {
+          facturas,
+          total: totalItems,
+        };
+        break;
+      }
+
+      case 'retenciones': {
+        // 1. Retenciones en ventas (de facturas de venta)
+        const respFac = await fetch(`${baseUrl}/api/facturas_consulta`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ api_key: apiKey, fechadesde: fDesde, fechahasta: fHasta }),
+        });
+        const jsonFac = await respFac.json();
+        let facList: any[] = jsonFac.facturas || [];
+        if (cleanId) {
+          facList = facList.filter(f =>
+            f.identificacion === cleanId ||
+            (matchedCliente && f.clientesid === matchedCliente.clientesid) ||
+            f.razonsocial?.toLowerCase().includes(cleanId.toLowerCase())
+          );
+        }
+
+        const retencionesVentas = facList
+          .filter(f => (f.totalretenidoiva > 0 || f.totalretenidorenta > 0 || f.autorizacionretencion || f.secuenciaretencion))
+          .map(f => ({
+            tipo: 'VENTA',
+            secuencia: f.secuenciaretencion ? `${f.establecimientoretencion || '001'}-${f.puntoemisionretencion || '001'}-${f.secuenciaretencion}` : 'S/N',
+            fechaEmision: f.emisionretencion || f.emision,
+            autorizacion: f.autorizacionretencion || '',
+            totalRenta: Number(f.totalretenidorenta || 0),
+            totalIva: Number(f.totalretenidoiva || 0),
+            total: Number(f.totalretenidorenta || 0) + Number(f.totalretenidoiva || 0),
+            facturaAfectada: `${f.establecimiento}-${f.puntoemision}-${f.secuencial}`,
+            clienteOProveedor: f.razonsocial,
+            identificacion: f.identificacion,
+          }));
+
+        // 2. Retenciones en compras (emitidas a proveedores)
+        let retencionesCompras: any[] = [];
+        try {
+          const respComp = await fetch(`${baseUrl}/api/consulta_compras`, {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ api_key: apiKey, fechainicio: fDesde, fechafin: fHasta, mostrarcxp: true }),
+          });
+          const jsonComp = await respComp.json();
+          let compList: any[] = jsonComp.compras || [];
+          if (cleanId) {
+            compList = compList.filter(c =>
+              c.identificacion === cleanId ||
+              c.identificacion?.includes(cleanId) ||
+              c.razonsocial?.toLowerCase().includes(cleanId.toLowerCase())
+            );
+          }
+          retencionesCompras = compList
+            .filter(c => (c.retenciontotal > 0 || c.retencionautorizacion || c.retencionsecuencia))
+            .map(c => ({
+              tipo: 'COMPRA',
+              secuencia: c.retencionsecuencia ? `${c.retencionestablecimiento || '001'}-${c.retencionpuntoemision || '001'}-${c.retencionsecuencia}` : 'S/N',
+              fechaEmision: c.retencionemision || c.emision,
+              autorizacion: c.retencionautorizacion || '',
+              totalRenta: Number(c.retenciontotalrenta || 0),
+              totalIva: Number(c.retenciontotaliva || 0),
+              total: Number(c.retenciontotal || 0),
+              facturaAfectada: `${c.establecimiento}-${c.puntoemision}-${c.secuencia}`,
+              clienteOProveedor: c.razonsocial,
+              identificacion: c.identificacion,
+            }));
+        } catch (err) {
+          console.warn('[Perseo Proxy] Error consultando retenciones compras:', err);
+        }
+
+        const allRetenciones = [...retencionesVentas, ...retencionesCompras];
+        totalItems = allRetenciones.length;
+        resultData = {
+          retenciones: allRetenciones,
+          total: totalItems,
+        };
+        break;
+      }
+
+      case 'estado_cuenta': {
+        const resp = await fetch(`${baseUrl}/api/consulta_cliente_estadocuenta`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ api_key: apiKey, detallado: 1 }),
+        });
+        const json = await resp.json();
+        let cxc: any[] = json.cxc || [];
+
+        if (cleanId) {
+          cxc = cxc.filter(c =>
+            (matchedCliente && c.clientesid === matchedCliente.clientesid) ||
+            (matchedCliente && c.razonsocial?.toLowerCase() === matchedCliente.razonsocial?.toLowerCase()) ||
+            c.razonsocial?.toLowerCase().includes(cleanId.toLowerCase())
+          );
+        }
+
+        const totalFacturado = cxc.reduce((acc, curr) => acc + Number(curr.valor || 0), 0);
+        const totalSaldoPendiente = cxc.reduce((acc, curr) => acc + Number(curr.saldo || 0), 0);
+        const totalAbonado = Math.max(0, totalFacturado - totalSaldoPendiente);
+
+        totalItems = cxc.length;
+        resultData = {
+          cxc,
+          total: totalItems,
+          resumen: {
+            totalFacturado: Number(totalFacturado.toFixed(2)),
+            totalSaldoPendiente: Number(totalSaldoPendiente.toFixed(2)),
+            totalAbonado: Number(totalAbonado.toFixed(2)),
+          },
+        };
+        break;
+      }
+
+      case 'guias_remision': {
+        const resp = await fetch(`${baseUrl}/api/guias_remision_consulta`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ api_key: apiKey }),
+        });
+        const json = await resp.json();
+        let guias: any[] = json.guias || [];
+
+        if (cleanId) {
+          guias = guias.filter(g =>
+            g.identificacioncliente === cleanId ||
+            g.identificacioncliente?.includes(cleanId) ||
+            g.identificaciontransportista === cleanId ||
+            (matchedCliente && g.nombrecliente?.toLowerCase().includes(matchedCliente.razonsocial.toLowerCase()))
+          );
+        }
+
+        totalItems = guias.length;
+        resultData = {
+          guias,
+          total: totalItems,
+        };
+        break;
+      }
+
+      case 'liquidaciones': {
+        const respComp = await fetch(`${baseUrl}/api/consulta_compras`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ api_key: apiKey, fechainicio: fDesde, fechafin: fHasta, mostrarcxp: true }),
+        });
+        const jsonComp = await respComp.json();
+        let compList: any[] = jsonComp.compras || [];
+
+        // Filtrar liquidaciones (sri_documentoscodigo === '03' o secuenciasid_liquidacion)
+        let liquidaciones = compList.filter(c =>
+          c.sri_documentoscodigo === '03' ||
+          (c.secuenciasid_liquidacion && c.secuenciasid_liquidacion > 0) ||
+          c.concepto?.toLowerCase().includes('liquidacion')
+        );
+
+        if (cleanId) {
+          liquidaciones = liquidaciones.filter(l =>
+            l.identificacion === cleanId ||
+            l.identificacion?.includes(cleanId) ||
+            l.razonsocial?.toLowerCase().includes(cleanId.toLowerCase())
+          );
+        }
+
+        totalItems = liquidaciones.length;
+        resultData = {
+          liquidaciones,
+          total: totalItems,
+        };
+        break;
+      }
+
+      case 'cobros': {
+        const resp = await fetch(`${baseUrl}/api/consulta_cobros`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ api_key: apiKey, fechadesde: fDesde, fechahasta: fHasta }),
+        });
+        const json = await resp.json();
+        let cobros: any[] = json.cobros || [];
+
+        if (cleanId && matchedCliente) {
+          cobros = cobros.filter(cb =>
+            cb.clientesid === matchedCliente.clientesid ||
+            cb.concepto?.toLowerCase().includes(matchedCliente.razonsocial.toLowerCase())
+          );
+        } else if (cleanId) {
+          cobros = cobros.filter(cb => cb.concepto?.toLowerCase().includes(cleanId.toLowerCase()));
+        }
+
+        totalItems = cobros.length;
+        resultData = {
+          cobros,
+          total: totalItems,
+        };
+        break;
+      }
+
+      case 'proformas': {
+        const resp = await fetch(`${baseUrl}/api/proformas_obtener`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ api_key: apiKey, fecha_desde: fDesde, fecha_hasta: fHasta }),
+        });
+        const json = await resp.json();
+        const proformas: any[] = json.proformas || [];
+        totalItems = proformas.length;
+        resultData = {
+          proformas,
+          total: totalItems,
+        };
+        break;
+      }
+
+      case 'pedidos': {
+        const resp = await fetch(`${baseUrl}/api/pedidos_consulta`, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ api_key: apiKey, fecha_desde: fDesde, fecha_hasta: fHasta }),
+        });
+        const json = await resp.json();
+        const pedidos: any[] = json.pedidos || [];
+        totalItems = pedidos.length;
+        resultData = {
+          pedidos,
+          total: totalItems,
+        };
+        break;
+      }
+
+      default:
+        return res.status(400).json({
+          success: false,
+          errorCode: 'INVALID_QUERY_TYPE',
+          message: `El tipo de consulta "${tipoConsulta}" no es válido.`,
+        });
+    }
+
+    return res.json({
+      success: true,
+      tipoConsulta,
+      periodo: periodo || 'historico',
+      matchedCliente: matchedCliente
+        ? {
+            id: matchedCliente.clientesid,
+            razonSocial: matchedCliente.razonsocial,
+            identificacion: matchedCliente.identificacion,
+            email: matchedCliente.email,
+            telefono: matchedCliente.telefono1,
+            direccion: matchedCliente.direccion,
+          }
+        : null,
+      total: totalItems,
+      result: resultData,
+      timestamp: new Date().toISOString(),
+    });
   } catch (error) {
+    console.error('[Perseo Proxy Error]:', error);
     return res.status(502).json({
       success: false,
       errorCode: 'PERSEO_COMMUNICATION_ERROR',
