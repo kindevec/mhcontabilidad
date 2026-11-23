@@ -40,12 +40,17 @@ export type PerseoQueryType =
   | 'liquidaciones'
   | 'cobros'
   | 'proformas'
-  | 'pedidos';
+  | 'pedidos'
+  | 'proveedor_cxp'
+  | 'proveedor_pagos'
+  | 'proveedor_retenciones'
+  | 'proveedor_facturas';
 
 export interface PerseoQueryRequest {
   identificacion: string;
   tipoDocumento?: 'RUC' | 'CEDULA' | 'PASAPORTE';
   tipoConsulta: PerseoQueryType;
+  portalTipo?: 'cliente' | 'proveedor';
   periodo?: string; // '2026' | 'ultimo_mes' | '2025' | 'todos'
   fechaDesde?: string;
   fechaHasta?: string;
@@ -59,6 +64,15 @@ export interface MatchedClienteInfo {
   email?: string;
   telefono?: string;
   direccion?: string;
+}
+
+export interface MatchedProveedorInfo {
+  id: number;
+  razonSocial: string;
+  nombreComercial?: string;
+  identificacion: string;
+  direccion?: string;
+  telefono?: string;
 }
 
 export interface PerseoFacturaItem {
@@ -152,27 +166,66 @@ export interface PerseoCobro {
   }>;
 }
 
+export interface PerseoPago {
+  pagosid: number;
+  cobroscodigo: string;
+  fechaemision: string;
+  importeTotal: number;
+  concepto: string;
+  tipo?: string;
+  documentos?: Array<{
+    documentosid: number;
+    secuencia: string;
+    importe: number;
+  }>;
+  formapago?: Array<{
+    forma_pago_empresaid: number | string;
+    importe: number;
+    numerodocumento?: string;
+    emision?: string;
+    vence?: string;
+  }>;
+}
+
+export interface PerseoProveedorCxpItem {
+  proveedoresid: number;
+  razonsocial: string;
+  documentosid: number;
+  secuencia: string;
+  tipo: string;
+  valor: number;
+  saldo: number;
+  emision: string;
+  vence: string;
+}
+
 export interface PerseoQueryResponse {
   success: boolean;
   message?: string;
   timestamp: string;
   tipoConsulta?: PerseoQueryType;
+  portalTipo?: 'cliente' | 'proveedor';
   periodo?: string;
   matchedCliente?: MatchedClienteInfo | null;
+  matchedProveedor?: MatchedProveedorInfo | null;
   total?: number;
   result?: {
     facturas?: PerseoFactura[];
     retenciones?: PerseoRetencion[];
     cxc?: PerseoEstadoCuentaItem[];
+    cxp?: PerseoProveedorCxpItem[];
     guias?: PerseoGuiaRemision[];
     liquidaciones?: any[];
     cobros?: PerseoCobro[];
+    pagos?: PerseoPago[];
     proformas?: any[];
     pedidos?: any[];
+    compras?: any[];
     resumen?: {
       totalFacturado: number;
       totalSaldoPendiente: number;
-      totalAbonado: number;
+      totalAbonado?: number;
+      totalPagado?: number;
     };
   };
   errorCode?: string;

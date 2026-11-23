@@ -36,12 +36,19 @@ import {
 } from '../types';
 import digitalPortalImg from '../assets/images/portal_hero_laptop.jpg';
 
-export const OnlineServicesPage: React.FC = () => {
+export interface OnlineServicesPageProps {
+  initialTab?: 'cliente' | 'proveedor';
+}
+
+export const OnlineServicesPage: React.FC<OnlineServicesPageProps> = ({ initialTab = 'cliente' }) => {
+  const [portalTab, setPortalTab] = useState<'cliente' | 'proveedor'>(initialTab);
   const [docType, setDocType] = useState<'RUC' | 'CEDULA' | 'PASAPORTE'>('RUC');
   const [docNumber, setDocNumber] = useState('');
-  const [queryType, setQueryType] = useState<PerseoQueryType>('facturacion');
+  const [queryType, setQueryType] = useState<PerseoQueryType>(
+    initialTab === 'proveedor' ? 'proveedor_cxp' : 'facturacion'
+  );
   const [period, setPeriod] = useState('2026');
-  const [clientPhone, setClientPhone] = useState('');
+  const [referenceDocNumber, setReferenceDocNumber] = useState('');
 
   const [isSearching, setIsSearching] = useState(false);
   const [validationError, setValidationError] = useState<string | null>(null);
@@ -55,6 +62,15 @@ export const OnlineServicesPage: React.FC = () => {
     setOpenFaqIndices((prev) =>
       prev.includes(idx) ? prev.filter((i) => i !== idx) : [...prev, idx]
     );
+  };
+
+  const handleSwitchTab = (tab: 'cliente' | 'proveedor') => {
+    setPortalTab(tab);
+    setQueryType(tab === 'proveedor' ? 'proveedor_cxp' : 'facturacion');
+    setQueryResponse(null);
+    setValidationError(null);
+    setDocNumber('');
+    setReferenceDocNumber('');
   };
 
   const faqItems = [
@@ -98,6 +114,14 @@ export const OnlineServicesPage: React.FC = () => {
         return 'Proformas y Cotizaciones Comerciales';
       case 'pedidos':
         return 'Pedidos Registrados en el Sistema';
+      case 'proveedor_cxp':
+        return 'Cuentas por Pagar (CxP) y Estado de Cuenta';
+      case 'proveedor_pagos':
+        return 'Historial de Pagos y Transferencias Recibidas';
+      case 'proveedor_retenciones':
+        return 'Comprobantes de Retención Emitidos al Proveedor';
+      case 'proveedor_facturas':
+        return 'Facturas de Compra Registradas y Aprobadas';
       default:
         return 'Consulta Contable';
     }
@@ -163,6 +187,14 @@ export const OnlineServicesPage: React.FC = () => {
       }
     }
 
+    const cleanRefDoc = referenceDocNumber.trim();
+    if (!cleanRefDoc || cleanRefDoc.length < 3) {
+      setValidationError(
+        'Por seguridad y protección de datos (LOPDP), ingrese el número de una factura o comprobante de referencia (mínimo 3 dígitos).'
+      );
+      return;
+    }
+
     setIsSearching(true);
     setQueryResponse(null);
     setExpandedFacturaId(null);
@@ -172,10 +204,17 @@ export const OnlineServicesPage: React.FC = () => {
         identificacion: cleanDoc,
         tipoDocumento: docType,
         tipoConsulta: queryType,
+        portalTipo: portalTab,
         periodo: period,
+        numeroDocumento: cleanRefDoc,
       });
 
-      setQueryResponse(res);
+      if (!res.success) {
+        setValidationError(res.message || 'No se pudo verificar la consulta.');
+        setQueryResponse(null);
+      } else {
+        setQueryResponse(res);
+      }
     } catch (err) {
       setValidationError(err instanceof Error ? err.message : 'Error inesperado al consultar Perseo.');
     } finally {
@@ -224,22 +263,59 @@ export const OnlineServicesPage: React.FC = () => {
       <section className="pt-12 sm:pt-16 pb-6 sm:pb-10 bg-slate-50/70">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           {/* Encabezado de Consulta en Línea */}
-          <div className="text-center max-w-2xl mx-auto mb-10 sm:mb-12 space-y-3">
+          <div className="text-center max-w-2xl mx-auto mb-8 sm:mb-10 space-y-3">
             <h2 className="text-2xl sm:text-3xl lg:text-4xl font-black text-[#172B3A] tracking-tight">
-              Consulte sus Comprobantes y Estado Contable
+              {portalTab === 'proveedor'
+                ? 'Portal de Proveedores: Cuentas por Pagar y Pagos'
+                : 'Consulte sus Comprobantes y Estado Contable'}
             </h2>
             <p className="text-sm text-[#64748B] leading-relaxed">
-              Consulte en tiempo real el estado de sus facturas electrónicas, retenciones tributarias, cartera y comprobantes registrados en el sistema contable Perseo.
+              {portalTab === 'proveedor'
+                ? 'Consulte en tiempo real el saldo de sus facturas registradas, retenciones emitidas, abonos y transferencias de pago en el sistema contable Perseo.'
+                : 'Consulte en tiempo real el estado de sus facturas electrónicas, retenciones tributarias, cartera y comprobantes registrados en el sistema contable Perseo.'}
             </p>
           </div>
 
-          {/* Módulo Principal de Consulta al Cliente */}
+          {/* Módulo Principal de Consulta al Cliente / Proveedor */}
           <div className="max-w-4xl mx-auto space-y-8">
             <div className="bg-white rounded-none border border-slate-200 shadow-[6px_6px_0px_0px_#E2E8F0,0_25px_50px_-12px_rgba(0,0,0,0.12)] sm:shadow-[10px_10px_0px_0px_#E2E8F0,0_30px_60px_-12px_rgba(0,0,0,0.15)] p-6 sm:p-10 space-y-6 text-[#172B3A] relative">
+              
+              {/* Selector de Pestaña: Clientes vs Proveedores */}
+              <div className="flex items-center gap-2 border-b border-slate-200 pb-4">
+                <button
+                  type="button"
+                  onClick={() => handleSwitchTab('cliente')}
+                  className={`flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                    portalTab === 'cliente'
+                      ? 'bg-[#005BB2] text-white shadow-sm ring-2 ring-[#005BB2]/20'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                >
+                  <Building className="w-4 h-4" />
+                  <span>Portal Clientes</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => handleSwitchTab('proveedor')}
+                  className={`flex items-center gap-2 px-4 py-2.5 text-xs sm:text-sm font-bold uppercase tracking-wider transition-all cursor-pointer ${
+                    portalTab === 'proveedor'
+                      ? 'bg-[#005BB2] text-white shadow-sm ring-2 ring-[#005BB2]/20'
+                      : 'bg-slate-100 text-slate-600 hover:bg-slate-200'
+                  }`}
+                >
+                  <Truck className="w-4 h-4" />
+                  <span>Portal Proveedores</span>
+                </button>
+              </div>
+
               <div className="space-y-2 border-b border-slate-200 pb-5">
                 <div className="flex items-center justify-between flex-wrap gap-3">
                   <h3 className="text-xl sm:text-2xl font-black text-[#172B3A] tracking-tight flex items-center gap-2">
-                    <span>Búsqueda y Consulta Contable</span>
+                    <span>
+                      {portalTab === 'proveedor'
+                        ? 'Consultas para Proveedores Registrados'
+                        : 'Búsqueda y Consulta Contable para Clientes'}
+                    </span>
                   </h3>
                   <div className="shrink-0 flex items-center gap-2">
                     <span className="hidden sm:inline-flex items-center gap-1.5 px-2.5 py-1 text-[11px] font-bold text-emerald-700 bg-emerald-50 border border-emerald-200">
@@ -250,7 +326,9 @@ export const OnlineServicesPage: React.FC = () => {
                   </div>
                 </div>
                 <p className="text-xs sm:text-sm text-[#64748B] leading-relaxed">
-                  Seleccione el documento a consultar e ingrese su número de identificación fiscal para visualizar sus registros en línea.
+                  {portalTab === 'proveedor'
+                    ? 'Ingrese el RUC o Cédula de su empresa proveedora para consultar sus cuentas por pagar, retenciones aplicadas o historial de transferencias recibidas.'
+                    : 'Seleccione el documento a consultar e ingrese su número de identificación fiscal para visualizar sus registros en línea.'}
                 </p>
               </div>
 
@@ -283,12 +361,18 @@ export const OnlineServicesPage: React.FC = () => {
                       htmlFor="user-doc-number"
                       className="block text-xs font-bold text-[#172B3A] uppercase tracking-wider mb-2"
                     >
-                      Número de Identificación
+                      {portalTab === 'proveedor' ? 'RUC / Identificación del Proveedor' : 'Número de Identificación'}
                     </label>
                     <input
                       id="user-doc-number"
                       type="text"
-                      placeholder={docType === 'RUC' ? 'Ej: 1790012345001' : 'Ej: 1712345678'}
+                      placeholder={
+                        portalTab === 'proveedor'
+                          ? 'Ej: 1790554295001 (RUC Proveedor)'
+                          : docType === 'RUC'
+                          ? 'Ej: 1790012345001'
+                          : 'Ej: 1712345678'
+                      }
                       value={docNumber}
                       onChange={(e) => setDocNumber(e.target.value)}
                       maxLength={docType === 'RUC' ? 13 : docType === 'CEDULA' ? 10 : 20}
@@ -312,14 +396,25 @@ export const OnlineServicesPage: React.FC = () => {
                       onChange={(e) => setQueryType(e.target.value as PerseoQueryType)}
                       className="w-full px-4 py-3 rounded-none border border-[#005BB2] bg-white text-slate-900 text-xs sm:text-sm font-semibold focus:outline-none focus:ring-2 focus:ring-[#005BB2] transition-all shadow-xs cursor-pointer"
                     >
-                      <option value="facturacion">Facturas Electrónicas de Venta</option>
-                      <option value="retenciones">Comprobantes de Retención SRI</option>
-                      <option value="estado_cuenta">Estado de Cuenta y Cartera (Saldos)</option>
-                      <option value="guias_remision">Guías de Remisión de Transporte</option>
-                      <option value="liquidaciones">Liquidaciones de Compra</option>
-                      <option value="cobros">Historial de Cobros y Abonos</option>
-                      <option value="proformas">Proformas y Cotizaciones</option>
-                      <option value="pedidos">Pedidos Registrados</option>
+                      {portalTab === 'proveedor' ? (
+                        <>
+                          <option value="proveedor_cxp">Estado de Cuenta y Cuentas por Pagar (CxP)</option>
+                          <option value="proveedor_pagos">Historial de Pagos y Transferencias Recibidas</option>
+                          <option value="proveedor_retenciones">Comprobantes de Retención SRI Emitidos</option>
+                          <option value="proveedor_facturas">Facturas de Compra Registradas</option>
+                        </>
+                      ) : (
+                        <>
+                          <option value="facturacion">Facturas Electrónicas de Venta</option>
+                          <option value="retenciones">Comprobantes de Retención SRI</option>
+                          <option value="estado_cuenta">Estado de Cuenta y Cartera (Saldos)</option>
+                          <option value="guias_remision">Guías de Remisión de Transporte</option>
+                          <option value="liquidaciones">Liquidaciones de Compra</option>
+                          <option value="cobros">Historial de Cobros y Abonos</option>
+                          <option value="proformas">Proformas y Cotizaciones</option>
+                          <option value="pedidos">Pedidos Registrados</option>
+                        </>
+                      )}
                     </select>
                   </div>
 
@@ -344,25 +439,34 @@ export const OnlineServicesPage: React.FC = () => {
                   </div>
                 </div>
 
-                {/* Fila 3: Celular / WhatsApp (Opcional de contacto) */}
+                {/* Fila 3: Validación de Dato Cruzado (Obligatorio - LOPDP) */}
                 <div>
                   <div className="flex items-center justify-between mb-2">
                     <label
-                      htmlFor="user-client-phone"
+                      htmlFor="user-ref-doc"
                       className="block text-xs font-bold text-[#172B3A] uppercase tracking-wider"
                     >
-                      Celular o WhatsApp de Contacto
+                      Nº de Factura o Comprobante de Verificación
                     </label>
-                    <span className="text-[11px] text-slate-400 font-medium">Opcional</span>
+                    <span className="text-[11px] text-[#FC6412] font-bold uppercase tracking-wide">
+                      Obligatorio · Seguridad LOPDP
+                    </span>
                   </div>
                   <input
-                    id="user-client-phone"
-                    type="tel"
-                    placeholder="Ej: 0991234567"
-                    value={clientPhone}
-                    onChange={(e) => setClientPhone(e.target.value)}
+                    id="user-ref-doc"
+                    type="text"
+                    placeholder={
+                      portalTab === 'proveedor'
+                        ? 'Ej: 000001209, CE00000025 o últimos dígitos de su factura'
+                        : 'Ej: 001-901-000000259, 000000259 o 259'
+                    }
+                    value={referenceDocNumber}
+                    onChange={(e) => setReferenceDocNumber(e.target.value)}
                     className="w-full px-4 py-3 rounded-none border border-[#005BB2] bg-white text-slate-900 font-mono text-xs sm:text-sm font-medium focus:outline-none focus:ring-2 focus:ring-[#005BB2] transition-all shadow-xs placeholder-slate-400"
                   />
+                  <p className="mt-1.5 text-[11px] text-slate-500">
+                    Para proteger su información financiera, ingrese el número de una factura, retención o comprobante emitido a su nombre.
+                  </p>
                 </div>
 
                 {validationError && (
@@ -397,6 +501,8 @@ export const OnlineServicesPage: React.FC = () => {
                       onClick={() => {
                         setQueryResponse(null);
                         setDocNumber('');
+                        setReferenceDocNumber('');
+                        setValidationError(null);
                       }}
                       className="text-xs font-bold text-slate-500 hover:text-slate-800 flex items-center gap-1.5 py-2 px-3 border border-slate-200 bg-slate-50 hover:bg-slate-100 transition-colors cursor-pointer"
                     >
@@ -436,6 +542,22 @@ export const OnlineServicesPage: React.FC = () => {
                             ({queryResponse.matchedCliente.identificacion})
                           </span>
                         </p>
+                      )}
+                      {queryResponse.matchedProveedor && (
+                        <div className="pt-1 space-y-0.5">
+                          <p className="text-sm font-bold text-[#172B3A] flex items-center gap-1.5">
+                            <Truck className="w-4 h-4 text-[#FC6412] shrink-0" />
+                            <span>{queryResponse.matchedProveedor.razonSocial}</span>
+                            <span className="font-mono text-xs text-slate-500 font-normal">
+                              ({queryResponse.matchedProveedor.identificacion})
+                            </span>
+                          </p>
+                          {queryResponse.matchedProveedor.direccion && (
+                            <p className="text-[11px] text-slate-500 pl-5">
+                              {queryResponse.matchedProveedor.direccion}
+                            </p>
+                          )}
+                        </div>
                       )}
                     </div>
                     <div className="text-right sm:text-right text-xs text-slate-500">
@@ -874,6 +996,313 @@ export const OnlineServicesPage: React.FC = () => {
                       <p className="text-xs text-slate-500 max-w-md mx-auto">
                         No se encontraron registros de {queryType} activos en el rango de fechas seleccionado.
                       </p>
+                    </div>
+                  )}
+
+                  {/* CASO H: ESTADO DE CUENTA Y CUENTAS POR PAGAR (PROVEEDORES) */}
+                  {queryType === 'proveedor_cxp' && (
+                    <div className="space-y-6">
+                      {/* Tarjetas Resumen */}
+                      {queryResponse.result?.resumen && (
+                        <div className="grid grid-cols-1 sm:grid-cols-3 gap-3">
+                          <div className="p-4 bg-slate-50 border border-slate-200">
+                            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
+                              Total Facturado
+                            </span>
+                            <span className="text-lg sm:text-xl font-black text-[#172B3A]">
+                              {formatCurrency(queryResponse.result.resumen.totalFacturado)}
+                            </span>
+                          </div>
+                          <div className="p-4 bg-emerald-50 border border-emerald-200">
+                            <span className="text-[11px] font-bold text-emerald-700 uppercase tracking-wider block">
+                              Total Pagado / Abonado
+                            </span>
+                            <span className="text-lg sm:text-xl font-black text-emerald-800">
+                              {formatCurrency(queryResponse.result.resumen.totalPagado)}
+                            </span>
+                          </div>
+                          <div className="p-4 bg-orange-50 border border-orange-200">
+                            <span className="text-[11px] font-bold text-[#FC6412] uppercase tracking-wider block">
+                              Saldo Pendiente por Pagar
+                            </span>
+                            <span className="text-lg sm:text-xl font-black text-[#FC6412]">
+                              {formatCurrency(queryResponse.result.resumen.totalSaldoPendiente)}
+                            </span>
+                          </div>
+                        </div>
+                      )}
+
+                      {(!queryResponse.result?.cxp || queryResponse.result.cxp.length === 0) ? (
+                        <div className="p-8 text-center bg-slate-50 border border-slate-200 space-y-2">
+                          <CheckCircle className="w-8 h-8 text-emerald-500 mx-auto" />
+                          <h4 className="font-bold text-sm text-[#172B3A]">Sin cuentas por pagar pendientes</h4>
+                          <p className="text-xs text-slate-500 max-w-md mx-auto">
+                            No existen saldos pendientes ni comprobantes por pagar asociados a su RUC de proveedor.
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-left text-xs border border-slate-200">
+                            <thead className="bg-[#172B3A] text-white">
+                              <tr>
+                                <th className="p-3 font-bold">Tipo</th>
+                                <th className="p-3 font-bold">Secuencia / Factura</th>
+                                <th className="p-3 font-bold">Emisión</th>
+                                <th className="p-3 font-bold">Vence</th>
+                                <th className="p-3 font-bold text-right">Valor Total</th>
+                                <th className="p-3 font-bold text-right">Saldo Pendiente</th>
+                                <th className="p-3 font-bold text-center">Estado</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-200">
+                              {queryResponse.result.cxp.map((it: any, idx: number) => {
+                                const isPaid = Math.abs(Number(it.saldo || 0)) === 0;
+                                return (
+                                  <tr key={idx} className="hover:bg-slate-50">
+                                    <td className="p-3 font-mono font-bold text-slate-600">{it.tipo}</td>
+                                    <td className="p-3 font-mono font-bold text-[#005BB2]">{it.secuencia}</td>
+                                    <td className="p-3">{formatDate(it.emision)}</td>
+                                    <td className="p-3">{formatDate(it.vence)}</td>
+                                    <td className="p-3 text-right font-medium text-slate-700">
+                                      {formatCurrency(Math.abs(Number(it.valor || 0)))}
+                                    </td>
+                                    <td className="p-3 text-right font-black text-[#172B3A]">
+                                      {formatCurrency(Math.abs(Number(it.saldo || 0)))}
+                                    </td>
+                                    <td className="p-3 text-center">
+                                      {isPaid ? (
+                                        <span className="px-2 py-0.5 text-[10px] font-bold uppercase bg-emerald-100 text-emerald-800 border border-emerald-300">
+                                          CANCELADO
+                                        </span>
+                                      ) : (
+                                        <span className="px-2 py-0.5 text-[10px] font-bold uppercase bg-amber-100 text-amber-800 border border-amber-300">
+                                          PENDIENTE
+                                        </span>
+                                      )}
+                                    </td>
+                                  </tr>
+                                );
+                              })}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* CASO I: HISTORIAL DE PAGOS A PROVEEDORES */}
+                  {queryType === 'proveedor_pagos' && (
+                    <div className="space-y-6">
+                      {queryResponse.result?.resumen && (
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                          <div className="p-4 bg-emerald-50 border border-emerald-200">
+                            <span className="text-[11px] font-bold text-emerald-700 uppercase tracking-wider block">
+                              Total Pagos y Transferencias Realizadas
+                            </span>
+                            <span className="text-lg sm:text-xl font-black text-emerald-800">
+                              {formatCurrency(queryResponse.result.resumen.totalPagado)}
+                            </span>
+                          </div>
+                          <div className="p-4 bg-slate-50 border border-slate-200">
+                            <span className="text-[11px] font-bold text-slate-500 uppercase tracking-wider block">
+                              Comprobantes de Egreso Registrados
+                            </span>
+                            <span className="text-lg sm:text-xl font-black text-[#172B3A]">
+                              {queryResponse.total || 0} comprobantes
+                            </span>
+                          </div>
+                        </div>
+                      )}
+
+                      {(!queryResponse.result?.pagos || queryResponse.result.pagos.length === 0) ? (
+                        <div className="p-8 text-center bg-slate-50 border border-slate-200 space-y-2">
+                          <DollarSign className="w-8 h-8 text-slate-400 mx-auto" />
+                          <h4 className="font-bold text-sm text-[#172B3A]">Sin comprobantes de pago registrados</h4>
+                          <p className="text-xs text-slate-500 max-w-md mx-auto">
+                            No se registran pagos ni transferencias emitidas a este proveedor en el periodo consultado.
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-left text-xs border border-slate-200">
+                            <thead className="bg-[#172B3A] text-white">
+                              <tr>
+                                <th className="p-3 font-bold">Comprobante de Egreso</th>
+                                <th className="p-3 font-bold">Fecha de Pago</th>
+                                <th className="p-3 font-bold">Concepto / Detalle</th>
+                                <th className="p-3 font-bold">Facturas Canceladas</th>
+                                <th className="p-3 font-bold text-right">Importe Pagado</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-200">
+                              {queryResponse.result.pagos.map((p: any, idx: number) => (
+                                <tr key={idx} className="hover:bg-slate-50">
+                                  <td className="p-3 font-mono font-bold text-[#005BB2]">{p.cobroscodigo}</td>
+                                  <td className="p-3">{formatDate(p.fechaemision)}</td>
+                                  <td className="p-3 text-slate-700">{p.concepto}</td>
+                                  <td className="p-3">
+                                    {p.documentos && p.documentos.length > 0 ? (
+                                      <div className="flex flex-wrap gap-1">
+                                        {p.documentos.map((d: any, dIdx: number) => (
+                                          <span
+                                            key={dIdx}
+                                            className="px-1.5 py-0.5 text-[10px] font-mono bg-blue-50 text-[#005BB2] border border-blue-200"
+                                          >
+                                            F-{d.secuencia} ({formatCurrency(d.importe)})
+                                          </span>
+                                        ))}
+                                      </div>
+                                    ) : (
+                                      <span className="text-slate-400 text-[11px]">—</span>
+                                    )}
+                                  </td>
+                                  <td className="p-3 text-right font-black text-emerald-700">
+                                    {formatCurrency(p.importeTotal)}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* CASO J: RETENCIONES DE COMPRA EMITIDAS AL PROVEEDOR */}
+                  {queryType === 'proveedor_retenciones' && (
+                    <div className="space-y-4">
+                      {(!queryResponse.result?.retenciones || queryResponse.result.retenciones.length === 0) ? (
+                        <div className="p-8 text-center bg-slate-50 border border-slate-200 space-y-2">
+                          <Receipt className="w-8 h-8 text-slate-400 mx-auto" />
+                          <h4 className="font-bold text-sm text-[#172B3A]">Sin comprobantes de retención</h4>
+                          <p className="text-xs text-slate-500 max-w-md mx-auto">
+                            No se encontraron comprobantes de retención emitidos hacia su empresa en el periodo seleccionado.
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-left text-xs border border-slate-200">
+                            <thead className="bg-[#172B3A] text-white">
+                              <tr>
+                                <th className="p-3 font-bold">Nº Retención</th>
+                                <th className="p-3 font-bold">Factura Afectada</th>
+                                <th className="p-3 font-bold">Fecha Emisión</th>
+                                <th className="p-3 font-bold text-right">Ret. Renta</th>
+                                <th className="p-3 font-bold text-right">Ret. IVA</th>
+                                <th className="p-3 font-bold text-right">Total Retenido</th>
+                                <th className="p-3 font-bold text-center">Autorización SRI</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-200">
+                              {queryResponse.result.retenciones.map((ret: any, idx: number) => (
+                                <tr key={idx} className="hover:bg-slate-50">
+                                  <td className="p-3 font-mono font-bold text-[#005BB2]">{ret.secuencia}</td>
+                                  <td className="p-3 font-mono text-slate-700">{ret.facturaAfectada}</td>
+                                  <td className="p-3">{formatDate(ret.fechaEmision)}</td>
+                                  <td className="p-3 text-right font-medium text-slate-600">
+                                    {formatCurrency(ret.totalRenta)}
+                                  </td>
+                                  <td className="p-3 text-right font-medium text-slate-600">
+                                    {formatCurrency(ret.totalIva)}
+                                  </td>
+                                  <td className="p-3 text-right font-black text-[#172B3A]">
+                                    {formatCurrency(ret.total)}
+                                  </td>
+                                  <td className="p-3 text-center">
+                                    {ret.autorizacion ? (
+                                      <button
+                                        type="button"
+                                        onClick={() => handleCopyClave(ret.autorizacion)}
+                                        className="inline-flex items-center gap-1 px-2 py-1 text-[11px] font-bold bg-slate-100 hover:bg-[#005BB2] hover:text-white border border-slate-200 transition-colors cursor-pointer"
+                                        title="Copiar Clave de Acceso SRI"
+                                      >
+                                        {copiedKey === ret.autorizacion ? (
+                                          <Check className="w-3 h-3 text-emerald-600" />
+                                        ) : (
+                                          <Copy className="w-3 h-3" />
+                                        )}
+                                        <span>Copiar SRI</span>
+                                      </button>
+                                    ) : (
+                                      <span className="text-slate-400 text-[11px]">En proceso</span>
+                                    )}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
+                    </div>
+                  )}
+
+                  {/* CASO K: FACTURAS DE COMPRA REGISTRADAS */}
+                  {queryType === 'proveedor_facturas' && (
+                    <div className="space-y-4">
+                      {(!queryResponse.result?.facturas || queryResponse.result.facturas.length === 0) ? (
+                        <div className="p-8 text-center bg-slate-50 border border-slate-200 space-y-2">
+                          <FileText className="w-8 h-8 text-slate-400 mx-auto" />
+                          <h4 className="font-bold text-sm text-[#172B3A]">Sin facturas de compra registradas</h4>
+                          <p className="text-xs text-slate-500 max-w-md mx-auto">
+                            No se encontraron comprobantes de compra ingresados en la contabilidad en el periodo consultado.
+                          </p>
+                        </div>
+                      ) : (
+                        <div className="overflow-x-auto">
+                          <table className="w-full text-left text-xs border border-slate-200">
+                            <thead className="bg-[#172B3A] text-white">
+                              <tr>
+                                <th className="p-3 font-bold">Nº Factura Proveedor</th>
+                                <th className="p-3 font-bold">Emisión</th>
+                                <th className="p-3 font-bold">Vence</th>
+                                <th className="p-3 font-bold text-right">Subtotal</th>
+                                <th className="p-3 font-bold text-right">IVA</th>
+                                <th className="p-3 font-bold text-right">Total Factura</th>
+                                <th className="p-3 font-bold text-center">Autorización SRI</th>
+                              </tr>
+                            </thead>
+                            <tbody className="divide-y divide-slate-200">
+                              {queryResponse.result.facturas.map((fac: any, idx: number) => (
+                                <tr key={idx} className="hover:bg-slate-50">
+                                  <td className="p-3 font-mono font-bold text-[#005BB2]">
+                                    {fac.establecimiento}-{fac.puntoemision}-{fac.secuencial}
+                                  </td>
+                                  <td className="p-3">{formatDate(fac.emision)}</td>
+                                  <td className="p-3">{formatDate(fac.vence)}</td>
+                                  <td className="p-3 text-right font-medium text-slate-600">
+                                    {formatCurrency(fac.subtotal)}
+                                  </td>
+                                  <td className="p-3 text-right font-medium text-slate-600">
+                                    {formatCurrency(fac.total_iva)}
+                                  </td>
+                                  <td className="p-3 text-right font-black text-[#172B3A]">
+                                    {formatCurrency(fac.total)}
+                                  </td>
+                                  <td className="p-3 text-center">
+                                    {fac.claveacceso ? (
+                                      <button
+                                        type="button"
+                                        onClick={() => handleCopyClave(fac.claveacceso)}
+                                        className="inline-flex items-center gap-1 px-2 py-1 text-[11px] font-bold bg-slate-100 hover:bg-[#005BB2] hover:text-white border border-slate-200 transition-colors cursor-pointer"
+                                        title="Copiar Clave de Acceso SRI"
+                                      >
+                                        {copiedKey === fac.claveacceso ? (
+                                          <Check className="w-3 h-3 text-emerald-600" />
+                                        ) : (
+                                          <Copy className="w-3 h-3" />
+                                        )}
+                                        <span>Copiar SRI</span>
+                                      </button>
+                                    ) : (
+                                      <span className="text-slate-400 text-[11px]">—</span>
+                                    )}
+                                  </td>
+                                </tr>
+                              ))}
+                            </tbody>
+                          </table>
+                        </div>
+                      )}
                     </div>
                   )}
                 </motion.div>

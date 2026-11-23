@@ -67,16 +67,25 @@ export default function App() {
             }
           />
 
-          {/* Ruta 4: Portal Clientes (Diferido) */}
+          {/* Ruta 4: Portal Clientes y Proveedores (Diferido) */}
           <Route
             path="portal-clientes"
             element={
               <Suspense fallback={<RouteLoadingFallback />}>
-                <OnlineServicesPage />
+                <OnlineServicesPage initialTab="cliente" />
               </Suspense>
             }
           />
           <Route path="servicios-en-linea" element={<Navigate to="/portal-clientes" replace />} />
+          <Route
+            path="portal-proveedores"
+            element={
+              <Suspense fallback={<RouteLoadingFallback />}>
+                <OnlineServicesPage initialTab="proveedor" />
+              </Suspense>
+            }
+          />
+          <Route path="proveedores" element={<Navigate to="/portal-proveedores" replace />} />
 
           {/* Ruta 5: Contacto (Diferido) */}
           <Route

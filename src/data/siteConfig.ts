@@ -82,9 +82,15 @@ export const siteConfig: SiteConfig = {
     },
     {
       id: "portal-clientes",
-      label: "Portal Clientes",
+      label: "Clientes",
       path: "/portal-clientes",
-      description: "Acceso al sistema en línea y consultas",
+      description: "Acceso al sistema en línea y consultas para clientes",
+    },
+    {
+      id: "portal-proveedores",
+      label: "Proveedores",
+      path: "/portal-proveedores",
+      description: "Portal de cuentas por pagar, pagos y retenciones para proveedores",
     },
     {
       id: "contacto",

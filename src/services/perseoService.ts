@@ -85,7 +85,7 @@ export async function getPerseoStatus(): Promise<PerseoConfigStatus> {
 export async function queryPerseo(request: PerseoQueryRequest): Promise<PerseoQueryResponse> {
   try {
     const controller = new AbortController();
-    const timeoutId = setTimeout(() => controller.abort(), 15000);
+    const timeoutId = setTimeout(() => controller.abort(), 28000);
 
     const res = await fetch('/api/perseo/query', {
       method: 'POST',
