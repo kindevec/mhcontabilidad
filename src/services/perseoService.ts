@@ -41,15 +41,26 @@ export const PERSEO_PLANNED_ENDPOINTS: PerseoEndpointSpec[] = [
   },
 ];
 
+const SUPABASE_FUNCTION_URL = (import.meta.env.VITE_PERSEO_FUNCTION_URL || '').replace(/\/+$/, '');
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || '';
+
+function buildHeaders(extra?: Record<string, string>): Record<string, string> {
+  const headers: Record<string, string> = { ...extra };
+  if (SUPABASE_FUNCTION_URL && SUPABASE_ANON_KEY) {
+    headers['Authorization'] = `Bearer ${SUPABASE_ANON_KEY}`;
+    headers['apikey'] = SUPABASE_ANON_KEY;
+  }
+  return headers;
+}
+
 /**
  * Consulta el estado de configuración de la API de Perseo a través de la capa de servidor seguro
  */
 export async function getPerseoStatus(): Promise<PerseoConfigStatus> {
+  const url = SUPABASE_FUNCTION_URL ? `${SUPABASE_FUNCTION_URL}?action=status` : '/api/perseo/status';
   try {
-    const res = await fetch('/api/perseo/status', {
-      headers: {
-        'Accept': 'application/json',
-      },
+    const res = await fetch(url, {
+      headers: buildHeaders({ Accept: 'application/json' }),
     });
 
     if (res.ok) {
@@ -83,15 +94,16 @@ export async function getPerseoStatus(): Promise<PerseoConfigStatus> {
  * Si las credenciales aún no están provistas, retorna un estado informativo claro sin falsear datos.
  */
 export async function queryPerseo(request: PerseoQueryRequest): Promise<PerseoQueryResponse> {
+  const url = SUPABASE_FUNCTION_URL || '/api/perseo/query';
   try {
     const controller = new AbortController();
     const timeoutId = setTimeout(() => controller.abort(), 28000);
 
-    const res = await fetch('/api/perseo/query', {
+    const res = await fetch(url, {
       method: 'POST',
-      headers: {
+      headers: buildHeaders({
         'Content-Type': 'application/json',
-      },
+      }),
       body: JSON.stringify(request),
       signal: controller.signal,
     });

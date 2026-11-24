@@ -1,8 +1,17 @@
-import React, { useState } from 'react';
-import { MapPin, Clock, Phone, Mail, Send } from 'lucide-react';
+import React, { useState, useRef, useEffect } from 'react';
+import { MapPin, Clock, Phone, Mail, Send, ChevronDown, Check } from 'lucide-react';
 import { siteConfig } from '../data/siteConfig';
 import { MHLogo } from './MHLogo';
 import contabilidadImg from '../assets/images/hero_contabilidad_asesoria_1792699795005.webp';
+
+const SERVICE_OPTIONS = [
+  'Contabilidad General y Orden Financiero',
+  'Impuestos y Blindaje Fiscal',
+  'Consultoría y Estrategia de Crecimiento',
+  'Gestión de Nómina y Soporte Laboral',
+  'Tecnología, Facturación y Firmas Electrónicas',
+  'Asesoría Contable Personalizada',
+];
 
 export const LeaveNumbersSection: React.FC = () => {
   const [formData, setFormData] = useState({
@@ -10,10 +19,22 @@ export const LeaveNumbersSection: React.FC = () => {
     lastName: '',
     email: '',
     phone: '',
-    service: 'Contabilidad General y Orden Financiero',
+    service: SERVICE_OPTIONS[0],
     message: '',
     hpField: '',
   });
+  const [isServiceOpen, setIsServiceOpen] = useState(false);
+  const serviceDropdownRef = useRef<HTMLDivElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (serviceDropdownRef.current && !serviceDropdownRef.current.contains(event.target as Node)) {
+        setIsServiceOpen(false);
+      }
+    };
+    document.addEventListener('mousedown', handleClickOutside);
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, []);
 
   const sanitize = (val: string) => val.replace(/[<>]/g, '').trim();
 
@@ -126,22 +147,60 @@ export const LeaveNumbersSection: React.FC = () => {
               </div>
 
               {/* Fila 3: Servicio de Interés */}
-              <div className="space-y-1">
+              <div className="space-y-1.5" ref={serviceDropdownRef}>
                 <label className="block text-xs font-bold text-slate-700 tracking-wide">
                   Servicio que requieres
                 </label>
-                <select
-                  value={formData.service}
-                  onChange={(e) => setFormData({ ...formData, service: e.target.value })}
-                  className="w-full py-2.5 px-0 bg-transparent border-b-2 border-slate-200 focus:border-[#005BB2] text-xs sm:text-sm text-slate-900 outline-none transition-colors rounded-none cursor-pointer"
-                >
-                  <option value="Contabilidad General y Orden Financiero">Contabilidad General y Orden Financiero</option>
-                  <option value="Impuestos y Blindaje Fiscal">Impuestos y Blindaje Fiscal</option>
-                  <option value="Consultoría y Estrategia de Crecimiento">Consultoría y Estrategia de Crecimiento</option>
-                  <option value="Gestión de Nómina y Soporte Laboral">Gestión de Nómina y Soporte Laboral</option>
-                  <option value="Tecnología, Facturación y Firmas Electrónicas">Tecnología, Facturación y Firmas Electrónicas</option>
-                  <option value="Asesoría Contable Personalizada">Asesoría Contable Personalizada</option>
-                </select>
+                <div className="relative">
+                  <button
+                    type="button"
+                    aria-haspopup="listbox"
+                    aria-expanded={isServiceOpen}
+                    onClick={() => setIsServiceOpen((prev) => !prev)}
+                    className={`w-full flex items-center justify-between gap-2 py-2.5 px-3.5 rounded-xl border text-left text-xs sm:text-sm font-medium transition-all duration-200 cursor-pointer outline-none ${
+                      isServiceOpen
+                        ? 'border-[#005BB2] bg-white text-[#172B3A] ring-2 ring-[#005BB2]/15 shadow-xs'
+                        : 'border-slate-200 bg-slate-50/70 text-[#172B3A] hover:bg-white hover:border-[#005BB2]/50'
+                    }`}
+                  >
+                    <span className="truncate">{formData.service}</span>
+                    <ChevronDown
+                      className={`w-4 h-4 text-[#005BB2] shrink-0 transition-transform duration-200 ${
+                        isServiceOpen ? 'rotate-180' : ''
+                      }`}
+                    />
+                  </button>
+
+                  {isServiceOpen && (
+                    <ul
+                      role="listbox"
+                      className="absolute z-30 left-0 right-0 mt-1.5 py-1.5 rounded-xl border border-slate-200 bg-white shadow-xl shadow-slate-900/10 max-h-60 overflow-y-auto"
+                    >
+                      {SERVICE_OPTIONS.map((option) => {
+                        const isSelected = formData.service === option;
+                        return (
+                          <li key={option} role="option" aria-selected={isSelected}>
+                            <button
+                              type="button"
+                              onClick={() => {
+                                setFormData({ ...formData, service: option });
+                                setIsServiceOpen(false);
+                              }}
+                              className={`w-full flex items-center justify-between gap-2 px-3.5 py-2.5 text-left text-xs sm:text-sm transition-colors cursor-pointer ${
+                                isSelected
+                                  ? 'bg-[#005BB2]/10 text-[#005BB2] font-bold'
+                                  : 'text-slate-700 hover:bg-slate-50 hover:text-[#172B3A] font-medium'
+                              }`}
+                            >
+                              <span className="truncate">{option}</span>
+                              {isSelected && <Check className="w-4 h-4 text-[#FC6412] shrink-0" />}
+                            </button>
+                          </li>
+                        );
+                      })}
+                    </ul>
+                  )}
+                </div>
               </div>
 
               {/* Fila 4: Mensaje */}

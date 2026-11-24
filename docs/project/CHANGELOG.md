@@ -4,6 +4,9 @@
 
 ## [Unreleased] - 2026-11-21
 
+### Eliminado
+- Eliminado completamente el Panel Administrativo (`src/admin/`, [AdminPage.tsx](file:///d:/Codespace/Kindev/Trabajos/MHContabilidad/src/pages/AdminPage.tsx) y rutas `/admin`, `/admin/*` en [App.tsx](file:///d:/Codespace/Kindev/Trabajos/MHContabilidad/src/App.tsx)) junto con sus vistas, mocks y utilidades `jobie`.
+
 ### Seguridad
 - **Validación de Dato Cruzado (LOPDP)**: Implementada verificación obligatoria de doble factor por conocimiento de comprobante (`identificacion` + `numeroDocumento` de mínimo 3 dígitos) en el servidor ([server.ts](file:///d:/Codespace/Kindev/Trabajos/MHContabilidad/server.ts)) y en el formulario web ([OnlineServicesPage.tsx](file:///d:/Codespace/Kindev/Trabajos/MHContabilidad/src/pages/OnlineServicesPage.tsx)). Bloquea con HTTP `403` (`CROSS_VALIDATION_REQUIRED` / `VERIFICATION_FAILED`) cualquier consulta sin comprobante válido asociado al RUC/Cédula.
 
@@ -18,6 +21,9 @@
 - Caché en memoria con TTL de 10 minutos en [server.ts](file:///d:/Codespace/Kindev/Trabajos/MHContabilidad/server.ts) para optimizar consultas de 340 proveedores, 2,033 cuentas por pagar y 1,603 comprobantes de pago sin degradar el rendimiento del ERP Perseo.
 
 ## [1.0.0] - 2026-11-20
+
+### Eliminado
+- Eliminado completamente el Panel Administrativo (`src/admin/`, [AdminPage.tsx](file:///d:/Codespace/Kindev/Trabajos/MHContabilidad/src/pages/AdminPage.tsx) y rutas `/admin`, `/admin/*` en [App.tsx](file:///d:/Codespace/Kindev/Trabajos/MHContabilidad/src/App.tsx)) junto con sus vistas, mocks y utilidades `jobie`.
 
 ### Seguridad
 - **Validación de Dato Cruzado (LOPDP)**: Implementada verificación obligatoria de doble factor por conocimiento de comprobante (`identificacion` + `numeroDocumento` de mínimo 3 dígitos) en el servidor ([server.ts](file:///d:/Codespace/Kindev/Trabajos/MHContabilidad/server.ts)) y en el formulario web ([OnlineServicesPage.tsx](file:///d:/Codespace/Kindev/Trabajos/MHContabilidad/src/pages/OnlineServicesPage.tsx)). Bloquea con HTTP `403` (`CROSS_VALIDATION_REQUIRED` / `VERIFICATION_FAILED`) cualquier consulta sin comprobante válido asociado al RUC/Cédula.
@@ -36,6 +42,9 @@
 ### Corregido
 - Resuelta ambigüedad de URL base de Perseo (`https://tu-contabilidad.com` en lugar del subpath `/sistema` que arrojaba 400 Bad Request).
 - Corregido filtrado para clientes sin número telefónico registrado en el ERP utilizando búsqueda primaria por RUC/cédula.
+
+### Eliminado
+- Eliminado completamente el Panel Administrativo (`src/admin/`, [AdminPage.tsx](file:///d:/Codespace/Kindev/Trabajos/MHContabilidad/src/pages/AdminPage.tsx) y rutas `/admin`, `/admin/*` en [App.tsx](file:///d:/Codespace/Kindev/Trabajos/MHContabilidad/src/App.tsx)) junto con sus vistas, mocks y utilidades `jobie`.
 
 ### Seguridad
 - Las credenciales y API Key de Perseo permanecen seguras exclusivamente en variables de entorno / servidor Express, sin exposición al frontend del cliente.
